@@ -73,15 +73,17 @@
 </div>
 
 <script src="data_fases.js"></script>
-<script src="data_extras.js"></script>
-<script src="data_logs.js"></script>
-
-<script src="main.js"></script>
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-  }
-</script>
+    <script src="data_extras.js"></script>
+    <script src="data_logs.js"></script>
+    <script src="main.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('SW registrado!', reg))
+                    .catch(err => console.log('Erro no SW', err));
+            });
+        }
+    </script>
 </body>
 </html>
