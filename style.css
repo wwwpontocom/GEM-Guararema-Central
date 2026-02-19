@@ -1,0 +1,46 @@
+ :root { --primary: #4a90e2; --bg: #f0f2f5; }
+        body { font-family: 'Arial', sans-serif; margin: 0; display: flex; height: 100vh; background: var(--bg); }
+        
+        /* Painel Lateral do Chat */
+       /* Painel Lateral do Chat */
+        .chat-sidebar { 
+            width: 350px; 
+            background: white; 
+            border-right: 1px solid #ddd; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; /* Garante que a barra ocupe a altura total */
+        }
+        .chat-header { background: var(--primary); color: white; padding: 20px; font-weight: bold; text-align: center; flex-shrink: 0; }
+        
+// --- FIX IS HERE ---
+// Locate inside style...
+        #chat-window { 
+            flex: 1; 
+            padding: 15px; 
+            overflow-y: auto; /* Ativa a rolagem vertical */
+            display: flex; 
+            flex-direction: column; 
+            gap: 10px; 
+            background: #fff;
+        }
+        .msg { padding: 10px 14px; border-radius: 15px; font-size: 13px; max-width: 85%; line-height: 1.4; }
+        .user { align-self: flex-end; background: var(--primary); color: white; }
+        .bot { align-self: flex-start; background: #eee; color: #333; }
+        .input-area { padding: 15px; border-top: 1px solid #eee; display: flex; gap: 5px; }
+        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 20px; outline: none; }
+
+        /* Área de Renderização do Livro */
+        .display-area { flex: 1; padding: 40px; overflow-y: auto; display: flex; justify-content: center; }
+        .page { width: 100%; max-width: 700px; background: white; padding: 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-radius: 8px; height: fit-content; opacity: 1; transition: opacity 0.15s; }
+        
+        /* Estilos da Página (Réplica) */
+        .fase-header { background: #888; color: white; text-align: center; padding: 8px; font-size: 20px; border-radius: 4px; margin-bottom: 20px; }
+        .section-title { background: #e3f2fd; border-bottom: 3px solid var(--primary); padding: 10px; display: flex; align-items: center; margin: 20px 0 10px 0; }
+        .icon-box { background: var(--primary); color: white; border-radius: 4px; padding: 4px 8px; margin-right: 12px; font-weight: bold; }
+        h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
+        .instrument-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; background: #f9f9f9; padding: 10px; border-radius: 5px; }
+        .col-title { font-weight: bold; color: var(--primary); border-bottom: 1px solid #ddd; font-size: 12px; margin-bottom: 5px; }
+        .instrument-item { font-style: italic; color: #666; font-size: 11px; }
+        .highlight-blue { color: var(--primary); font-weight: bold; }
+        .footer { border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px; display: flex; justify-content: space-between; font-size: 10px; color: #999; }
