@@ -15,7 +15,7 @@
         
 // --- FIX IS HERE ---
 // Locate inside style...
-        #chat-window { 
+         #chat-window { 
             flex: 1; 
             padding: 15px; 
             overflow-y: auto; /* Ativa a rolagem vertical */
@@ -23,6 +23,16 @@
             flex-direction: column; 
             gap: 10px; 
             background: #fff;
+        }
+
+// --- FIX IS HERE ---
+        /* Responsividade para Celulares (Portrait) */
+        @media (max-width: 768px) {
+            body { flex-direction: column; height: auto; }
+            .chat-sidebar { width: 100%; height: 50vh; border-right: none; border-bottom: 1px solid #ddd; }
+            .display-area { padding: 10px; }
+            .page { padding: 20px; }
+            .instrument-grid { grid-template-columns: repeat(2, 1fr); }
         }
         .msg { padding: 10px 14px; border-radius: 15px; font-size: 13px; max-width: 85%; line-height: 1.4; }
         .user { align-self: flex-end; background: var(--primary); color: white; }
