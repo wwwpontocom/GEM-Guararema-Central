@@ -37,10 +37,14 @@ body {
     flex-direction: column; 
     height: 100%; 
     flex-shrink: 0;
-    transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animação suave */
+    /* --- FIX IS HERE --- */
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s ease; 
 }
 
-/* --- FIX IS HERE --- */
+/* Estado Minimizado (Desktop: Slide para Esquerda) */
+.chat-sidebar.minimized {
+    transform: translateX(-305px); /* Deixa apenas uma bordinha do toggle visível */
+}
 
 .chat-header { 
     background: var(--primary); 
@@ -48,15 +52,22 @@ body {
     padding: 15px; 
     font-weight: bold; 
     display: flex;
-    flex-direction: row-reverse; /* Inverte a ordem para o botão ficar na esquerda */
-    justify-content: flex-end;   /* Empurra tudo para a esquerda */
+    flex-direction: row-reverse; 
+    justify-content: flex-end;   
     align-items: center;
     gap: 10px;
     flex-shrink: 0; 
+    width: 350px; /* Largura fixa para o header não esmagar no slide */
+}
+
+/* Ajuste do botão quando minimizado no desktop */
+.chat-sidebar.minimized .chat-header {
+    justify-content: flex-end;
+    padding-right: 10px;
 }
 
 .toggle-chat-btn {
-    display: inline-flex; /* Ativado no Desktop agora */
+    display: inline-flex; 
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
@@ -70,12 +81,6 @@ body {
 }
 
 /* --- END OF FIX --- */
-
-/* Estado Minimizado (Mobile) */
-.chat-sidebar.minimized {
-    height: 45px !important; 
-    overflow: hidden;
-}
 
 #chat-window { 
     flex: 1; 
@@ -93,6 +98,7 @@ body {
     display: flex; 
     gap: 5px; 
     background: white; 
+    width: 350px;
 }
 
 input { 
@@ -182,12 +188,16 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
         border-right: none;
         border-top: 2px solid #ddd;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        transition: transform 0.4s ease, height 0.4s ease;
+        transform: translateX(0); /* Reseta o slide lateral do desktop */
     }
+
+    /* Reseta larguras fixas no mobile */
+    .chat-header, .input-area { width: 100%; }
 
     .chat-sidebar.minimized {
         height: 50px !important;
-        transform: translateY(0);
+        transform: translateY(0); /* No mobile ele retrai verticalmente apenas */
+        overflow: hidden;
     }
 
     .chat-header {
