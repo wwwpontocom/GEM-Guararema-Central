@@ -193,7 +193,7 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
     .chat-header {
         height: 50px;
         display: flex;
-        flex-direction: row; /* Volta ao normal no mobile se preferir */
+        flex-direction: row; 
         justify-content: space-between;
         align-items: center;
         padding: 0 20px;
