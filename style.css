@@ -40,23 +40,23 @@ body {
     transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* Animação suave */
 }
 
-/* Estado Minimizado (Mobile) */
-.chat-sidebar.minimized {
-    height: 45px !important; 
-    overflow: hidden;
-}
+/* --- FIX IS HERE --- */
 
 .chat-header { 
     background: var(--primary); 
     color: white; 
     padding: 15px; 
     font-weight: bold; 
-    text-align: center; 
+    display: flex;
+    flex-direction: row-reverse; /* Inverte a ordem para o botão ficar na esquerda */
+    justify-content: flex-end;   /* Empurra tudo para a esquerda */
+    align-items: center;
+    gap: 10px;
     flex-shrink: 0; 
 }
 
 .toggle-chat-btn {
-    display: none; /* Escondido no Desktop */
+    display: inline-flex; /* Ativado no Desktop agora */
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
@@ -64,8 +64,17 @@ body {
     width: 30px;
     height: 30px;
     cursor: pointer;
-    margin-left: 10px;
     font-weight: bold;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- END OF FIX --- */
+
+/* Estado Minimizado (Mobile) */
+.chat-sidebar.minimized {
+    height: 45px !important; 
+    overflow: hidden;
 }
 
 #chat-window { 
@@ -158,12 +167,12 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
         flex: 1;
         padding: 20px 10px;
         overflow-y: auto;
-        padding-bottom: 70px; /* Espaço para o chat minimizado */
+        padding-bottom: 70px; 
     }
 
     .chat-sidebar {
         width: 100%;
-        height: 350px; /* Altura reduzida para caber melhor no landscape */
+        height: 350px; 
         max-height: 80vh; 
         position: fixed;
         bottom: 0;
@@ -183,13 +192,14 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
     .chat-header {
         height: 50px;
         display: flex;
+        flex-direction: row; /* Volta ao normal no mobile se preferir */
         justify-content: space-between;
         align-items: center;
         padding: 0 20px;
-        cursor: pointer; /* Indica que é clicável */
+        cursor: pointer; 
     }
 
-    .toggle-chat-btn { display: inline-flex; }
+    .toggle-chat-btn { display: inline-flex; margin-left: 10px; }
     .page { width: 95%; padding: 20px; }
     .instrument-grid { grid-template-columns: repeat(2, 1fr); }
     nav div:first-child { font-size: 14px; }
