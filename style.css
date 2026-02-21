@@ -15,7 +15,7 @@ body {
     overflow: hidden; 
 }
 
-/* Estrutura Principal Desktop */
+/* Estrutura Principal Desktop & Landscape */
 #main-container {
     display: flex;
     width: 100%;
@@ -37,13 +37,12 @@ body {
     flex-direction: column; 
     height: 100%; 
     flex-shrink: 0;
-    /* --- FIX IS HERE --- */
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s ease; 
 }
 
-/* Estado Minimizado (Desktop: Slide para Esquerda) */
+/* Estado Minimizado (Desktop e Mobile Landscape: Slide para Esquerda) */
 .chat-sidebar.minimized {
-    transform: translateX(-305px); /* Deixa apenas uma bordinha do toggle visível */
+    transform: translateX(-305px); 
 }
 
 .chat-header { 
@@ -57,10 +56,9 @@ body {
     align-items: center;
     gap: 10px;
     flex-shrink: 0; 
-    width: 350px; /* Largura fixa para o header não esmagar no slide */
+    width: 350px; 
 }
 
-/* Ajuste do botão quando minimizado no desktop */
 .chat-sidebar.minimized .chat-header {
     justify-content: flex-end;
     padding-right: 10px;
@@ -79,8 +77,6 @@ body {
     align-items: center;
     justify-content: center;
 }
-
-/* --- END OF FIX --- */
 
 #chat-window { 
     flex: 1; 
@@ -152,9 +148,9 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
 .footer { border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px; display: flex; justify-content: space-between; font-size: 10px; color: #999; }
 
 /* ============================================================
-   MOBILE PORTRAIT ENHANCEMENTS (Ajuste para Celular)
+   --- FIX IS HERE: MOBILE PORTRAIT ONLY ---
    ============================================================ */
-@media (max-width: 768px) {
+@media (max-width: 768px) and (orientation: portrait) {
     body { overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; }
     
     #main-container {
@@ -188,15 +184,15 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
         border-right: none;
         border-top: 2px solid #ddd;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        transform: translateX(0); /* Reseta o slide lateral do desktop */
+        transform: translateX(0); /* Cancela o slide lateral no Portrait */
     }
 
-    /* Reseta larguras fixas no mobile */
+    /* Reseta larguras fixas no mobile portrait */
     .chat-header, .input-area { width: 100%; }
 
     .chat-sidebar.minimized {
         height: 50px !important;
-        transform: translateY(0); /* No mobile ele retrai verticalmente apenas */
+        transform: translateY(0); /* Retrai verticalmente no Portrait */
         overflow: hidden;
     }
 
