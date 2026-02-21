@@ -14,6 +14,7 @@ body {
     background: var(--bg); 
     overflow: hidden; 
 }
+
 /* --- FIX IS HERE --- */
 
 /* Estrutura Principal Desktop */
@@ -22,7 +23,7 @@ body {
     width: 100%;
     height: calc(100vh - var(--nav-height));
     margin-top: var(--nav-height);
-    overflow: hidden; /* Garante que o sidebar não crie scroll ao sair da tela */
+    overflow: hidden; 
 }
 
 #tab-assistente {
@@ -41,16 +42,15 @@ body {
     flex-shrink: 0;
     position: relative;
     z-index: 1001;
-    /* Transição suave para transform (movimento) e width */
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Estado Minimizado (Desktop): Desliza para a esquerda */
+/* Estado Minimizado (Desktop): Desliza para a esquerda, deixando 45px */
 .chat-sidebar.minimized {
-    transform: translateX(-305px); /* Deixa 45px visíveis para o ícone/botão */
+    transform: translateX(-305px); 
 }
 
-/* Mantém os elementos internos com largura fixa para não esmagar no slide */
+/* Elementos internos com largura fixa para não esmagar no slide */
 .chat-header, .input-area {
     width: 350px; 
     flex-shrink: 0;
@@ -65,10 +65,17 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: padding 0.3s ease;
+}
+
+/* Ajuste do Header quando minimizado para manter o botão visível */
+.chat-sidebar.minimized .chat-header {
+    justify-content: flex-end;
+    padding-right: 8px;
 }
 
 .toggle-chat-btn {
-    display: inline-flex; /* Sempre visível no desktop e mobile agora */
+    display: inline-flex;
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
@@ -91,16 +98,37 @@ body {
     background: #fff;
 }
 
+/* Estilos das Mensagens do Chat */
+.msg { padding: 10px 14px; border-radius: 15px; font-size: 13px; max-width: 85%; line-height: 1.4; }
+.user { align-self: flex-end; background: var(--primary); color: white; }
+.bot { align-self: flex-start; background: #eee; color: #333; }
+
+/* Área de Busca com Efeito Slide-Out (Peek-a-boo) */
 .input-area { 
-    padding: 15px; 
+    padding: 10px 15px; 
     border-top: 1px solid #eee; 
     display: flex; 
     gap: 5px; 
-    background: white; 
+    background: white;
+    height: 60px;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-input { 
+.chat-sidebar.minimized .input-area {
+    transform: translateX(0); 
+}
+
+.chat-sidebar.minimized .input-area:hover,
+.chat-sidebar.minimized .input-area:focus-within {
+    transform: translateX(305px); 
+    box-shadow: 5px 0 15px rgba(0,0,0,0.1);
+    border-radius: 0 20px 20px 0;
+}
+
+input#user-input { 
     flex: 1; 
+    min-width: 280px;
     padding: 10px; 
     border: 1px solid #ddd; 
     border-radius: 20px; 
@@ -125,10 +153,23 @@ input {
     box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
     border-radius: 8px; 
     height: fit-content;
+    opacity: 1;
+    transition: opacity 0.15s;
 }
 
+/* Estilos Internos da Biblioteca (Réplica do Livro) */
+.fase-header { background: #888; color: white; text-align: center; padding: 8px; font-size: 20px; border-radius: 4px; margin-bottom: 20px; }
+.section-title { background: #e3f2fd; border-bottom: 3px solid var(--primary); padding: 10px; display: flex; align-items: center; margin: 20px 0 10px 0; }
+.icon-box { background: var(--primary); color: white; border-radius: 4px; padding: 4px 8px; margin-right: 12px; font-weight: bold; }
+h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
+.instrument-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 15px 0; background: #f9f9f9; padding: 10px; border-radius: 5px; }
+.col-title { font-weight: bold; color: var(--primary); border-bottom: 1px solid #ddd; font-size: 12px; margin-bottom: 5px; }
+.instrument-item { font-style: italic; color: #666; font-size: 11px; }
+.highlight-blue { color: var(--primary); font-weight: bold; }
+.footer { border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px; display: flex; justify-content: space-between; font-size: 10px; color: #999; }
+
 /* ============================================================
-   MOBILE PORTRAIT ENHANCEMENTS (Ajuste para Celular)
+   MOBILE PORTRAIT ENHANCEMENTS
    ============================================================ */
 @media (max-width: 768px) {
     body { overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; }
@@ -137,45 +178,36 @@ input {
         display: block; 
         height: calc(100vh - var(--nav-height));
         margin-top: var(--nav-height);
-        position: relative;
-    }
-
-    #tab-assistente {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
     }
 
     .display-area {
         flex: 1;
         padding: 20px 10px;
-        overflow-y: auto;
-        padding-bottom: 70px; /* Espaço para ver o header do chat no fundo */
+        padding-bottom: 80px;
     }
 
-    /* Mobile: Sidebar vira Drawer que sobe/desce */
     .chat-sidebar {
         width: 100%;
         height: 350px;
         position: fixed;
         bottom: 0;
         left: 0;
-        transform: translateY(0); /* Reset do desktop X para Y */
-        border-right: none;
+        transform: translateY(0);
         border-top: 2px solid #ddd;
-        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
     }
 
-    /* Estado Minimizado (Mobile): Desliza para baixo */
     .chat-sidebar.minimized {
-        transform: translateY(300px); /* Deixa 50px (header) visíveis */
+        transform: translateY(300px); 
+    }
+
+    .chat-sidebar.minimized .input-area {
+        display: none;
     }
 
     .chat-header, .input-area {
-        width: 100%; /* Ajusta para largura total no mobile */
+        width: 100%;
     }
 
     .page { width: 95%; padding: 20px; }
     .instrument-grid { grid-template-columns: repeat(2, 1fr); }
-    nav div:first-child { font-size: 14px; }
 }
