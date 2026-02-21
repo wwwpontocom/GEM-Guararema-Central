@@ -411,27 +411,38 @@ window.addEventListener('appinstalled', () => {
 
 function toggleChat() {
     const sidebar = document.querySelector('.chat-sidebar');
+    if (!sidebar) return;
+    
     const isMinimized = sidebar.classList.toggle('minimized');
     
-    // Update the visual indicator
+    // Atualiza o ícone do botão
     const btn = document.querySelector('.toggle-chat-btn');
     if (btn) {
         btn.innerText = isMinimized ? '▲' : '▼';
     }
 
-    // If opening, scroll to bottom of chat automatically
+    // Se abrir, rola para baixo
     if (!isMinimized) {
         const win = document.getElementById('chat-window');
-        setTimeout(() => {
-            win.scrollTop = win.scrollHeight;
-        }, 400);
+        if (win) {
+            setTimeout(() => {
+                win.scrollTop = win.scrollHeight;
+            }, 300);
+        }
     }
 }
 
-// Add event listener to the header itself for easier mobile tapping
+// Inicialização segura
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.chat-header');
-    if (window.innerWidth <= 768) {
-        header.onclick = toggleChat;
+    if (header) {
+        // Remove qualquer listener antigo e adiciona o novo
+        header.removeEventListener('click', toggleChat);
+        header.addEventListener('click', (e) => {
+            // Só ativa o toggle se estiver no mobile
+            if (window.innerWidth <= 768) {
+                toggleChat();
+            }
+        });
     }
 });
