@@ -409,19 +409,29 @@ window.addEventListener('appinstalled', () => {
     console.log('PWA instalado com sucesso!');
 });
 
-function toggleChat() {
+function toggleChat(forceOpen = false) {
     const sidebar = document.querySelector('.chat-sidebar');
-    if (!sidebar) return;
-    
-    const isMinimized = sidebar.classList.toggle('minimized');
-    
-    // Atualiza o ícone do botão
     const btn = document.querySelector('.toggle-chat-btn');
-    if (btn) {
-        btn.innerText = isMinimized ? '▲' : '▼';
+    if (!sidebar) return;
+
+    if (forceOpen) {
+        sidebar.classList.remove('minimized');
+    } else {
+        sidebar.classList.toggle('minimized');
     }
 
-    // Se abrir, rola para baixo
+    const isMinimized = sidebar.classList.contains('minimized');
+    
+    // Update Icon based on platform and state
+    if (btn) {
+        if (window.innerWidth <= 768) {
+            btn.innerText = isMinimized ? '▲' : '▼';
+        } else {
+            btn.innerText = isMinimized ? '▶' : '◀';
+        }
+    }
+
+    // Scroll to bottom if opened
     if (!isMinimized) {
         const win = document.getElementById('chat-window');
         if (win) {
@@ -432,17 +442,38 @@ function toggleChat() {
     }
 }
 
-// Inicialização segura
+// Single initialization block
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.chat-header');
+    const userInput = document.getElementById('user-input');
+
+    // 1. Toggle on header click
     if (header) {
-        // Remove qualquer listener antigo e adiciona o novo
-        header.removeEventListener('click', toggleChat);
         header.addEventListener('click', (e) => {
-            // Só ativa o toggle se estiver no mobile
-            if (window.innerWidth <= 768) {
+            // Don't toggle if clicking the internal input specifically
+            if (e.target.tagName !== 'INPUT') {
                 toggleChat();
             }
         });
     }
+
+    // 2. AUTO-OPEN when user types or focuses on search
+    if (userInput) {
+        userInput.addEventListener('input', () => {
+            const sidebar = document.querySelector('.chat-sidebar');
+            if (sidebar && sidebar.classList.contains('minimized')) {
+                toggleChat(true); // Force open
+            }
+        });
+        
+        userInput.addEventListener('focus', () => {
+            toggleChat(true); // Open immediately when clicked
+        });
+    }
+
+    // 3. Initial Library Update
+    atualizarBibliotecaComMensagens();
+    
+    // 4. Start listening to logs
+    escutarLogs();
 });
