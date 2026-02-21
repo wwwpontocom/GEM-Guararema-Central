@@ -408,3 +408,12 @@ window.addEventListener('appinstalled', () => {
     deferredPrompt = null;
     console.log('PWA instalado com sucesso!');
 });
+
+function toggleChat() {
+    const sidebar = document.querySelector('.chat-sidebar');
+    sidebar.classList.toggle('minimized');
+    
+    // Feedback no botão
+    const btn = document.querySelector('.toggle-chat-btn');
+    btn.innerText = sidebar.classList.contains('minimized') ? '▲' : '▼';
+}
