@@ -411,9 +411,27 @@ window.addEventListener('appinstalled', () => {
 
 function toggleChat() {
     const sidebar = document.querySelector('.chat-sidebar');
-    sidebar.classList.toggle('minimized');
+    const isMinimized = sidebar.classList.toggle('minimized');
     
-    // Feedback no botão
+    // Update the visual indicator
     const btn = document.querySelector('.toggle-chat-btn');
-    btn.innerText = sidebar.classList.contains('minimized') ? '▲' : '▼';
+    if (btn) {
+        btn.innerText = isMinimized ? '▲' : '▼';
+    }
+
+    // If opening, scroll to bottom of chat automatically
+    if (!isMinimized) {
+        const win = document.getElementById('chat-window');
+        setTimeout(() => {
+            win.scrollTop = win.scrollHeight;
+        }, 400);
+    }
 }
+
+// Add event listener to the header itself for easier mobile tapping
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.chat-header');
+    if (window.innerWidth <= 768) {
+        header.onclick = toggleChat;
+    }
+});
