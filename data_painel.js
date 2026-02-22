@@ -2,7 +2,7 @@
 
 /**
  * Inicializa o Quadro de Avisos Interativo como uma interface puramente informativa.
- * Sem inputs, sem botões de salvar e sem conexões com bancos de dados.
+ * IDs de grupos e funções de salvamento foram totalmente removidos.
  */
 function inicializarPainelInterativo() {
     const renderArea = document.getElementById('render-area');
@@ -23,7 +23,7 @@ function inicializarPainelInterativo() {
                     <h3 style="margin: 0; font-size: 14px; color: var(--primary);">📢 AVISOS GERAIS</h3>
                     <span style="font-size: 10px; background: #e3f2fd; padding: 2px 6px; border-radius: 4px;">Info</span>
                 </div>
-                <div id="log-grupo-a" style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
+                <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         • Bem-vindo à nova Biblioteca Interativa.<br>
                         • Utilize o chat ao lado para consultar tópicos musicais.
@@ -36,7 +36,7 @@ function inicializarPainelInterativo() {
                     <h3 style="margin: 0; font-size: 14px; color: var(--primary);">📝 NOTAS DE AULA</h3>
                     <span style="font-size: 10px; background: #e3f2fd; padding: 2px 6px; border-radius: 4px;">Estudo</span>
                 </div>
-                <div id="log-grupo-b" style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
+                <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         • Módulo atual: Propriedades do Som.<br>
                         • Próximo tópico: Notação Musical Básica.
@@ -49,7 +49,7 @@ function inicializarPainelInterativo() {
                     <h3 style="margin: 0; font-size: 14px; color: var(--primary);">💡 DICAS RÁPIDAS</h3>
                     <span style="font-size: 10px; background: #e3f2fd; padding: 2px 6px; border-radius: 4px;">Dica</span>
                 </div>
-                <div id="log-grupo-c" style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
+                <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         • A altura define se o som é grave ou agudo.<br>
                         • A intensidade define o volume (forte ou fraco).
@@ -68,6 +68,7 @@ function inicializarPainelInterativo() {
     renderArea.innerHTML = dashboardHTML;
 }
 
+// Inicia o painel assim que o script for carregado ou a janela estiver pronta
 window.addEventListener('load', inicializarPainelInterativo);
 
 // --- END OF FIX ---
