@@ -38,7 +38,14 @@ function inicializarPainelInterativo() {
                 </div>
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
-                        • Módulo atual: Propriedades do Som.<br>
+                        •Assunto do Ensaio do GEM- 20/02/2026
+Atonalismo (Hino 210)
+Você já tentou cantar ou tocar a Escala de Dó Maior e parar, encerrar a escala na nota Si (sétima nota, sensível)?
+Se já fez deve ter percebido, ou se fizer isdo provávelmente perceberá que isso causa uma sensação estranha. 
+Desenvolvida no início do século XX, a Música Atonal tem uma harmonia marcada por sons dissonantes, que causan essa sensação estranha que falamos.
+Apesar de Carl Maria Friedrich Ernest von Weber, o compositor da partitura do Hino 210, ser de um período chamado de Romantismo que é anterior à Música Atonal, séc XX, ele utilizou do cromatismo e dissonâncias para criar tensão dramática
+
+ <br>
                         • Próximo tópico: Notação Musical Básica.
                     </div>
                 </div>
