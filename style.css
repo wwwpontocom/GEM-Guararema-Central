@@ -177,22 +177,39 @@ nav .nav-icons {
     body { overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; }
     
     /* Ajuste da Nav no Mobile */
-    nav {
-        padding: 0 10px;
+nav {
+        padding: 0 8px; /* Redução leve de padding lateral */
     }
 
     nav div:first-child { 
-        font-size: 13px; /* Diminui o texto "Plataforma GEM" */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 60%;
+        font-size: 12px; /* Redução adicional para garantir espaço */
+        max-width: 50%;
     }
 
     nav .nav-icons {
-        gap: 10px; /* Aperta os ícones para caberem */
+        gap: 2px; /* Espaçamento mínimo entre ícones */
     }
 
+    /* Reduzindo o tamanho visual dos botões/ícones */
+    nav .nav-icons a, 
+    nav .nav-icons button {
+        min-width: 36px;  /* Área de toque ligeiramente menor mas funcional */
+        min-height: 36px; 
+        padding: 6px;
+    }
+
+    /* Reduz o tamanho da fonte (se usar ícones de fonte) ou imagens */
+    nav .nav-icons i,
+    nav .nav-icons span {
+        font-size: 16px !important; /* Força ícones menores */
+    }
+
+    nav .nav-icons img, 
+    nav .nav-icons svg {
+        width: 18px !important;
+        height: 18px !important;
+    }
+    
     /* Locate inside... #main-container */
     #main-container {
         display: block; 
