@@ -178,46 +178,34 @@ nav .nav-icons {
     
     /* Ajuste da Nav no Mobile */
 nav {
-        padding: 0 8px;
-        height: var(--nav-height);
+        padding: 10px 8px !important; /* Reduz padding lateral da barra */
     }
 
-    nav div:first-child { 
-        font-size: 11px !important; /* Tamanho pequeno mas legível */
-        max-width: 45%; 
+    nav div:first-child {
+        font-size: 11px !important; /* "PLATAFORMA GEM..." menor */
+        max-width: 35%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
-    nav .nav-icons {
-        gap: 4px; /* Espaço mínimo funcional */
+    nav div:last-child {
+        gap: 5px !important; /* Diminui o espaço entre os botões */
     }
 
-    /* Reduzindo o tamanho dos botões de navegação */
-    nav .nav-icons a, 
-    nav .nav-icons button {
-        min-width: 32px;
-        min-height: 32px;
-        padding: 4px;
-        font-size: 10px !important; /* Letras dentro dos ícones (se houver) */
-        display: flex;
-        flex-direction: column; /* Empilha ícone e texto se existirem */
-        align-items: center;
+    /* Diminui as letras dos botões e spans */
+    nav span, 
+    nav button {
+        font-size: 10px !important; /* Letras menores nos labels */
+        padding: 4px 5px !important; /* Menos espaço interno */
+        letter-spacing: -0.5px; /* Aperta as letras levemente */
     }
 
-    /* Reduz especificamente os ícones e fontes de símbolos */
-    nav .nav-icons i,
-    nav .nav-icons span.icon-text,
-    nav .nav-icons .material-icons {
-        font-size: 16px !important; 
+    /* Esconde o emoji se o espaço for muito crítico */
+    .mobile-hide-emoji {
+        display: none;
     }
-
-    /* Reduz imagens de ícones (como o da colcheia) */
-    nav .nav-icons img {
-        width: 18px !important;
-        height: 18px !important;
-    }
+}
     
     /* Locate inside... #main-container */
     #main-container {
