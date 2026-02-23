@@ -15,19 +15,18 @@ Object.assign(BIBLIOTECA_LIVRO, {
             
             <h3 style="color: var(--primary); border-bottom: 1px solid #ddd; padding-bottom: 5px;">1. Violino</h3>
             
+  <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
+                <div style="text-align: center;">
+                   <img src="assets/img/vio1.jpg" alt="Técnica Mão Direita 1" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
+                    <p style="font-size: 11px; color: #666;">Figura 1: Posição do Arco</p>
+                </div>
+              
+            </div>
+
+            
             <h4>A. Técnicas da Mão Direita</h4>
             <p>Na mão direita é onde está disposto o uso do arco do violino. É ele o responsável pela produção do som e onde reside a musicalidade e expressão.</p>
             
-            <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
-                <div style="text-align: center;">
-                    <img src="caminho/para/imagem_mao1.jpg" alt="Técnica Mão Direita 1" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
-                    <p style="font-size: 11px; color: #666;">Figura 1: Posição do Arco</p>
-                </div>
-                <div style="text-align: center;">
-                    <img src="caminho/para/imagem_mao2.jpg" alt="Técnica Mão Direita 2" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
-                    <p style="font-size: 11px; color: #666;">Figura 2: Flexibilidade</p>
-                </div>
-            </div>
 
             <p><strong>Flexibilidade:</strong> Os dedos jamais estarão rígidos. O pulso e os dedos devem estar flexíveis e relaxados para que o som seja de alta qualidade. Sinta o arco como uma extensão do seu braço.</p>
 
@@ -71,6 +70,14 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     <td style="border: 1px solid #ddd; padding: 8px;">Base de apoio (formato de círculo) entre talão e madeira.</td>
                 </tr>
             </table>
+
+               <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
+             
+                <div style="text-align: center;">
+                   <img src="assets/img/vio2.jpg" alt="Técnica Mão Direita 2" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
+                    <p style="font-size: 11px; color: #666;">Figura 2: Flexibilidade</p>
+                </div>
+            </div>
 
             <h3 style="color: var(--primary); border-bottom: 1px solid #ddd; padding-bottom: 5px; margin-top: 25px;">2. Viola</h3>
             <p>Conteúdo em desenvolvimento para instrumentistas de Viola.</p>
