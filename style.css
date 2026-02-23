@@ -178,12 +178,12 @@ nav .nav-icons {
     
     /* Ajuste da Nav no Mobile */
 nav {
-        padding: 0 8px; /* Redução leve de padding lateral */
+        padding: 0 6px; /* Redução leve de padding lateral */
     }
 
     nav div:first-child { 
-        font-size: 6px; /* Redução adicional para garantir espaço */
-        max-width: 30%;
+        font-size: 4px; /* Redução adicional para garantir espaço */
+        max-width: 10%;
     }
 
     nav .nav-icons {
@@ -193,15 +193,15 @@ nav {
     /* Reduzindo o tamanho visual dos botões/ícones */
     nav .nav-icons a, 
     nav .nav-icons button {
-        min-width: 36px;  /* Área de toque ligeiramente menor mas funcional */
-        min-height: 36px; 
+        min-width: 30px;  /* Área de toque ligeiramente menor mas funcional */
+        min-height: 30px; 
         padding: 4px;
     }
 
     /* Reduz o tamanho da fonte (se usar ícones de fonte) ou imagens */
     nav .nav-icons i,
     nav .nav-icons span {
-        font-size: 10px !important; /* Força ícones menores */
+        font-size: 6px !important; /* Força ícones menores */
     }
 
     nav .nav-icons img, 
