@@ -178,36 +178,45 @@ nav .nav-icons {
     
     /* Ajuste da Nav no Mobile */
 nav {
-        padding: 0 6px; /* Redução leve de padding lateral */
+        padding: 0 8px;
+        height: var(--nav-height);
     }
 
     nav div:first-child { 
-        font-size: 4px; /* Redução adicional para garantir espaço */
-        max-width: 10%;
+        font-size: 11px !important; /* Tamanho pequeno mas legível */
+        max-width: 45%; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     nav .nav-icons {
-        gap: 2px; /* Espaçamento mínimo entre ícones */
+        gap: 4px; /* Espaço mínimo funcional */
     }
 
-    /* Reduzindo o tamanho visual dos botões/ícones */
+    /* Reduzindo o tamanho dos botões de navegação */
     nav .nav-icons a, 
     nav .nav-icons button {
-        min-width: 30px;  /* Área de toque ligeiramente menor mas funcional */
-        min-height: 30px; 
+        min-width: 32px;
+        min-height: 32px;
         padding: 4px;
+        font-size: 10px !important; /* Letras dentro dos ícones (se houver) */
+        display: flex;
+        flex-direction: column; /* Empilha ícone e texto se existirem */
+        align-items: center;
     }
 
-    /* Reduz o tamanho da fonte (se usar ícones de fonte) ou imagens */
+    /* Reduz especificamente os ícones e fontes de símbolos */
     nav .nav-icons i,
-    nav .nav-icons span {
-        font-size: 6px !important; /* Força ícones menores */
+    nav .nav-icons span.icon-text,
+    nav .nav-icons .material-icons {
+        font-size: 16px !important; 
     }
 
-    nav .nav-icons img, 
-    nav .nav-icons svg {
-        width: 10px !important;
-        height: 10px !important;
+    /* Reduz imagens de ícones (como o da colcheia) */
+    nav .nav-icons img {
+        width: 18px !important;
+        height: 18px !important;
     }
     
     /* Locate inside... #main-container */
