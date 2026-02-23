@@ -147,12 +147,53 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
 .highlight-blue { color: var(--primary); font-weight: bold; }
 .footer { border-top: 1px solid #ddd; margin-top: 30px; padding-top: 10px; display: flex; justify-content: space-between; font-size: 10px; color: #999; }
 
+/* --- FIX IS HERE: ESTRUTURA DA NAV (ADICIONE ISSO) --- */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    color: white;
+    z-index: 2000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav .nav-icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
 /* ============================================================
-   --- FIX IS HERE: MOBILE PORTRAIT ONLY ---
+   MOBILE PORTRAIT ENHANCEMENTS (Ajuste para Celular)
    ============================================================ */
-@media (max-width: 768px) and (orientation: portrait) {
+@media (max-width: 768px) {
     body { overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; }
     
+    /* Ajuste da Nav no Mobile */
+    nav {
+        padding: 0 10px;
+    }
+
+    nav div:first-child { 
+        font-size: 13px; /* Diminui o texto "Plataforma GEM" */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 60%;
+    }
+
+    nav .nav-icons {
+        gap: 10px; /* Aperta os ícones para caberem */
+    }
+
+    /* Locate inside... #main-container */
     #main-container {
         display: block; 
         height: calc(100vh - var(--nav-height));
@@ -184,15 +225,14 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
         border-right: none;
         border-top: 2px solid #ddd;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-        transform: translateX(0); /* Cancela o slide lateral no Portrait */
+        transform: translateX(0);
     }
 
-    /* Reseta larguras fixas no mobile portrait */
     .chat-header, .input-area { width: 100%; }
 
     .chat-sidebar.minimized {
         height: 50px !important;
-        transform: translateY(0); /* Retrai verticalmente no Portrait */
+        transform: translateY(0);
         overflow: hidden;
     }
 
@@ -202,12 +242,12 @@ h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
         flex-direction: row; 
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
+        padding: 0 15px;
         cursor: pointer; 
     }
 
     .toggle-chat-btn { display: inline-flex; margin-left: 10px; }
     .page { width: 95%; padding: 20px; }
     .instrument-grid { grid-template-columns: repeat(2, 1fr); }
-    nav div:first-child { font-size: 14px; }
 }
+/* --- END OF FIX --- */
