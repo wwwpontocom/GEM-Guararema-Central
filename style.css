@@ -182,7 +182,7 @@ nav {
     }
 
     nav div:first-child { 
-        font-size: 10px; /* Redução adicional para garantir espaço */
+        font-size: 6px; /* Redução adicional para garantir espaço */
         max-width: 50%;
     }
 
@@ -206,8 +206,8 @@ nav {
 
     nav .nav-icons img, 
     nav .nav-icons svg {
-        width: 15px !important;
-        height: 15px !important;
+        width: 10px !important;
+        height: 10px !important;
     }
     
     /* Locate inside... #main-container */
