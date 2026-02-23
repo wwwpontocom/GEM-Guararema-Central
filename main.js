@@ -384,11 +384,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
- // Atualiza o visual do botão antes de exibir
-    btnInstalar.innerHTML = `
-        <div style="font-size: 24px; margin-bottom: 5px;">♪</div>
-        <span style="font-size: 10px; font-weight: bold; display: block;">GEM GM Central</span>
-    `;
     // This line makes the button visible ONLY when installation is possible
     document.getElementById('btn-instalar').style.display = 'block'; 
 });
