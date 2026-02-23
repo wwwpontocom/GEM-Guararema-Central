@@ -183,7 +183,7 @@ nav {
 
     nav div:first-child { 
         font-size: 6px; /* Redução adicional para garantir espaço */
-        max-width: 50%;
+        max-width: 30%;
     }
 
     nav .nav-icons {
@@ -195,13 +195,13 @@ nav {
     nav .nav-icons button {
         min-width: 36px;  /* Área de toque ligeiramente menor mas funcional */
         min-height: 36px; 
-        padding: 6px;
+        padding: 4px;
     }
 
     /* Reduz o tamanho da fonte (se usar ícones de fonte) ou imagens */
     nav .nav-icons i,
     nav .nav-icons span {
-        font-size: 16px !important; /* Força ícones menores */
+        font-size: 10px !important; /* Força ícones menores */
     }
 
     nav .nav-icons img, 
