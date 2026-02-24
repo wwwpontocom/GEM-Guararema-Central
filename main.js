@@ -479,69 +479,68 @@ document.addEventListener('DOMContentLoaded', () => {
     escutarLogs();
 });
 
-function abrirPopup(texto, icone = '💡') {
+let currentSlide = 0;
+
+function abrirPopup(slidesArray, icone = '📚') {
     if (!document.getElementById('modal-animation-style')) {
         const style = document.createElement('style');
         style.id = 'modal-animation-style';
         style.innerHTML = `
-            @keyframes modalIn {
-                from { opacity: 0; transform: scale(0.95) translateY(10px); }
-                to { opacity: 1; transform: scale(1) translateY(0); }
-            }
-            .modal-overlay { backdrop-filter: blur(4px); transition: opacity 0.3s ease; }
-            .modal-page { 
-                font-family: 'Arial', sans-serif;
-                background: white; 
-                padding: 30px; 
-                border-radius: 8px; 
-                max-width: 90%; 
-                width: 500px; 
-                box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-                position: relative; 
-                animation: modalIn 0.3s ease-out;
-                border-top: 5px solid var(--primary); /* Estilo de destaque */
-            }
-            .modal-page .section-title-popup { 
-                background: #e3f2fd; 
-                border-bottom: 3px solid var(--primary); 
-                padding: 10px; 
-                display: flex; 
-                align-items: center; 
-                margin-bottom: 15px;
-                text-align: left;
-            }
+            .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:3000; backdrop-filter: blur(4px); }
+            .modal-page { background: white; border-radius: 12px; width: 500px; max-width: 90%; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-top: 5px solid var(--primary); }
+            .slider-container { display: flex; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; }
+            .slide { min-width: 100%; padding: 30px; box-sizing: border-box; font-family: Arial; }
+            .nav-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
+            .nav-btn:disabled { background: #ccc; cursor: not-allowed; }
+            .dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
+            .dot { width: 8px; height: 8px; border-radius: 50%; background: #ddd; }
+            .dot.active { background: var(--primary); }
         `;
         document.head.appendChild(style);
     }
 
+    currentSlide = 0;
     const overlay = document.createElement('div');
     overlay.className = "modal-overlay";
-    overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:3000;";
     
-    const modal = document.createElement('div');
-    modal.className = "modal-page";
-    
-    // O conteúdo agora usa as classes da sua biblioteca
-    modal.innerHTML = `
-        <div class="section-title-popup">
-            <span style="background:var(--primary); color:white; border-radius:4px; padding:4px 8px; margin-right:12px; font-weight:bold;">${icone}</span>
-            <h2 style="margin:0; font-size:16px; text-transform:uppercase; color:#333;">Informação Detalhada</h2>
-        </div>
-        <div style="text-align:left; font-size:14px; line-height:1.6; color:#444;">
-            ${texto}
-        </div>
-        <div style="margin-top:25px; border-top: 1px solid #ddd; padding-top:15px; text-align:right;">
-            <button onclick="fecharPopup(this)" style="padding:8px 20px; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; font-size:12px;">FECHAR</button>
+    overlay.innerHTML = `
+        <div class="modal-page">
+            <div class="slider-container" id="slider">
+                ${slidesArray.map(content => `<div class="slide">${content}</div>`).join('')}
+            </div>
+            
+            <div class="dots" id="dots">
+                ${slidesArray.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}
+            </div>
+
+            <div style="display:flex; justify-content: space-between; padding: 0 20px 20px;">
+                <button class="nav-btn" id="prevBtn" disabled onclick="mudarSlide(-1)">Anterior</button>
+                <button class="nav-btn" onclick="fecharPopup(this)" style="background:#888;">Fechar</button>
+                <button class="nav-btn" id="nextBtn" onclick="mudarSlide(1)">Próximo</button>
+            </div>
         </div>
     `;
-    
-    overlay.appendChild(modal);
+
     document.body.appendChild(overlay);
-    overlay.onclick = (e) => { if(e.target === overlay) fecharPopup(modal.querySelector('button')); };
+}
+
+function mudarSlide(direcao) {
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    
+    currentSlide = Math.max(0, Math.min(currentSlide + direcao, slides.length - 1));
+    
+    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+    
+    // Atualiza botões
+    document.getElementById('prevBtn').disabled = currentSlide === 0;
+    document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
+    
+    // Atualiza dots
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
 }
 
 function fecharPopup(btn) {
-    const overlay = btn.closest('.modal-overlay');
-    overlay.style.opacity = "0";
-    setTimeout(() => overlay.remove(), 300);
+    btn.closest('.modal-overlay').remove();
 }
