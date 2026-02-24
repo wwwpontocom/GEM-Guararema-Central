@@ -480,6 +480,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 let currentSlide = 0;
+let touchStartX = 0;
+let touchEndX = 0;
 
 function abrirPopup(slidesArray, icone = '📚') {
     if (!document.getElementById('modal-animation-style')) {
@@ -487,9 +489,9 @@ function abrirPopup(slidesArray, icone = '📚') {
         style.id = 'modal-animation-style';
         style.innerHTML = `
             .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:3000; backdrop-filter: blur(4px); }
-            .modal-page { background: white; border-radius: 12px; width: 500px; max-width: 90%; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-top: 5px solid var(--primary); }
+            .modal-page { background: white; border-radius: 12px; width: 500px; max-width: 90%; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-top: 5px solid var(--primary); touch-action: pan-y; }
             .slider-container { display: flex; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; }
-            .slide { min-width: 100%; padding: 30px; box-sizing: border-box; font-family: Arial; }
+            .slide { min-width: 100%; padding: 30px; box-sizing: border-box; font-family: Arial; user-select: none; }
             .nav-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
             .nav-btn:disabled { background: #ccc; cursor: not-allowed; }
             .dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
@@ -504,7 +506,7 @@ function abrirPopup(slidesArray, icone = '📚') {
     overlay.className = "modal-overlay";
     
     overlay.innerHTML = `
-        <div class="modal-page">
+        <div class="modal-page" id="modalPage">
             <div class="slider-container" id="slider">
                 ${slidesArray.map(content => `<div class="slide">${content}</div>`).join('')}
             </div>
@@ -522,22 +524,42 @@ function abrirPopup(slidesArray, icone = '📚') {
     `;
 
     document.body.appendChild(overlay);
+
+    // --- Lógica de Swipe ---
+    const modalPage = overlay.querySelector('#modalPage');
+    
+    modalPage.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+
+    modalPage.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, {passive: true});
+
+    function handleSwipe() {
+        const threshold = 50; // Mínimo de pixels para considerar swipe
+        if (touchStartX - touchEndX > threshold) {
+            mudarSlide(1); // Swipe para a esquerda -> Próximo
+        } else if (touchEndX - touchStartX > threshold) {
+            mudarSlide(-1); // Swipe para a direita -> Anterior
+        }
+    }
 }
 
 function mudarSlide(direcao) {
     const slider = document.getElementById('slider');
     const slides = document.querySelectorAll('.slide');
     const dots = document.querySelectorAll('.dot');
+    if(!slider || slides.length === 0) return;
     
     currentSlide = Math.max(0, Math.min(currentSlide + direcao, slides.length - 1));
     
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     
-    // Atualiza botões
     document.getElementById('prevBtn').disabled = currentSlide === 0;
     document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
     
-    // Atualiza dots
     dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
 }
 
