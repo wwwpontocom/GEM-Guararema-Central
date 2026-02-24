@@ -479,24 +479,42 @@ document.addEventListener('DOMContentLoaded', () => {
     escutarLogs();
 });
 
-function abrirPopup(texto) {
-    // Cria o fundo do popup
+function abrirPopup(texto, icone = '💡') { // Ícone padrão é a lâmpada
+    if (!document.getElementById('modal-animation-style')) {
+        const style = document.createElement('style');
+        style.id = 'modal-animation-style';
+        style.innerHTML = `
+            @keyframes modalIn {
+                from { opacity: 0; transform: scale(0.8) translateY(20px); }
+                to { opacity: 1; transform: scale(1) translateY(0); }
+            }
+            .modal-overlay { backdrop-filter: blur(2px); transition: opacity 0.3s ease; }
+        `;
+        document.head.appendChild(style);
+    }
+
     const overlay = document.createElement('div');
+    overlay.className = "modal-overlay";
     overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:3000;";
     
-    // Cria a caixa do popup
     const modal = document.createElement('div');
-    modal.style = "background:white; padding:20px; border-radius:8px; max-width:90%; width:400px; box-shadow:0 4px 15px rgba(0,0,0,0.2); text-align:center; position:relative;";
+    modal.style = "background:white; padding:25px; border-radius:12px; max-width:90%; width:400px; box-shadow:0 10px 25px rgba(0,0,0,0.3); text-align:center; position:relative; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);";
     
+    // O ícone agora é dinâmico via variável 'icone'
     modal.innerHTML = `
-        <h3 style="margin-top:0; color:var(--primary);">Informação</h3>
-        <p style="font-size:14px; line-height:1.5; color:#444;">${texto}</p>
-        <button onclick="this.parentElement.parentElement.remove()" style="margin-top:15px; padding:8px 20px; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer;">Fechar</button>
+        <div style="font-size: 40px; margin-bottom: 10px;">${icone}</div>
+        <h3 style="margin: 0 0 15px 0; color: #4a90e2; font-family: sans-serif; text-transform: uppercase; letter-spacing: 1px;">Atenção</h3>
+        <p style="font-size:15px; line-height:1.6; color:#444; margin-bottom: 20px; font-family: sans-serif;">${texto}</p>
+        <button onclick="fecharPopup(this)" style="padding:10px 25px; background:#4a90e2; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; transition: background 0.2s;">Entendido</button>
     `;
     
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    overlay.onclick = (e) => { if(e.target === overlay) fecharPopup(modal.querySelector('button')); };
+}
 
-    // Fecha ao clicar fora da caixa
-    overlay.onclick = (e) => { if(e.target === overlay) overlay.remove(); };
+function fecharPopup(btn) {
+    const overlay = btn.closest('.modal-overlay');
+    overlay.style.opacity = "0";
+    setTimeout(() => overlay.remove(), 300);
 }
