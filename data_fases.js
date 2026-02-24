@@ -32,30 +32,10 @@ let BIBLIOTECA_LIVRO = {
                     <div><div class="col-title">Madeiras</div><div class="instrument-item">Flauta, Oboé, Clarinete</div></div>
                     <div><div class="col-title">Metais</div><div class="instrument-item">Trompete, Trompa, Tuba</div></div>
                 </div>
-                <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #eee;">
-                    <iframe 
-                        src="https://docs.google.com/presentation/d/1OEK2OcxxxuFPURd_wrax--EWF_3ZPTc527MrrkI50QM/embed?start=false&loop=false&delayms=3000"  
-                        frameborder="0" 
-                        width="100%" 
-                        height="100%" 
-                        style="position: absolute; top: 0; left: 0;"
-                        allowfullscreen="true">
-                    </iframe>
-                </div> 
-                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px;">
-    <p style="margin:0 0 10px 0; font-weight:bold; color:#212529;">🔈 Exemplos Sonoros (Fase 1.2):</p>
-    <audio controls style="width:100%;">
-        <source src="https://drive.google.com/uc?export=download&id=1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-    <p style="font-size:11px; color:#6c757d; margin-top:8px;">
-        ⚠️ Se o áudio não tocar, <a href="https://drive.google.com/file/d/1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6/view" target="_blank" style="color:#4a90e2;">clique aqui para abrir o som direto no Drive</a>.
-    </p>
-</div> 
-        <source src="https://docs.google.com/uc?export=download&id=1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6" type="audio/mpeg">
-        Seu navegador não suporta o áudio.
-    </audio>
-</div>
+               
+<button onclick="abrirPopup('Música é a arte de expressar sentimentos por sons coordenados. O som é a propagação de ondas no ar.')" style="background:none; border:none; color:var(--primary); cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Resumo]</button>
+<button onclick="abrirPopup('Aqui você encontrará detalhes técnicos sobre a produção sonora e a classificação dos instrumentos na orquestra.')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer;">💡 Saiba Mais</button>
+
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
             `,
             pagina: "9"
