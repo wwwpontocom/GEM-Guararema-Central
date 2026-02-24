@@ -560,12 +560,3 @@ function mudarSlide(direcao) {
 function fecharPopup(btn) {
     btn.closest('.modal-overlay').remove();
 }
-
-function tocarSom(nomeArquivo) {
-    const caminho = `assets/audio/${nomeArquivo}`;
-    const audio = new Audio(caminho);
-    audio.play().catch(error => {
-        console.error("Erro ao tocar áudio:", caminho, error);
-        alert("Não foi possível carregar o áudio. Verifique o caminho no GitHub.");
-    });
-}
