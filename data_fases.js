@@ -49,8 +49,7 @@ let BIBLIOTECA_LIVRO = {
     '<b>DEEP LEARNING: EXEMPLOS</b><br><br>Clique nos ícones para ouvir o som de cada instrumento:<br><br><div style=&quot;display:flex; justify-content:space-around; align-items:flex-end; gap:10px; margin-top:20px;&quot;><div style=&quot;text-align:center; cursor:pointer;&quot; onclick=&quot;new Audio(&quot;assets/audio/cello_exemplo1.wav&quot;).play()&quot;><span style=&quot;font-size:24px;&quot;>🔊</span><br><img src=&quot;https://i.ibb.co/LhqZzS6/cello.png&quot; style=&quot;width:50px; display:block; margin:10px auto;&quot;><b>Violoncelo</b></div><div style=&quot;text-align:center; cursor:pointer;&quot; onclick=&quot;new Audio(&quot;assets/audio/violin_exemplo1.wav&quot;).play()&quot;><span style=&quot;font-size:24px;&quot;>🔊</span><br><img src=&quot;https://i.ibb.co/m0fS6f6/violin.png&quot; style=&quot;width:40px; display:block; margin:10px auto;&quot;><b>Violino</b></div><div style=&quot;text-align:center; cursor:pointer;&quot; onclick=&quot;new Audio(&quot;assets/audio/trompa_exemplo1.wav&quot;).play()&quot;><span style=&quot;font-size:24px;&quot;>🔊</span><br><img src=&quot;https://i.ibb.co/vxsL0tV/horn.png&quot; style=&quot;width:55px; display:block; margin:10px auto;&quot;><b>Trompa</b><div 
     onclick="new Audio('assets/audio/cello_exemplo1.mp3').play().then(() => console.log('Audio playing!')).catch(e => alert('Audio Error: Check console or path.'))" 
     style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin: 5px;">
-    Test Cello Audio 🔊
-</div></div></div>'
+    Test Cello Audio 🔊</div></div></div>'
 ], '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
     💡 Saiba Mais
 </button>
