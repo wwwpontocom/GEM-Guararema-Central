@@ -34,12 +34,15 @@ let BIBLIOTECA_LIVRO = {
                 </div>
                
 <button onclick="abrirPopup('Música é a arte de expressar sentimentos por sons coordenados. O som é a propagação de ondas no ar.', '📝')" style="background:none; border:none; color:var(--primary); cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Resumo]</button>
+
 <button onclick="abrirPopup([
-    '<h3>📚 Definições Acadêmicas</h3><br><i>&quot;A música é a arte de pensar com os sons.&quot;</i> - J. Combarieu<br><br><i>&quot;Organiza os sons no tempo.&quot;</i> - Mário de Andrade',
-    '<h3>🎻 Visão Técnica</h3><br><i>&quot;Música é a arte de expressar os diversos afetos da nossa alma mediante aos sons.&quot;</i> - Rafael C. Machado',
-    '<h3>🙌 Contexto Sacro</h3><br><p class=&quot;highlight-blue&quot;>Destinada a louvores e súplicas a Deus.</p><br>Expressamos alegria, adoração e louvor.'
-], '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; font-weight: bold;">
-    💡 Saiba Mais (Slides)
+    '<b>O QUE É MÚSICA?</b><br><br>Existem diversas definições que variam entre autores, mas a conclusão é a mesma:<br><br><i>&quot;A música é a arte de pensar com os sons, um pensamento sem conceitos.&quot;</i><br>(Jules Combarieu)<br><br><i>&quot;Música é a manifestação humana que organiza os sons e ruídos no tempo.&quot;</i><br>(Mário de Andrade)',
+    
+    '<b>VISÃO TÉCNICA E ESTÉTICA</b><br><br><i>&quot;Música é a arte de coordenar fenômenos acústicos para produzir efeitos estéticos.&quot;</i><br>(Enciclopédia Britânica - Barsa)<br><br><i>&quot;Música é a arte de expressar os diversos afetos da nossa alma mediante aos sons.&quot;</i><br>(Rafael Coelho Machado)',
+    
+    '<b>CONTEXTO DE MÚSICA SACRA</b><br><br>Em nosso contexto destinado a louvores e súplicas a Deus, definimos que:<br><br><span class=&quot;highlight-blue&quot; style=&quot;color:#4a90e2; font-weight:bold;&quot;>&quot;Música é a arte de expressar sentimentos por meio de Sons coordenados, produzidos por voz ou instrumento musical.&quot;</span><br><br>Expressamos: alegria, tristeza, euforia, respeito, comunhão, adoração e louvor.'
+], '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
+    💡 Saiba Mais
 </button>
 
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
