@@ -38,7 +38,7 @@ function inicializarPainelInterativo() {
                 </div>
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
-                        •Assunto do Ensaio do GEM- 20/02/2026
+                        •Assunto do Ensaio do GEM- 20/02/2026  <br>
 Atonalismo (Hino 210)  <br>
 Você já tentou cantar ou tocar a Escala de Dó Maior e parar, encerrar a escala na nota Si (sétima nota, sensível)?  <br>
 Se já fez deve ter percebido, ou se fizer provávelmente perceberá que isso causa uma sensação estranha.  <br>
