@@ -16,12 +16,6 @@
 
 <nav style="width: 100%; background: #2c3e50; color: white; display: flex; align-items: center; padding: 10px 20px; box-sizing: border-box; position: fixed; top: 0; z-index: 1000; justify-content: space-between;">
     <div style="font-weight: bold; font-size: 18px;">PLATAFORMA GEM GM CENTRAL</div>
-
-    <button 
-    onclick="new Audio('assets/audio/cello_exemplo1.mp3').play().then(() => console.log('Audio playing!')).catch(e => alert('Audio Error: Check console or path.'))" 
-    style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin: 5px;">
-    Test Cello Audio 🔊
-</button>
     <div style="display: flex; gap: 20px; align-items: center;"> 
         <span onclick="switchTab('assistente')" id="nav-assistente" style="cursor:pointer; padding: 5px 10px; border-bottom: 2px solid #4a90e2;">Assistente</span>
         <span onclick="switchTab('alou')" id="nav-alou" style="cursor:pointer; padding: 5px 10px; opacity: 0.7;"><span class="mobile-hide-emoji">💬</span> ALOU!GEM</span>
