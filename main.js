@@ -479,16 +479,37 @@ document.addEventListener('DOMContentLoaded', () => {
     escutarLogs();
 });
 
-function abrirPopup(texto, icone = '💡') { // Ícone padrão é a lâmpada
+function abrirPopup(texto, icone = '💡') {
     if (!document.getElementById('modal-animation-style')) {
         const style = document.createElement('style');
         style.id = 'modal-animation-style';
         style.innerHTML = `
             @keyframes modalIn {
-                from { opacity: 0; transform: scale(0.8) translateY(20px); }
+                from { opacity: 0; transform: scale(0.95) translateY(10px); }
                 to { opacity: 1; transform: scale(1) translateY(0); }
             }
-            .modal-overlay { backdrop-filter: blur(2px); transition: opacity 0.3s ease; }
+            .modal-overlay { backdrop-filter: blur(4px); transition: opacity 0.3s ease; }
+            .modal-page { 
+                font-family: 'Arial', sans-serif;
+                background: white; 
+                padding: 30px; 
+                border-radius: 8px; 
+                max-width: 90%; 
+                width: 500px; 
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+                position: relative; 
+                animation: modalIn 0.3s ease-out;
+                border-top: 5px solid var(--primary); /* Estilo de destaque */
+            }
+            .modal-page .section-title-popup { 
+                background: #e3f2fd; 
+                border-bottom: 3px solid var(--primary); 
+                padding: 10px; 
+                display: flex; 
+                align-items: center; 
+                margin-bottom: 15px;
+                text-align: left;
+            }
         `;
         document.head.appendChild(style);
     }
@@ -498,14 +519,20 @@ function abrirPopup(texto, icone = '💡') { // Ícone padrão é a lâmpada
     overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:3000;";
     
     const modal = document.createElement('div');
-    modal.style = "background:white; padding:25px; border-radius:12px; max-width:90%; width:400px; box-shadow:0 10px 25px rgba(0,0,0,0.3); text-align:center; position:relative; animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);";
+    modal.className = "modal-page";
     
-    // O ícone agora é dinâmico via variável 'icone'
+    // O conteúdo agora usa as classes da sua biblioteca
     modal.innerHTML = `
-        <div style="font-size: 40px; margin-bottom: 10px;">${icone}</div>
-        <h3 style="margin: 0 0 15px 0; color: #4a90e2; font-family: sans-serif; text-transform: uppercase; letter-spacing: 1px;">Atenção</h3>
-        <p style="font-size:15px; line-height:1.6; color:#444; margin-bottom: 20px; font-family: sans-serif;">${texto}</p>
-        <button onclick="fecharPopup(this)" style="padding:10px 25px; background:#4a90e2; color:white; border:none; border-radius:6px; cursor:pointer; font-weight:bold; transition: background 0.2s;">Entendido</button>
+        <div class="section-title-popup">
+            <span style="background:var(--primary); color:white; border-radius:4px; padding:4px 8px; margin-right:12px; font-weight:bold;">${icone}</span>
+            <h2 style="margin:0; font-size:16px; text-transform:uppercase; color:#333;">Informação Detalhada</h2>
+        </div>
+        <div style="text-align:left; font-size:14px; line-height:1.6; color:#444;">
+            ${texto}
+        </div>
+        <div style="margin-top:25px; border-top: 1px solid #ddd; padding-top:15px; text-align:right;">
+            <button onclick="fecharPopup(this)" style="padding:8px 20px; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer; font-weight:bold; font-size:12px;">FECHAR</button>
+        </div>
     `;
     
     overlay.appendChild(modal);
