@@ -483,7 +483,10 @@ let currentSlide = 0;
 let touchStartX = 0;
 let touchEndX = 0;
 
-function abrirPopup(slidesArray, icone = '📚') {
+function abrirPopup(input, icone = '📚') {
+    // CORREÇÃO: Transforma string simples em Array para o .map não quebrar
+    const slidesArray = Array.isArray(input) ? input : [input];
+
     if (!document.getElementById('modal-animation-style')) {
         const style = document.createElement('style');
         style.id = 'modal-animation-style';
@@ -491,7 +494,7 @@ function abrirPopup(slidesArray, icone = '📚') {
             .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; justify-content:center; align-items:center; z-index:3000; backdrop-filter: blur(4px); }
             .modal-page { background: white; border-radius: 12px; width: 500px; max-width: 90%; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; border-top: 5px solid var(--primary); touch-action: pan-y; }
             .slider-container { display: flex; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); width: 100%; }
-            .slide { min-width: 100%; padding: 30px; box-sizing: border-box; font-family: Arial; user-select: none; }
+            .slide { min-width: 100%; padding: 30px; box-sizing: border-box; font-family: Arial; user-select: none; max-height: 70vh; overflow-y: auto; }
             .nav-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
             .nav-btn:disabled { background: #ccc; cursor: not-allowed; }
             .dots { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; }
@@ -505,45 +508,38 @@ function abrirPopup(slidesArray, icone = '📚') {
     const overlay = document.createElement('div');
     overlay.className = "modal-overlay";
     
+    // Esconde navegação se houver apenas 1 slide
+    const showNav = slidesArray.length > 1 ? 'flex' : 'none';
+
     overlay.innerHTML = `
         <div class="modal-page" id="modalPage">
             <div class="slider-container" id="slider">
                 ${slidesArray.map(content => `<div class="slide">${content}</div>`).join('')}
             </div>
             
-            <div class="dots" id="dots">
+            <div class="dots" id="dots" style="display: ${showNav}">
                 ${slidesArray.map((_, i) => `<div class="dot ${i===0?'active':''}"></div>`).join('')}
             </div>
 
             <div style="display:flex; justify-content: space-between; padding: 0 20px 20px;">
-                <button class="nav-btn" id="prevBtn" disabled onclick="mudarSlide(-1)">Anterior</button>
+                <button class="nav-btn" id="prevBtn" style="display: ${showNav}" disabled onclick="mudarSlide(-1)">Anterior</button>
                 <button class="nav-btn" onclick="fecharPopup(this)" style="background:#888;">Fechar</button>
-                <button class="nav-btn" id="nextBtn" onclick="mudarSlide(1)">Próximo</button>
+                <button class="nav-btn" id="nextBtn" style="display: ${showNav}" onclick="mudarSlide(1)">Próximo</button>
             </div>
         </div>
     `;
 
     document.body.appendChild(overlay);
 
-    // --- Lógica de Swipe ---
     const modalPage = overlay.querySelector('#modalPage');
-    
-    modalPage.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-
-    modalPage.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, {passive: true});
+    modalPage.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+    modalPage.addEventListener('touchend', e => { touchEndX = e.changedTouches[0].screenX; handleSwipe(); }, {passive: true});
 
     function handleSwipe() {
-        const threshold = 50; // Mínimo de pixels para considerar swipe
-        if (touchStartX - touchEndX > threshold) {
-            mudarSlide(1); // Swipe para a esquerda -> Próximo
-        } else if (touchEndX - touchStartX > threshold) {
-            mudarSlide(-1); // Swipe para a direita -> Anterior
-        }
+        if (slidesArray.length <= 1) return;
+        const threshold = 50;
+        if (touchStartX - touchEndX > threshold) mudarSlide(1);
+        else if (touchEndX - touchStartX > threshold) mudarSlide(-1);
     }
 }
 
@@ -554,12 +550,10 @@ function mudarSlide(direcao) {
     if(!slider || slides.length === 0) return;
     
     currentSlide = Math.max(0, Math.min(currentSlide + direcao, slides.length - 1));
-    
     slider.style.transform = `translateX(-${currentSlide * 100}%)`;
     
     document.getElementById('prevBtn').disabled = currentSlide === 0;
     document.getElementById('nextBtn').disabled = currentSlide === slides.length - 1;
-    
     dots.forEach((dot, i) => dot.classList.toggle('active', i === currentSlide));
 }
 
