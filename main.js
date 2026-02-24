@@ -478,3 +478,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. Start listening to logs
     escutarLogs();
 });
+
+function abrirPopup(texto) {
+    // Cria o fundo do popup
+    const overlay = document.createElement('div');
+    overlay.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); display:flex; justify-content:center; align-items:center; z-index:3000;";
+    
+    // Cria a caixa do popup
+    const modal = document.createElement('div');
+    modal.style = "background:white; padding:20px; border-radius:8px; max-width:90%; width:400px; box-shadow:0 4px 15px rgba(0,0,0,0.2); text-align:center; position:relative;";
+    
+    modal.innerHTML = `
+        <h3 style="margin-top:0; color:var(--primary);">Informação</h3>
+        <p style="font-size:14px; line-height:1.5; color:#444;">${texto}</p>
+        <button onclick="this.parentElement.parentElement.remove()" style="margin-top:15px; padding:8px 20px; background:var(--primary); color:white; border:none; border-radius:4px; cursor:pointer;">Fechar</button>
+    `;
+    
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Fecha ao clicar fora da caixa
+    overlay.onclick = (e) => { if(e.target === overlay) overlay.remove(); };
+}
