@@ -33,9 +33,9 @@ let BIBLIOTECA_LIVRO = {
                     <div><div class="col-title">Metais</div><div class="instrument-item">Trompete, Trompa, Tuba</div></div>
                 </div>
                
-<button onclick="abrirPopup('Música é a arte de expressar sentimentos por sons coordenados. O som é a propagação de ondas no ar.')" style="background:none; border:none; color:var(--primary); cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Resumo]</button>
-<button onclick="abrirPopup('Aqui você encontrará detalhes técnicos sobre a produção sonora e a classificação dos instrumentos na orquestra.')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer;">💡 Saiba Mais</button>
+<button onclick="abrirPopup('Música é a arte de expressar sentimentos por sons coordenados. O som é a propagação de ondas no ar.', '📝')" style="background:none; border:none; color:var(--primary); cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Resumo]</button>
 
+<button onclick="abrirPopup('<b>O QUE É MÚSICA?</b><br><br><i>&quot;A música é a arte de pensar com os sons, um pensamento sem conceitos.&quot;</i> (Jules Combarieu)<br><br><i>&quot;Música é a manifestação humana que organiza os sons e ruídos no tempo.&quot;</i> (Mário de Andrade)<br><br><i>&quot;Música é a arte de coordenar fenômenos acústicos para produzir efeitos estéticos.&quot;</i> (Enciclopédia Britânica - Barsa)', '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px;">💡 Saiba Mais</button>
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
             `,
             pagina: "9"
