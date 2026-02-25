@@ -1,10 +1,10 @@
-// --- FIX IS HERE: INICIALIZAÇÃO DA BIBLIOTECA "FIQUE INTEIRADO" ---
+// --- FIX IS HERE: UNIFIED DASHBOARD FUNCTION ---
 
 /**
- * Inicializa o Quadro de Avisos Interativo como uma interface puramente informativa.
- * IDs de grupos e funções de salvamento foram totalmente removidos.
+ * Renderiza o Quadro de Avisos "Fique Inteirado"
+ * Esta função é chamada tanto no carregamento inicial quanto pelo botão "Início"
  */
-function inicializarPainelInterativo() {
+function exibirPainel() {
     const renderArea = document.getElementById('render-area');
     if (!renderArea) return;
 
@@ -39,12 +39,11 @@ function inicializarPainelInterativo() {
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         •Assunto do Ensaio do GEM- 20/02/2026  <br>
-Atonalismo (Hino 210)  <br>
-Você já tentou cantar ou tocar a Escala de Dó Maior e parar, encerrar a escala na nota Si (sétima nota, sensível)?  <br>
-Se já fez deve ter percebido, ou se fizer provávelmente perceberá que isso causa uma sensação estranha.  <br>
-Desenvolvida no início do século XX, a Música Atonal tem uma harmonia marcada por sons dissonantes, que causan essa sensação estranha que falamos.
-Apesar de Carl Maria Friedrich Ernest von Weber, o compositor da partitura do Hino 210, ser de um período chamado de Romantismo que é anterior à Música Atonal, séc XX, ele utilizou do cromatismo e dissonâncias para criar tensão dramática
-
+                        Atonalismo (Hino 210)  <br>
+                        Você já tentou cantar ou tocar a Escala de Dó Maior e parar, encerrar a escala na nota Si (sétima nota, sensível)?  <br>
+                        Se já fez deve ter percebido, ou se fizer provavelmente perceberá que isso causa uma sensação estranha.  <br>
+                        Desenvolvida no início do século XX, a Música Atonal tem uma harmonia marcada por sons dissonantes, que causam essa sensação estranha que falamos.<br>
+                        Apesar de Carl Maria Friedrich Ernest von Weber ser do período Romântico, ele utilizou cromatismo e dissonâncias para criar tensão dramática.
                     </div>
                 </div>
             </div>
@@ -73,18 +72,7 @@ Apesar de Carl Maria Friedrich Ernest von Weber, o compositor da partitura do Hi
     renderArea.innerHTML = dashboardHTML;
 }
 
-// Inicia o painel assim que o script for carregado ou a janela estiver pronta
-window.addEventListener('load', inicializarPainelInterativo);
-
-function exibirPainel() {
-    const renderArea = document.getElementById('render-area');
-    renderArea.innerHTML = `
-        <h2>Bem-vindo ao Painel Central</h2>
-        <div class="grid-botoes">...</div>
-    `;
-}
-
-// Chame uma vez ao carregar o script pela primeira vez
-exibirPainel();
+// Inicializa o painel no carregamento da página
+window.addEventListener('load', exibirPainel);
 
 // --- END OF FIX ---
