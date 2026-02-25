@@ -76,4 +76,15 @@ Apesar de Carl Maria Friedrich Ernest von Weber, o compositor da partitura do Hi
 // Inicia o painel assim que o script for carregado ou a janela estiver pronta
 window.addEventListener('load', inicializarPainelInterativo);
 
+function exibirPainel() {
+    const renderArea = document.getElementById('render-area');
+    renderArea.innerHTML = `
+        <h2>Bem-vindo ao Painel Central</h2>
+        <div class="grid-botoes">...</div>
+    `;
+}
+
+// Chame uma vez ao carregar o script pela primeira vez
+exibirPainel();
+
 // --- END OF FIX ---
