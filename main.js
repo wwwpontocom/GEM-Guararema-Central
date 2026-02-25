@@ -132,51 +132,49 @@ document.getElementById('alou-content').style.display = 'flex';
     }
     
 function switchTab(tab) {
-    // Referências dos Containers
-    const tabs = {
-        assistente: document.getElementById('tab-assistente'),
-        alou: document.getElementById('tab-alou'),
-        agenda: document.getElementById('tab-agenda')
-    };
+    // 1. Mapeamento de todas as abas do sistema
+    const allTabs = [
+        'assistente', 'alou', 'agenda', 'cronograma', 
+        'turmas', 'moo', 'instrumentos', 'exercicios', 'programa'
+    ];
     
-    // Referências da Nav (IDs antigos e novos)
-    const navs = {
-        assistente: document.getElementById('nav-assistente'),
-        alou: document.getElementById('nav-alou'),
-        agenda: document.getElementById('nav-agenda')
-    };
-
-    // 1. Reset Geral: Esconde conteúdos e limpa estilos da Nav
-    Object.keys(tabs).forEach(key => {
-        if (tabs[key]) tabs[key].style.display = 'none';
-        if (navs[key]) {
-            navs[key].style.opacity = '0.7';
-            navs[key].style.borderBottom = 'none';
+    // 2. Reset Geral: Esconde todas e limpa estilos
+    allTabs.forEach(id => {
+        const contentEl = document.getElementById('tab-' + id);
+        const navEl = document.getElementById('nav-' + id);
+        
+        if (contentEl) contentEl.style.display = 'none';
+        if (navEl) {
+            navEl.style.opacity = '0.7';
+            navEl.style.borderBottom = 'none';
         }
     });
 
-    // 2. Ativa a aba selecionada
-    const currentTab = tabs[tab];
-    const currentNav = navs[tab];
+    // 3. Ativa a aba solicitada
+    const activeContent = document.getElementById('tab-' + tab);
+    const activeNav = document.getElementById('nav-' + tab);
 
-    if (currentTab) {
-        // Ajuste de Display conforme o tipo de conteúdo
+    if (activeContent) {
+        // Lógica de exibição específica
         if (tab === 'alou' || tab === 'assistente') {
-            currentTab.style.display = 'flex';
+            activeContent.style.display = 'flex';
         } else {
-            currentTab.style.display = 'block';
+            activeContent.style.display = 'block';
         }
 
-        // Se for a agenda, carrega o conteúdo dinâmico
+        // --- GATILHO DA AGENDA ---
         if (tab === 'agenda') {
-            renderizarAgenda();
+            console.log("Iniciando renderização da Agenda...");
+            if (typeof renderizarAgenda === "function") {
+                renderizarAgenda();
+            }
         }
     }
 
-    // 3. Aplica destaque visual na Nav se o elemento existir
-    if (currentNav) {
-        currentNav.style.opacity = '1';
-        currentNav.style.borderBottom = '2px solid #4a90e2';
+    // 4. Destaque visual na Nav (se existir)
+    if (activeNav) {
+        activeNav.style.opacity = '1';
+        activeNav.style.borderBottom = '2px solid #4a90e2';
     }
 }
 
