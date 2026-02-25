@@ -14,20 +14,44 @@
 </head>
 <body>
 
-<nav style="width: 100%; background: #2c3e50; color: white; display: flex; align-items: center; padding: 10px 20px; box-sizing: border-box; position: fixed; top: 0; z-index: 1000; justify-content: space-between;">
-    <div style="font-weight: bold; font-size: 18px;">PLATAFORMA GEM GM CENTRAL</div>
-    <div style="display: flex; gap: 20px; align-items: center;"> 
-        <span onclick="switchTab('assistente')" id="nav-assistente" style="cursor:pointer; padding: 5px 10px; border-bottom: 2px solid #4a90e2;">Assistente</span>
-        <span onclick="switchTab('alou')" id="nav-alou" style="cursor:pointer; padding: 5px 10px; opacity: 0.7;"><span class="mobile-hide-emoji">💬</span> ALOU!GEM</span>
-        <span onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScXgPs-BgHaXBuPf9Jzl54oxSCiSw7YU3GhC9D9dbwNiztXWA/viewform?usp=publish-editor', '_blank')" style="cursor:pointer; padding: 5px 10px; opacity: 0.7; color: #ffeb3b;"><span class="mobile-hide-emoji">📝</span> CHAMADA</span>
-        <button id="btn-instalar" style="display: none; background: #27ae60; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px;">INSTALAR</button>
+<nav style="width: 100%; background: #2c3e50; color: white; display: flex; align-items: center; padding: 0 20px; box-sizing: border-box; position: fixed; top: 0; height: var(--nav-height); z-index: 2000; justify-content: space-between;">
+    
+    <div style="display: flex; align-items: center; gap: 15px;">
+        <div id="menu-toggle" onclick="toggleMenu()" style="cursor:pointer; font-size: 24px; padding: 5px;">☰</div>
+        <div style="font-weight: bold; font-size: 16px; letter-spacing: 0.5px;">PLATAFORMA GEM <span style="color: #4a90e2;">GM CENTRAL</span></div>
     </div>
-    <div class="nav-bar">
-    <div id="nav-assistente" onclick="switchTab('assistente')">Assistente</div>
-    <div id="nav-alou" onclick="switchTab('alou')">Alou!</div>
-    <div id="nav-agenda" onclick="switchTab('agenda')" style="opacity: 0.7;">Agenda</div>
-</div>
+
+    <div style="display: flex; gap: 15px; align-items: center;">
+        <div id="active-tab-name" style="font-size: 10px; opacity: 0.7; text-transform: uppercase; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; display: none; /* Escondido no mobile via CSS se desejar */">Assistente</div>
+        
+        <span onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScXgPs-BgHaXBuPf9Jzl54oxSCiSw7YU3GhC9D9dbwNiztXWA/viewform?usp=publish-editor', '_blank')" 
+              style="cursor:pointer; font-size: 12px; font-weight: bold; color: #ffeb3b; display: flex; align-items: center; gap: 5px;">
+            <span class="mobile-hide-emoji">📝</span> CHAMADA
+        </span>
+
+        <button id="btn-instalar" style="display: none; background: #27ae60; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 11px;">INSTALAR</button>
+    </div>
 </nav>
+
+<div id="side-menu" class="side-menu">
+    <div class="menu-header">
+        <span>Menu Principal</span>
+        <button onclick="toggleMenu()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">×</button>
+    </div>
+    <div class="menu-items">
+        <div class="menu-item active" onclick="selectTab('assistente')">🤖 Assistente</div>
+        <div class="menu-item" onclick="selectTab('alou')">📢 ALOU!GEM</div>
+        <div class="menu-item" onclick="selectTab('agenda')">📅 Agenda</div>
+        <div class="menu-item" onclick="selectTab('cronograma')">⏳ Cronograma</div>
+        <div class="menu-item" onclick="selectTab('turmas')">👥 Turmas</div>
+        <div class="menu-item" onclick="selectTab('moo')">🎼 MOO</div>
+        <div class="menu-item" onclick="selectTab('instrumentos')">🎷 Instrumentos</div>
+        <div class="menu-item" onclick="selectTab('exercicios')">✏️ Exercícios</div>
+        <div class="menu-item" onclick="selectTab('programa')">📋 Programa Mínimo</div>
+    </div>
+</div>
+
+<div id="menu-overlay" onclick="toggleMenu()"></div>
 
 <div id="main-container" style="display: flex; width: 100%; height: calc(100vh - 48px); margin-top: 48px;">
     
