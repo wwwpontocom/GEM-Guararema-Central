@@ -702,22 +702,50 @@ function selectTab(tabId) {
         'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
         'programa': 'Programa Mínimo'
     };
-    document.getElementById('active-tab-name').innerText = labels[tabId];
+    
+    const activeLabel = labels[tabId] || 'GEM';
+    const activeTabNameEl = document.getElementById('active-tab-name');
+    if (activeTabNameEl) {
+        activeTabNameEl.innerText = activeLabel;
+    }
 
-    // 3. Destaca item ativo no menu
+    // 3. Lógica de Injeção de Conteúdo (Instrumentos e Turmas)
+    const renderArea = document.getElementById('render-area');
+    
+    if (tabId === 'instrumentos') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
+            renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
+        }
+    } 
+    else if (tabId === 'turmas') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
+            renderArea.innerHTML = `
+                <div class="fase-header">📍 CONTROLE DE TURMAS</div>
+                <div style="display: flex; flex-direction: column; gap: 30px; padding-top: 10px;">
+                    <section><h3>GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"] ? BIBLIOTECA_LIVRO["grupo_a"].html_content : ''}</section>
+                    <section><h3>GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"] ? BIBLIOTECA_LIVRO["grupo_b"].html_content : ''}</section>
+                    <section><h3>GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"] ? BIBLIOTECA_LIVRO["grupo_c"].html_content : ''}</section>
+                </div>`;
+            if (typeof carregarLogs === "function") carregarLogs();
+        }
+    } 
+    else {
+        // 4. Chama sua função de troca de aba padrão para abas comuns
+        if (typeof switchTab === "function") {
+            switchTab(tabId);
+        }
+    }
+
+    // 5. Destaca item ativo no menu
     document.querySelectorAll('.menu-item').forEach(item => {
         item.classList.remove('active');
-        if(item.innerText.toLowerCase().includes(labels[tabId].toLowerCase())) {
+        if(item.innerText.toLowerCase().includes(activeLabel.toLowerCase())) {
             item.classList.add('active');
         }
     });
-
-    // 4. Chama sua função de troca de aba existente
-    if (typeof switchTab === "function") {
-        switchTab(tabId);
-    }
 }
-
 function voltarAoInicio() {
     // 1. Resetar visualmente os containers (Garante que nada fique display: none)
     const tabAssistente = document.getElementById('tab-assistente');
