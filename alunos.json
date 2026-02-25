@@ -1,0 +1,8 @@
+[
+  { "nome": "Aran Silva", "instrumento": "Violino", "categoria": "teoria" },
+  { "nome": "Bruno Costa", "instrumento": "Violoncelo", "categoria": "teoria" },
+  { "nome": "Carla Dias", "instrumento": "Trompa", "categoria": "teoria" },
+  { "nome": "Daniel Oliveira", "instrumento": "Violino", "categoria": "outros" },
+  { "nome": "Eduarda Santos", "instrumento": "Flauta", "categoria": "outros" },
+  { "nome": "Fabio Lima", "instrumento": "Viola", "categoria": "outros" }
+]
