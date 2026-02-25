@@ -411,19 +411,22 @@ db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
     chatWin.scrollTop = chatWin.scrollHeight;
 });
 
+function carregarLogs() {
+    console.log("Sincronizando logs com Firebase...");
+    if (typeof escutarLogs === "function") {
+        escutarLogs();
+    }
+}
+
 function escutarLogs() {
     ['grupo_a', 'grupo_b', 'grupo_c'].forEach(grupo => {
         db.ref('onde_estamos/' + grupo).limitToLast(10).on('value', (snapshot) => {
             const dados = snapshot.val();
             let html = "";
             const sufixo = grupo.split('_')[1];
-            
-            // Importante: Como o HTML_CONTENT é injetado dinamicamente pelo renderPage,
-            // precisamos verificar se o container existe no DOM no momento
             const container = document.getElementById(`log-grupo-${sufixo}`);
             
             if (dados) {
-                // Inverter ordem para o mais recente aparecer no topo
                 const logs = Object.values(dados).reverse();
                 logs.forEach(item => {
                     const d = new Date(item.timestamp);
