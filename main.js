@@ -719,34 +719,29 @@ function selectTab(tabId) {
 }
 
 function voltarAoInicio() {
-    // 1. Força a abertura da aba assistente
+    // 1. Resetar visualmente os containers (Garante que nada fique display: none)
+    const tabAssistente = document.getElementById('tab-assistente');
+    const renderArea = document.getElementById('render-area');
+    
+    if (tabAssistente) tabAssistente.style.display = 'flex';
+    
+    // 2. Chama selectTab. 
+    // NOTA: selectTab já chama toggleMenu() internamente, então não chame toggleMenu aqui!
     if (typeof selectTab === "function") {
         selectTab('assistente');
     }
 
-    // 2. Limpa o conteúdo atual da área de renderização para evitar sobreposição
-    const renderArea = document.getElementById('render-area');
+    // 3. Reconstruir o conteúdo do Painel
     if (renderArea) {
-        renderArea.innerHTML = ""; // Limpa o que a busca escreveu (ex: Fase 1)
-    }
-
-    // 3. Tenta chamar a função que desenha o painel
-    if (typeof exibirPainel === "function") {
-        exibirPainel();
-        console.log("Dashboard reconstruído com sucesso.");
-    } else {
-        console.error("ERRO: A função 'exibirPainel' não foi encontrada no data_painel.js");
-        // Fallback: se não houver função, o app pode tentar recarregar o script ou injetar um aviso
-        if (renderArea) {
-            renderArea.innerHTML = "<p style='padding:20px;'>Erro ao carregar painel inicial. Verifique se o data_painel.js está correto.</p>";
-        }
-    }
-    
-    // 4. Fecha o menu lateral automaticamente para facilitar a visão
-    if (typeof toggleMenu === "function") {
-        const sideMenu = document.getElementById('side-menu');
-        if (sideMenu && sideMenu.classList.contains('open')) {
-            toggleMenu();
+        renderArea.innerHTML = ""; // Limpa resultados de busca (Fase 1, etc)
+        
+        if (typeof exibirPainel === "function") {
+            exibirPainel(); // Esta função DEVE estar dentro do seu data_painel.js
+            console.log("Dashboard reconstruído.");
+        } else {
+            console.warn("Função exibirPainel não encontrada. Verifique o data_painel.js");
+            // Se falhar, tentamos apenas limpar a área para o usuário ver o assistente vazio
+            renderArea.innerHTML = "<h2>Início</h2><p>Clique no menu para navegar.</p>";
         }
     }
 }
