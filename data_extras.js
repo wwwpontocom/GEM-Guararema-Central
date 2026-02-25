@@ -1,6 +1,6 @@
 Object.assign(BIBLIOTECA_LIVRO, {
        "vamos_aprender": {
-    keywords: ["vamos aprender", "basico", "importante", "informações", "introdução", "violino", "flauta", "afinação"],
+    keywords: ["vamos aprender", "basico", "importante", "informações", "introdução", "instrumentos", "violino", "flauta", "afinação"],
     fase: "Extras", 
     titulo: "VAMOS APRENDER", 
     icone: "💡",
