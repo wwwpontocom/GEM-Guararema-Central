@@ -719,20 +719,34 @@ function selectTab(tabId) {
 }
 
 function voltarAoInicio() {
-    // 1. Abre a aba do assistente (onde fica o render-area)
-    selectTab('assistente');
+    // 1. Força a abertura da aba assistente
+    if (typeof selectTab === "function") {
+        selectTab('assistente');
+    }
 
-    // 2. Tenta recarregar o painel inicial do seu data_painel.js
-    // Nota: Geralmente seu data_painel.js define uma função como exibirPainel() ou carregarHome()
+    // 2. Limpa o conteúdo atual da área de renderização para evitar sobreposição
+    const renderArea = document.getElementById('render-area');
+    if (renderArea) {
+        renderArea.innerHTML = ""; // Limpa o que a busca escreveu (ex: Fase 1)
+    }
+
+    // 3. Tenta chamar a função que desenha o painel
     if (typeof exibirPainel === "function") {
-        exibirPainel(); 
+        exibirPainel();
+        console.log("Dashboard reconstruído com sucesso.");
     } else {
-        // Caso o data_painel.js rode automaticamente, podemos forçar o reload do conteúdo
-        const renderArea = document.getElementById('render-area');
+        console.error("ERRO: A função 'exibirPainel' não foi encontrada no data_painel.js");
+        // Fallback: se não houver função, o app pode tentar recarregar o script ou injetar um aviso
         if (renderArea) {
-            // Se o seu data_painel.js apenas escreve no HTML ao carregar, 
-            // você pode chamar a lógica de renderização dele aqui.
-            console.log("Dashboard restaurado.");
+            renderArea.innerHTML = "<p style='padding:20px;'>Erro ao carregar painel inicial. Verifique se o data_painel.js está correto.</p>";
+        }
+    }
+    
+    // 4. Fecha o menu lateral automaticamente para facilitar a visão
+    if (typeof toggleMenu === "function") {
+        const sideMenu = document.getElementById('side-menu');
+        if (sideMenu && sideMenu.classList.contains('open')) {
+            toggleMenu();
         }
     }
 }
