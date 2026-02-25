@@ -720,17 +720,28 @@ function selectTab(tabId) {
         }
     } 
     else if (tabId === 'turmas') {
+        // Força a mudança para a aba onde o Firebase renderiza
         if (typeof switchTab === "function") switchTab('assistente');
+        
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
+            // Injeção do HTML Identica ao que o Assistente faz
             renderArea.innerHTML = `
                 <div class="fase-header">📍 CONTROLE DE TURMAS</div>
                 <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
-                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"] ? BIBLIOTECA_LIVRO["grupo_a"].html_content : ''}</section>
-                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"] ? BIBLIOTECA_LIVRO["grupo_b"].html_content : ''}</section>
-                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"] ? BIBLIOTECA_LIVRO["grupo_c"].html_content : ''}</section>
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"].html_content}</section>
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"].html_content}</section>
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"].html_content}</section>
                 </div>`;
-            // Aciona o carregamento dos dados do Firebase
-            if (typeof carregarLogs === "function") carregarLogs();
+
+            // Timeout de 50ms para garantir que o DOM registrou os IDs antes do Firebase agir
+            setTimeout(() => {
+                if (typeof carregarLogs === "function") {
+                    console.log("Sincronizando Firebase com o Menu Turmas...");
+                    carregarLogs();
+                }
+            }, 50);
+            
+            renderArea.scrollTop = 0;
         }
     } 
     else {
@@ -748,6 +759,7 @@ function selectTab(tabId) {
         }
     });
 }
+
 function voltarAoInicio() {
     // 1. Resetar visualmente os containers (Garante que nada fique display: none)
     const tabAssistente = document.getElementById('tab-assistente');
