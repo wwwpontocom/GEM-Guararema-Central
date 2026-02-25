@@ -131,45 +131,52 @@ document.getElementById('alou-content').style.display = 'flex';
         });
     }
     
-  function switchTab(tab) {
-    const assistente = document.getElementById('tab-assistente');
-    const alou = document.getElementById('tab-alou');
-    const agenda = document.getElementById('tab-agenda');
+function switchTab(tab) {
+    // Referências dos Containers
+    const tabs = {
+        assistente: document.getElementById('tab-assistente'),
+        alou: document.getElementById('tab-alou'),
+        agenda: document.getElementById('tab-agenda')
+    };
     
-    const navAssistente = document.getElementById('nav-assistente');
-    const navAlou = document.getElementById('nav-alou');
-    const navAgenda = document.getElementById('nav-agenda');
+    // Referências da Nav (IDs antigos e novos)
+    const navs = {
+        assistente: document.getElementById('nav-assistente'),
+        alou: document.getElementById('nav-alou'),
+        agenda: document.getElementById('nav-agenda')
+    };
 
-    // Reset geral de Estilos Nav
-    [navAssistente, navAlou, navAgenda].forEach(nav => {
-        if (nav) {
-            nav.style.opacity = '0.7';
-            nav.style.borderBottom = 'none';
+    // 1. Reset Geral: Esconde conteúdos e limpa estilos da Nav
+    Object.keys(tabs).forEach(key => {
+        if (tabs[key]) tabs[key].style.display = 'none';
+        if (navs[key]) {
+            navs[key].style.opacity = '0.7';
+            navs[key].style.borderBottom = 'none';
         }
     });
 
-    // Esconde todos os conteúdos
-    assistente.style.display = 'none';
-    alou.style.display = 'none';
-    agenda.style.display = 'none';
+    // 2. Ativa a aba selecionada
+    const currentTab = tabs[tab];
+    const currentNav = navs[tab];
 
-    // Ativa a aba selecionada
-    if (tab === 'assistente') {
-        assistente.style.display = 'flex';
-        navAssistente.style.opacity = '1';
-        navAssistente.style.borderBottom = '2px solid #4a90e2';
-    } else if (tab === 'alou') {
-        alou.style.display = 'flex';
-        navAlou.style.opacity = '1';
-        navAlou.style.borderBottom = '2px solid #4a90e2';
-    } else if (tab === 'agenda') {
-        agenda.style.display = 'flex';
-        if (navAgenda) {
-            navAgenda.style.opacity = '1';
-            navAgenda.style.borderBottom = '2px solid #4a90e2';
+    if (currentTab) {
+        // Ajuste de Display conforme o tipo de conteúdo
+        if (tab === 'alou' || tab === 'assistente') {
+            currentTab.style.display = 'flex';
+        } else {
+            currentTab.style.display = 'block';
         }
-        // Renderiza o conteúdo da biblioteca para a agenda
-        renderizarAgenda();
+
+        // Se for a agenda, carrega o conteúdo dinâmico
+        if (tab === 'agenda') {
+            renderizarAgenda();
+        }
+    }
+
+    // 3. Aplica destaque visual na Nav se o elemento existir
+    if (currentNav) {
+        currentNav.style.opacity = '1';
+        currentNav.style.borderBottom = '2px solid #4a90e2';
     }
 }
 
