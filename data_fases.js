@@ -50,41 +50,41 @@ let BIBLIOTECA_LIVRO = {
 </button>
 
 <div style="margin-top: 20px; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; font-family: Arial, sans-serif;">
-    <b style="font-size: 16px;">DEEP LEARNING: EXEMPLOS</b><br><br>
-    <p style="font-size: 14px; color: #555;">Clique nos botões para ouvir o som de cada instrumento:</p>
+    <b style="font-size: 16px;">DESCOBRINDO OS EXEMPLOS</b><br><br>
+    <p style="font-size: 14px; color: #555;">Clique nos alto-falantes para identificar o instrumento:</p>
     
     <div style="display: flex; justify-content: space-around; align-items: flex-end; gap: 10px; margin-top: 20px;">
-        <div style="text-align: center;">
-            <img src="https://i.ibb.co/LhqZzS6/cello.png" style="width: 50px; display: block; margin: 10px auto;">
-            <b>Violoncelo</b><br>
-            <button onclick="new Audio('assets/audio/cello_exemplo1.mp3').play().catch(e => console.error(e))" 
-                    style="margin-top:8px; padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
-                Ouvir 🔊
-            </button>
-        </div>
-        <div 
-    onclick="new Audio('assets/audio/cello_exemplo1.mp3').play().then(() => console.log('Audio playing!')).catch(e => alert('Audio Error: Check console or path.'))" 
-    style="padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin: 5px; display: inline-block;">
-    Test Cello Audio 🔊
-</div>
-
-        <div style="text-align: center;">
-            <img src="https://i.ibb.co/m0fS6f6/violin.png" style="width: 40px; display: block; margin: 10px auto;">
-            <b>Violino</b><br>
-            <button onclick="new Audio('assets/audio/violin_exemplo1.wav').play().catch(e => console.error(e))" 
-                    style="margin-top:8px; padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
-                Ouvir 🔊
+        
+        <div style="text-align: center; width: 80px;">
+            <img src="assets/img/cello1.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">Violoncelo</span><br>
+            <button onclick="let a = new Audio('assets/audio/cello_exemplo1.mp3'); a.play(); a.onended = () => { document.getElementById('name-cello').style.visibility = 'visible'; document.getElementById('btn-cello').innerText = 'Violoncelo'; }" 
+                    id="btn-cello"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
             </button>
         </div>
 
-        <div style="text-align: center;">
-            <img src="https://i.ibb.co/vxsL0tV/horn.png" style="width: 55px; display: block; margin: 10px auto;">
-            <b>Trompa</b><br>
-            <button onclick="new Audio('assets/audio/trompa_exemplo1.wav').play().catch(e => console.error(e))" 
-                    style="margin-top:8px; padding: 5px 10px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 11px;">
-                Ouvir 🔊
+        <div style="text-align: center; width: 80px;">
+            <img src="assets/img/violin1.png" style="width: 40px; display: block; margin: 10px auto;">
+            <span id="name-violin" style="font-size: 12px; font-weight: bold; visibility: hidden;">Violino</span><br>
+            <button onclick="let a = new Audio('assets/audio/violin_exemplo1.wav'); a.play(); a.onended = () => { document.getElementById('name-violin').style.visibility = 'visible'; document.getElementById('btn-violin').innerText = 'Violino'; }" 
+                    id="btn-violin"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
             </button>
         </div>
+
+        <div style="text-align: center; width: 80px;">
+            <img src="assets/img/horn1.png" style="width: 55px; display: block; margin: 10px auto;">
+            <span id="name-trompa" style="font-size: 12px; font-weight: bold; visibility: hidden;">Trompa</span><br>
+            <button onclick="let a = new Audio('assets/audio/trompa_exemplo1.wav'); a.play(); a.onended = () => { document.getElementById('name-trompa').style.visibility = 'visible'; document.getElementById('btn-trompa').innerText = 'Trompa'; }" 
+                    id="btn-trompa"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
+            </button>
+        </div>
+
     </div>
 </div>
 
