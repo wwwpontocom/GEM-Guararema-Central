@@ -720,11 +720,11 @@ function selectTab(tabId) {
         }
     } 
     else if (tabId === 'turmas') {
-        // Força a mudança para a aba onde o Firebase renderiza
+        // Força a mudança para a aba assistente
         if (typeof switchTab === "function") switchTab('assistente');
         
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
-            // Injeção do HTML Identica ao que o Assistente faz
+            // Concatena os logs EXATAMENTE como definidos no seu data_logs.js
             renderArea.innerHTML = `
                 <div class="fase-header">📍 CONTROLE DE TURMAS</div>
                 <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
@@ -733,11 +733,11 @@ function selectTab(tabId) {
                     <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"].html_content}</section>
                 </div>`;
 
-            // Timeout de 50ms para garantir que o DOM registrou os IDs antes do Firebase agir
+            // Timeout crucial para que o Firebase encontre os IDs recém-criados
             setTimeout(() => {
                 if (typeof carregarLogs === "function") {
-                    console.log("Sincronizando Firebase com o Menu Turmas...");
                     carregarLogs();
+                    console.log("Firebase logs sincronizados com o menu Turmas.");
                 }
             }, 50);
             
