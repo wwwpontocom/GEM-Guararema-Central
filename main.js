@@ -561,7 +561,22 @@ function fecharPopup(btn) {
     btn.closest('.modal-overlay').remove();
 }
 
-// 2. Função para abrir o Calendário
+let DADOS_ALUNOS = []; 
+const URL_GITHUB = "https://raw.githubusercontent.com/wwwpontocom/GEM-Guararema-Central/refs/heads/main/alunos.json";
+
+// 2. Carga Assíncrona dos Dados
+async function carregarDadosAlunos() {
+    try {
+        const response = await fetch(URL_GITHUB);
+        DADOS_ALUNOS = await response.json();
+        console.log("Dados dos alunos carregados com sucesso!");
+    } catch (error) {
+        console.error("Erro ao carregar JSON do GitHub:", error);
+        DADOS_ALUNOS = []; 
+    }
+}
+
+// 3. Função para abrir o Calendário (Consolidada)
 function abrirCalendarioEscolar() {
     const dataAtual = new Date();
     const mes = dataAtual.toLocaleString('pt-br', { month: 'long' });
@@ -577,42 +592,51 @@ function abrirCalendarioEscolar() {
             <div style="font-weight:bold;">Q</div><div style="font-weight:bold;">S</div><div style="font-weight:bold;">S</div>
     `;
 
-    // Gerador simples de dias (Exemplo para o mês atual)
-    for (let i = 1; i <= 30; i++) {
+    // Gerador de dias (Ajustado para 31 dias para cobrir todos os meses)
+    for (let i = 1; i <= 31; i++) {
         htmlCalendario += `
             <div onclick="mostrarListaAlunos('${i}/${dataAtual.getMonth()+1}')" 
-                 style="padding:8px; border:1px solid #eee; cursor:pointer; border-radius:4px; hover:background:#f0f0f0;">
+                 style="padding:8px; border:1px solid #eee; cursor:pointer; border-radius:4px; font-size:12px;">
                 ${i}
             </div>`;
     }
 
     htmlCalendario += `</div><p style="font-size:11px; margin-top:10px; color:#666;">* Toque em uma data para ver os alunos.</p>`;
-    
-    // Chama a função abrirPopup que já existe no seu projeto
     abrirPopup(htmlCalendario, "🗓️");
 }
 
-// 3. Função para mostrar a tabela de alunos separada
+// 4. Função para mostrar a tabela (Versão Profissional com Filtragem)
 function mostrarListaAlunos(data) {
+    // Filtragem dinâmica baseada no novo JSON de objetos
+    const alunosTeoria = DADOS_ALUNOS.filter(a => a.categoria === 'teoria');
+    const alunosOutros = DADOS_ALUNOS.filter(a => a.categoria === 'outros');
+
     const htmlTabela = `
         <div style="font-family: Arial, sans-serif;">
-            <h4 style="color:var(--primary);">Data: ${data}</h4>
+            <h4 style="color:var(--primary); margin-bottom:5px;">📅 Lista: ${data}</h4>
+            <hr>
             
-            <p><b>📚 TEORIA (Naquele dia):</b></p>
-            <table style="width:100%; border-collapse: collapse; margin-bottom: 15px;">
-                ${DADOS_ALUNOS.teoria.map(nome => `
-                    <tr><td style="border-bottom:1px solid #eee; padding:5px;">✅ ${nome}</td></tr>
-                `).join('')}
+            <p style="margin-top:10px;"><b>📚 TURMA DE TEORIA</b></p>
+            <table style="width:100%; border-collapse: collapse; margin-bottom: 15px; font-size:13px;">
+                ${alunosTeoria.length > 0 ? alunosTeoria.map(aluno => `
+                    <tr>
+                        <td style="border-bottom:1px solid #eee; padding:6px;">✅ ${aluno.nome}</td>
+                        <td style="border-bottom:1px solid #eee; padding:6px; color:#666; text-align:right;"><i>${aluno.instrumento}</i></td>
+                    </tr>
+                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Nenhum aluno de teoria.</td></tr>'}
             </table>
 
-            <p><b>🎻 OUTROS (Não estão na teoria):</b></p>
-            <table style="width:100%; border-collapse: collapse; color: #777;">
-                ${DADOS_ALUNOS.outros.map(nome => `
-                    <tr><td style="border-bottom:1px solid #eee; padding:5px;">⚪ ${nome}</td></tr>
-                `).join('')}
+            <p><b>🎻 OUTROS ALUNOS</b></p>
+            <table style="width:100%; border-collapse: collapse; color: #777; font-size:13px;">
+                ${alunosOutros.length > 0 ? alunosOutros.map(aluno => `
+                    <tr>
+                        <td style="border-bottom:1px solid #eee; padding:6px;">⚪ ${aluno.nome}</td>
+                        <td style="border-bottom:1px solid #eee; padding:6px; text-align:right;"><i>${aluno.instrumento}</i></td>
+                    </tr>
+                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Nenhum outro aluno.</td></tr>'}
             </table>
             
-            <button onclick="abrirCalendarioEscolar()" style="margin-top:15px; background:#888; color:white; border:none; padding:8px; border-radius:4px; cursor:pointer;">
+            <button onclick="abrirCalendarioEscolar()" style="margin-top:15px; width:100%; background:#888; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">
                 ⬅️ Voltar ao Calendário
             </button>
         </div>
@@ -620,3 +644,6 @@ function mostrarListaAlunos(data) {
 
     abrirPopup(htmlTabela, "👥");
 }
+
+// Inicializa a carga ao ler o arquivo
+carregarDadosAlunos();
