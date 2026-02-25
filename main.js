@@ -716,6 +716,7 @@ function selectTab(tabId) {
         if (typeof switchTab === "function") switchTab('assistente');
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
             renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
+            renderArea.scrollTop = 0;
         }
     } 
     else if (tabId === 'turmas') {
@@ -723,11 +724,12 @@ function selectTab(tabId) {
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
             renderArea.innerHTML = `
                 <div class="fase-header">📍 CONTROLE DE TURMAS</div>
-                <div style="display: flex; flex-direction: column; gap: 30px; padding-top: 10px;">
-                    <section><h3>GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"] ? BIBLIOTECA_LIVRO["grupo_a"].html_content : ''}</section>
-                    <section><h3>GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"] ? BIBLIOTECA_LIVRO["grupo_b"].html_content : ''}</section>
-                    <section><h3>GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"] ? BIBLIOTECA_LIVRO["grupo_c"].html_content : ''}</section>
+                <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"] ? BIBLIOTECA_LIVRO["grupo_a"].html_content : ''}</section>
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"] ? BIBLIOTECA_LIVRO["grupo_b"].html_content : ''}</section>
+                    <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"] ? BIBLIOTECA_LIVRO["grupo_c"].html_content : ''}</section>
                 </div>`;
+            // Aciona o carregamento dos dados do Firebase
             if (typeof carregarLogs === "function") carregarLogs();
         }
     } 
