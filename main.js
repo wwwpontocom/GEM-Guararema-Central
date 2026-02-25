@@ -767,8 +767,6 @@ function selectTab(tabId) {
             renderArea.scrollTop = 0;
         }
     } 
-
-// --- FIX IS HERE: DOM RENDERING SYNCHRONIZATION ---
     else if (tabId === 'turmas') {
         if (typeof switchTab === "function") switchTab('assistente');
         
@@ -788,20 +786,17 @@ function selectTab(tabId) {
                 tentativas++;
                 const checkEl = document.getElementById('log-grupo-a'); 
                 
-                if (checkEl || tentativas > 15) { // Tenta por até 1.5 segundos
+                if (checkEl || tentativas > 15) { 
                     clearInterval(checkAndLoad);
                     if (typeof carregarLogs === "function") {
-                        console.log("DOM detectado. Sincronizando logs do Firebase...");
                         carregarLogs();
                     }
                 }
-            }, 100); 
+            }, 50); // Reduzi para 50ms para ser mais rápido como o assistente
             
             renderArea.scrollTop = 0;
         }
     } 
-// --- END OF FIX ---
-
     else {
         // 4. Chama sua função de troca de aba padrão para abas comuns
         if (typeof switchTab === "function") {
@@ -817,6 +812,7 @@ function selectTab(tabId) {
         }
     });
 }
+
 function voltarAoInicio() {
     // 1. Resetar visualmente os containers (Garante que nada fique display: none)
     const tabAssistente = document.getElementById('tab-assistente');
