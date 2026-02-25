@@ -767,13 +767,21 @@ function selectTab(tabId) {
             renderArea.scrollTop = 0;
         }
     } 
+
+// --- FIX IS HERE: MANUAL REFRESH BUTTON ALIGNMENT ---
     else if (tabId === 'turmas') {
         if (typeof switchTab === "function") switchTab('assistente');
         
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
-            // Injeta o HTML estrutural
+            // Injeta o HTML estrutural com botão de recarga à direita
             renderArea.innerHTML = `
                 <div class="fase-header">📍 CONTROLE DE TURMAS</div>
+                <div style="text-align: right; padding: 0 15px; margin-top: -5px;">
+                    <a href="#" onclick="if(typeof carregarLogs === 'function') carregarLogs(); return false;" 
+                       style="font-size: 11px; color: var(--primary); text-decoration: none; font-weight: bold; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; border: 1px solid #ddd;">
+                       🔄 Sincronizar Histórico
+                    </a>
+                </div>
                 <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
                     <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"].html_content}</section>
                     <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"].html_content}</section>
@@ -792,11 +800,13 @@ function selectTab(tabId) {
                         carregarLogs();
                     }
                 }
-            }, 50); // Reduzi para 50ms para ser mais rápido como o assistente
+            }, 50); 
             
             renderArea.scrollTop = 0;
         }
     } 
+// --- END OF FIX ---
+
     else {
         // 4. Chama sua função de troca de aba padrão para abas comuns
         if (typeof switchTab === "function") {
