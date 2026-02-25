@@ -660,3 +660,37 @@ function mostrarListaAlunos(data) {
 
 // Inicializa a carga ao ler o arquivo
 carregarDadosAlunos();
+
+function toggleMenu() {
+    const menu = document.getElementById('side-menu');
+    const overlay = document.getElementById('menu-overlay');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('show');
+}
+
+function selectTab(tabId) {
+    // 1. Fecha o menu
+    toggleMenu();
+    
+    // 2. Atualiza nome na Nav
+    const labels = {
+        'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
+        'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
+        'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
+        'programa': 'Programa Mínimo'
+    };
+    document.getElementById('active-tab-name').innerText = labels[tabId];
+
+    // 3. Destaca item ativo no menu
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('active');
+        if(item.innerText.toLowerCase().includes(labels[tabId].toLowerCase())) {
+            item.classList.add('active');
+        }
+    });
+
+    // 4. Chama sua função de troca de aba existente
+    if (typeof switchTab === "function") {
+        switchTab(tabId);
+    }
+}
