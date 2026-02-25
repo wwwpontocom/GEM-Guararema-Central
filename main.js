@@ -131,32 +131,45 @@ document.getElementById('alou-content').style.display = 'flex';
         });
     }
     
-   function switchTab(tab) {
+  function switchTab(tab) {
     const assistente = document.getElementById('tab-assistente');
     const alou = document.getElementById('tab-alou');
+    const agenda = document.getElementById('tab-agenda');
+    
     const navAssistente = document.getElementById('nav-assistente');
     const navAlou = document.getElementById('nav-alou');
+    const navAgenda = document.getElementById('nav-agenda');
 
+    // Reset geral de Estilos Nav
+    [navAssistente, navAlou, navAgenda].forEach(nav => {
+        if (nav) {
+            nav.style.opacity = '0.7';
+            nav.style.borderBottom = 'none';
+        }
+    });
+
+    // Esconde todos os conteúdos
+    assistente.style.display = 'none';
+    alou.style.display = 'none';
+    agenda.style.display = 'none';
+
+    // Ativa a aba selecionada
     if (tab === 'assistente') {
-        // Controle de Exibição
         assistente.style.display = 'flex';
-        alou.style.display = 'none';
-        
-        // Feedback Visual na Nav
         navAssistente.style.opacity = '1';
         navAssistente.style.borderBottom = '2px solid #4a90e2';
-        navAlou.style.opacity = '0.7';
-        navAlou.style.borderBottom = 'none';
-    } else {
-        // Controle de Exibição
-        assistente.style.display = 'none';
+    } else if (tab === 'alou') {
         alou.style.display = 'flex';
-        
-        // Feedback Visual na Nav
-        navAssistente.style.opacity = '0.7';
-        navAssistente.style.borderBottom = 'none';
         navAlou.style.opacity = '1';
         navAlou.style.borderBottom = '2px solid #4a90e2';
+    } else if (tab === 'agenda') {
+        agenda.style.display = 'flex';
+        if (navAgenda) {
+            navAgenda.style.opacity = '1';
+            navAgenda.style.borderBottom = '2px solid #4a90e2';
+        }
+        // Renderiza o conteúdo da biblioteca para a agenda
+        renderizarAgenda();
     }
 }
 
