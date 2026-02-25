@@ -284,8 +284,24 @@ nav {
     .mobile-hide-emoji {
         display: none;
     }
+    #menu-toggle {
+        font-size: 28px !important; /* Ícone maior */
+        padding: 10px !important;   /* Área de clique expandida */
+        min-width: 44px;           /* Padrão de acessibilidade para toque */
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* Ajuste para o texto não encostar no sanduíche gigante */
+    nav div:first-child {
+        gap: 10px !important;
+    }
 }
-    
+
+
     /* Locate inside... #main-container */
     #main-container {
         display: block; 
