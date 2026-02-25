@@ -717,3 +717,22 @@ function selectTab(tabId) {
         switchTab(tabId);
     }
 }
+
+function voltarAoInicio() {
+    // 1. Abre a aba do assistente (onde fica o render-area)
+    selectTab('assistente');
+
+    // 2. Tenta recarregar o painel inicial do seu data_painel.js
+    // Nota: Geralmente seu data_painel.js define uma função como exibirPainel() ou carregarHome()
+    if (typeof exibirPainel === "function") {
+        exibirPainel(); 
+    } else {
+        // Caso o data_painel.js rode automaticamente, podemos forçar o reload do conteúdo
+        const renderArea = document.getElementById('render-area');
+        if (renderArea) {
+            // Se o seu data_painel.js apenas escreve no HTML ao carregar, 
+            // você pode chamar a lógica de renderização dele aqui.
+            console.log("Dashboard restaurado.");
+        }
+    }
+}
