@@ -345,23 +345,71 @@ function enviarMensagemPublica() {
 }
 
 function salvarLog(grupo) {
-    const sufixo = grupo.split('_')[1];
+    const sufixo = grupo.split('_')[1]; // Extrai 'a', 'b' ou 'c'
     const inputLog = document.getElementById(`input-log-${sufixo}`);
-    const texto = inputLog.value.trim();
+    
+    // Busca Elementos de Identificação e Segurança
+    const inputNome = document.getElementById('aluno-nome-input');
+    const inputCodigo = document.getElementById('input-codigo-acesso'); // Elemento do código
+    
+    let nome = inputNome ? inputNome.value.trim() : "";
+    let codigo = inputCodigo ? inputCodigo.value.trim() : "";
+    const texto = inputLog ? inputLog.value.trim() : "";
 
-    if (!texto) return;
+    // 1. Validação de Conteúdo
+    if (!texto) {
+        alert("Por favor, digite a nota do log.");
+        return;
+    }
 
-    // Trigger the prompt validation
-    const nome = validarEObterNome();
-    if (!nome) return;
+    // 2. Validação de Nome (com Fallback)
+    if (!nome) {
+        nome = prompt("Por favor, digite seu nome (Instrutor):");
+        if (!nome) return;
+    }
 
+    // 3. Validação de Código de Acesso (com Fallback)
+    if (!codigo) {
+        codigo = prompt("Digite o código de acesso para salvar:");
+        if (!codigo) return;
+    }
+
+    // 4. Execução do Salvamento no Firebase
+    // Nota: A lógica de validação do código (se é '123' ou 'abc') 
+    // geralmente acontece aqui ou nas regras do Firebase.
     db.ref('onde_estamos/' + grupo).push({
         instrutor: nome,
         nota: texto,
+        codigo_utilizado: codigo, // Gravando o código para auditoria se necessário
         timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+        alert("Histórico atualizado com sucesso!");
+        if (inputLog) inputLog.value = "";
+    }).catch((error) => {
+        console.error("Erro ao salvar no Firebase:", error);
+        alert("Erro ao salvar. Verifique sua conexão ou permissões.");
     });
-    if(inputLog) inputLog.value = "";
 }
+
+// Escuta mensagens em tempo real (Chat Comunitário)
+db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
+    const data = snapshot.val();
+    const chatWin = document.getElementById('alou-chat-window');
+    if (!chatWin) return; 
+
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg bot'; 
+    msgDiv.style.background = "#fff";
+    msgDiv.style.color = "#333";
+    msgDiv.style.alignSelf = "flex-start";
+    
+    const d = new Date(data.timestamp);
+    const hora = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
+
+    msgDiv.innerHTML = `<small style="color:var(--primary); font-weight:bold;">${data.usuario} [${hora}]</small><br>${data.mensagem}`;
+    chatWin.appendChild(msgDiv);
+    chatWin.scrollTop = chatWin.scrollHeight;
+});
 
 function escutarLogs() {
     ['grupo_a', 'grupo_b', 'grupo_c'].forEach(grupo => {
@@ -719,12 +767,13 @@ function selectTab(tabId) {
             renderArea.scrollTop = 0;
         }
     } 
+
+// --- FIX IS HERE: DOM RENDERING SYNCHRONIZATION ---
     else if (tabId === 'turmas') {
-        // Força a mudança para a aba assistente
         if (typeof switchTab === "function") switchTab('assistente');
         
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined') {
-            // Concatena os logs EXATAMENTE como definidos no seu data_logs.js
+            // Injeta o HTML estrutural
             renderArea.innerHTML = `
                 <div class="fase-header">📍 CONTROLE DE TURMAS</div>
                 <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
@@ -733,17 +782,26 @@ function selectTab(tabId) {
                     <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"].html_content}</section>
                 </div>`;
 
-            // Timeout crucial para que o Firebase encontre os IDs recém-criados
-            setTimeout(() => {
-                if (typeof carregarLogs === "function") {
-                    carregarLogs();
-                    console.log("Firebase logs sincronizados com o menu Turmas.");
+            // TENTATIVA DE CARREGAMENTO SINCRONIZADA
+            let tentativas = 0;
+            const checkAndLoad = setInterval(() => {
+                tentativas++;
+                const checkEl = document.getElementById('log-grupo-a'); 
+                
+                if (checkEl || tentativas > 15) { // Tenta por até 1.5 segundos
+                    clearInterval(checkAndLoad);
+                    if (typeof carregarLogs === "function") {
+                        console.log("DOM detectado. Sincronizando logs do Firebase...");
+                        carregarLogs();
+                    }
                 }
-            }, 50);
+            }, 100); 
             
             renderArea.scrollTop = 0;
         }
     } 
+// --- END OF FIX ---
+
     else {
         // 4. Chama sua função de troca de aba padrão para abas comuns
         if (typeof switchTab === "function") {
@@ -759,7 +817,6 @@ function selectTab(tabId) {
         }
     });
 }
-
 function voltarAoInicio() {
     // 1. Resetar visualmente os containers (Garante que nada fique display: none)
     const tabAssistente = document.getElementById('tab-assistente');
