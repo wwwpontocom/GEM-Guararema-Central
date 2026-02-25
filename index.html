@@ -22,6 +22,11 @@
         <span onclick="window.open('https://docs.google.com/forms/d/e/1FAIpQLScXgPs-BgHaXBuPf9Jzl54oxSCiSw7YU3GhC9D9dbwNiztXWA/viewform?usp=publish-editor', '_blank')" style="cursor:pointer; padding: 5px 10px; opacity: 0.7; color: #ffeb3b;"><span class="mobile-hide-emoji">📝</span> CHAMADA</span>
         <button id="btn-instalar" style="display: none; background: #27ae60; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 12px;">INSTALAR</button>
     </div>
+    <div class="nav-bar">
+    <div id="nav-assistente" onclick="switchTab('assistente')">Assistente</div>
+    <div id="nav-alou" onclick="switchTab('alou')">Alou!</div>
+    <div id="nav-agenda" onclick="switchTab('agenda')" style="opacity: 0.7;">Agenda</div>
+</div>
 </nav>
 
 <div id="main-container" style="display: flex; width: 100%; height: calc(100vh - 48px); margin-top: 48px;">
@@ -65,6 +70,10 @@
                     <input type="text" id="alou-input" placeholder="Diga um 'Alou'..." style="flex: 1;" onkeypress="if(event.key === 'Enter') enviarMensagemPublica()">
                     <button onclick="enviarMensagemPublica()" style="border:none; background:none; cursor:pointer; font-size:20px;">➔</button>
                 </div>
+                <div id="tab-agenda" style="display: none; flex-direction: column; padding: 20px;">
+    <div id="agenda-render-area">
+        </div>
+</div>
                 <div style="text-align: center; margin-top: 5px;">
                     <button onclick="gerarPDFDoDia()" style="background: #e74c3c; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">
                         📥 Encerrar Dia e Salvar PDF
@@ -77,6 +86,9 @@
 
 <script src="data_fases.js"></script>
     <script src="data_extras.js"></script>
+     <script src="data_plano.js"></script>
+     <script src="data_exercicios.js"></script>
+    <script src="data_dia.js"></script>
     <script src="data_logs.js"></script>
     <script src="main.js"></script>
     <script>
