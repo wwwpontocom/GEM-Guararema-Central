@@ -661,6 +661,24 @@ function mostrarListaAlunos(data) {
 // Inicializa a carga ao ler o arquivo
 carregarDadosAlunos();
 
+function renderizarAgenda() {
+    const container = document.getElementById('agenda-render-area');
+    if (!container) return;
+
+    container.innerHTML = `
+        <div style="text-align: center;">
+            <h2 style="color: var(--primary); margin-bottom: 20px;">📅 Agenda de Aulas</h2>
+            <p style="color: #666; font-size: 14px;">Consulte o calendário escolar e a lista de alunos para o dia selecionado.</p>
+            <br>
+            <button onclick="abrirCalendarioEscolar()" class="btn-calendar">
+                📂 ABRIR CALENDÁRIO COMPLETO
+            </button>
+            <div id="quick-view" style="margin-top: 30px;">
+                </div>
+        </div>
+    `;
+}
+
 function toggleMenu() {
     const menu = document.getElementById('side-menu');
     const overlay = document.getElementById('menu-overlay');
