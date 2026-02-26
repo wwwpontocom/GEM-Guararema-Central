@@ -781,7 +781,16 @@ function mostrarConteudo(chave) {
             `;
         }
 
-
+        // Injeta Cabeçalho Montado + Conteúdo do Objeto
+        renderArea.innerHTML = cabecalhoFinal + dados.html_content;
+        
+        if (activeTabNameEl) {
+            activeTabNameEl.innerText = dados.titulo;
+        }
+        
+        renderArea.scrollTop = 0;
+    }
+}
 
 function renderTurmas() {
     const area = document.getElementById('render-area');
