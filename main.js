@@ -747,23 +747,38 @@ function mostrarConteudo(chave) {
     const activeTabNameEl = document.getElementById('active-tab-name');
     
     if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO[chave]) {
-        // 1. Localiza os dados
         const dados = BIBLIOTECA_LIVRO[chave];
 
-        // 2. Injeta o conteúdo HTML (Isso fará os links aparecerem)
-        renderArea.innerHTML = dados.html_content;
+        // Se for o índice, mostramos apenas o conteúdo dele. 
+        // Se for uma lição, montamos o Header dinamicamente:
+        let cabecalhoFinal = "";
         
-        // 3. Atualiza o Título/Fase no topo (Onde aparece o "fase head")
+        if (chave !== 'indice') {
+            cabecalhoFinal = `
+                <style>
+                    .fase-header { background: #888; color: white; text-align: center; padding: 8px; font-size: 20px; border-radius: 4px; margin-bottom: 20px; font-family: sans-serif; }
+                    .section-title { background: #e3f2fd; border-bottom: 3px solid #4a90e2; padding: 10px; display: flex; align-items: center; margin: 20px 0 10px 0; font-family: sans-serif; }
+                    .icon-box { background: #4a90e2; color: white; border-radius: 4px; padding: 4px 8px; margin-right: 12px; font-weight: bold; }
+                    h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
+                    .instrument-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; background: #f9f9f9; padding: 10px; border-radius: 5px; }
+                    @media (min-width: 600px) { .instrument-grid { grid-template-columns: repeat(4, 1fr); } }
+                </style>
+                <div class="fase-header">${dados.fase}</div>
+                <div class="section-title">
+                    <div class="icon-box">${dados.icone}</div>
+                    <h2>${dados.titulo}</h2>
+                </div>
+            `;
+        }
+
+        // Injeta Cabeçalho Montado + Conteúdo do Objeto
+        renderArea.innerHTML = cabecalhoFinal + dados.html_content;
+        
         if (activeTabNameEl) {
-            activeTabNameEl.innerText = `${dados.fase} - ${dados.titulo}`;
+            activeTabNameEl.innerText = dados.titulo;
         }
         
-        // 4. Reseta o scroll para o topo
         renderArea.scrollTop = 0;
-
-        console.log(`Carregado com sucesso: ${chave}`);
-    } else {
-        console.error("Erro: Conteúdo não encontrado para a chave:", chave);
     }
 }
 
