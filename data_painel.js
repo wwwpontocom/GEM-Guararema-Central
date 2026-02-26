@@ -26,7 +26,7 @@ function exibirPainel() {
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         • Bem-vindo à nova Biblioteca Interativa.<br>
-                        • Utilize o chat ao lado para consultar tópicos musicais.
+                        • Ensaio Regional - Guararema Central - 15/03/2026 - àas 14h.
                     </div>
                 </div>
             </div>
