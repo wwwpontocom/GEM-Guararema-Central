@@ -232,6 +232,10 @@ let BIBLIOTECA_LIVRO = {
     </audio>
 </div>
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
+<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
+                <button onclick="mostrarConteudo('fase_1_elementos_musica')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
+                <button onclick="mostrarConteudo('indice')" style="padding: 12px 20px; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Menu Inicial ☰</button>
+            </div>
             `,
             pagina: "10"
         }
