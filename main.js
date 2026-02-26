@@ -714,7 +714,7 @@ function selectTab(tabId) {
         }
     }
     // ---------------------------
-    else if (tabId === 'instrumentos') {
+      else if (tabId === 'instrumentos') {
         if (typeof switchTab === "function") switchTab('assistente');
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
             renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
@@ -780,16 +780,6 @@ function mostrarConteudo(chave) {
             `;
         }
 
-        // Injeta Cabeçalho Montado + Conteúdo do Objeto
-        renderArea.innerHTML = cabecalhoFinal + dados.html_content;
-        
-        if (activeTabNameEl) {
-            activeTabNameEl.innerText = dados.titulo;
-        }
-        
-        renderArea.scrollTop = 0;
-    }
-}
 
 function renderTurmas() {
     const area = document.getElementById('render-area');
