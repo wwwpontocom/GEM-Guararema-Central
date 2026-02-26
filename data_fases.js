@@ -130,6 +130,9 @@ let BIBLIOTECA_LIVRO = {
 </div>
 
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
+<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: right;">
+            <button onclick="mostrarConteudo('fase_1_elementos_musica')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Próximo Tópico: 1.2 ➜</button>
+        </div>
             `,
             pagina: "9"
         },
@@ -169,6 +172,10 @@ let BIBLIOTECA_LIVRO = {
     </audio>
 </div>
 <a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
+<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
+            <button onclick="mostrarConteudo('fase_1_musica_som')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
+            <button onclick="mostrarConteudo('fase_1_propriedades_som')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Próximo Tópico: 1.3 ➜</button>
+        </div>
             `,
             pagina: "9" 
         },
