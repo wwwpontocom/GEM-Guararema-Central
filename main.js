@@ -744,18 +744,24 @@ function selectTab(tabId) {
 
 function mostrarConteudo(chave) {
     const renderArea = document.getElementById('render-area');
+    const activeTabNameEl = document.getElementById('active-tab-name');
+    
     if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO[chave]) {
-        // Injeta o conteúdo HTML da fase clicada
-        renderArea.innerHTML = BIBLIOTECA_LIVRO[chave].html_content;
+        // 1. Localiza os dados
+        const dados = BIBLIOTECA_LIVRO[chave];
+
+        // 2. Injeta o conteúdo HTML (Isso fará os links aparecerem)
+        renderArea.innerHTML = dados.html_content;
         
-        // Opcional: Rola para o topo para o usuário ler do início
-        renderArea.scrollTop = 0;
-        
-        // Se quiser que o título no topo mude para o título da lição:
-        const activeTabNameEl = document.getElementById('active-tab-name');
+        // 3. Atualiza o Título/Fase no topo (Onde aparece o "fase head")
         if (activeTabNameEl) {
-            activeTabNameEl.innerText = BIBLIOTECA_LIVRO[chave].titulo;
+            activeTabNameEl.innerText = `${dados.fase} - ${dados.titulo}`;
         }
+        
+        // 4. Reseta o scroll para o topo
+        renderArea.scrollTop = 0;
+
+        console.log(`Carregado com sucesso: ${chave}`);
     } else {
         console.error("Erro: Conteúdo não encontrado para a chave:", chave);
     }
