@@ -714,13 +714,14 @@ function selectTab(tabId) {
         }
     }
     // ---------------------------
-      else if (tabId === 'instrumentos') {
+    else if (tabId === 'instrumentos') {
         if (typeof switchTab === "function") switchTab('assistente');
-        if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
-            renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
-            renderArea.scrollTop = 0;
+        
+        // Chamamos a função centralizada em vez de injetar o HTML manualmente
+        if (typeof mostrarConteudo === "function") {
+            mostrarConteudo('vamos_aprender');
         }
-    } 
+    }
     // --- NOVO BLOCO PARA PLANO DE AULA ---
     else if (tabId === 'plano') {
         if (typeof switchTab === "function") switchTab('assistente');
