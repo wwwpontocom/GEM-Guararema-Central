@@ -209,63 +209,7 @@ db.ref('participantes').on('value', (snapshot) => {
     }
 });
 
-function enviarMensagemPublica() {
-    const inputMsg = document.getElementById('alou-input');
-    const inputNome = document.getElementById('aluno-nome-input'); // Your new text input
-    const texto = inputMsg.value.trim();
-    const nome = inputNome.value.trim();
-    
-    if (!texto) return;
-    if (!nome) {
-        alert("Por favor, digite seu nome antes de enviar!");
-        return;
-    }
 
-    db.ref('chat_comunitario').push({
-        usuario: nome,
-        mensagem: texto,
-        timestamp: firebase.database.ServerValue.TIMESTAMP
-    });
-    inputMsg.value = "";
-}
-
-function salvarLog(grupo) {
-    const sufixo = grupo.split('_')[1];
-    const inputLog = document.getElementById(`input-log-${sufixo}`);
-    const inputNome = document.getElementById('aluno-nome-input');
-    const texto = inputLog.value.trim();
-    const nome = inputNome.value.trim();
-
-    if (!texto || !nome) {
-        alert("Preencha seu nome e a nota do log.");
-        return;
-    }
-
-    db.ref('onde_estamos/' + grupo).push({
-        instrutor: nome,
-        nota: texto,
-        timestamp: firebase.database.ServerValue.TIMESTAMP
-    });
-    inputLog.value = "";
-}
-
-// Escuta mensagens em tempo real
-db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
-    const data = snapshot.val();
-    const chatWin = document.getElementById('alou-chat-window');
-    const msgDiv = document.createElement('div');
-    msgDiv.className = 'msg bot'; // Style for community chat
-    msgDiv.style.background = "#fff";
-    msgDiv.style.color = "#333";
-    msgDiv.style.alignSelf = "flex-start";
-    
-    const d = new Date(data.timestamp);
-    const hora = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
-
-    msgDiv.innerHTML = `<small style="color:var(--primary); font-weight:bold;">${data.usuario} [${hora}]</small><br>${data.mensagem}`;
-    chatWin.appendChild(msgDiv);
-    chatWin.scrollTop = chatWin.scrollHeight;
-});
 
 async function gerarPDFDoDia() {
     const { jsPDF } = window.jspdf;
@@ -332,69 +276,66 @@ function enviarMensagemPublica() {
     
     if (!texto) return;
 
-    // Trigger the prompt validation
+    // Usando sua lógica de validação de Nome/Senha Mestra
     const nome = validarEObterNome();
-    if (!nome) return; // Stop if they cancel or get the password wrong
+    if (!nome) return; 
 
     db.ref('chat_comunitario').push({
         usuario: nome,
         mensagem: texto,
         timestamp: firebase.database.ServerValue.TIMESTAMP
+    }).then(() => {
+        inputMsg.value = "";
+    }).catch((error) => {
+        console.error("Erro ao enviar mensagem:", error);
     });
-    inputMsg.value = "";
 }
 
 function salvarLog(grupo) {
-    const sufixo = grupo.split('_')[1]; // Extrai 'a', 'b' ou 'c'
+    const sufixo = grupo.split('_')[1];
     const inputLog = document.getElementById(`input-log-${sufixo}`);
-    
-    // Busca Elementos de Identificação e Segurança
     const inputNome = document.getElementById('aluno-nome-input');
-    const inputCodigo = document.getElementById('input-codigo-acesso'); // Elemento do código
+    const inputCodigo = document.getElementById('input-codigo-acesso');
     
     let nome = inputNome ? inputNome.value.trim() : "";
     let codigo = inputCodigo ? inputCodigo.value.trim() : "";
     const texto = inputLog ? inputLog.value.trim() : "";
 
-    // 1. Validação de Conteúdo
     if (!texto) {
         alert("Por favor, digite a nota do log.");
         return;
     }
 
-    // 2. Validação de Nome (com Fallback)
+    // Fallbacks caso o formulário não esteja preenchido
     if (!nome) {
         nome = prompt("Por favor, digite seu nome (Instrutor):");
         if (!nome) return;
     }
 
-    // 3. Validação de Código de Acesso (com Fallback)
     if (!codigo) {
         codigo = prompt("Digite o código de acesso para salvar:");
         if (!codigo) return;
     }
 
-    // 4. Execução do Salvamento no Firebase
-    // Nota: A lógica de validação do código (se é '123' ou 'abc') 
-    // geralmente acontece aqui ou nas regras do Firebase.
     db.ref('onde_estamos/' + grupo).push({
         instrutor: nome,
         nota: texto,
-        codigo_utilizado: codigo, // Gravando o código para auditoria se necessário
+        codigo_utilizado: codigo,
         timestamp: firebase.database.ServerValue.TIMESTAMP
     }).then(() => {
         alert("Histórico atualizado com sucesso!");
         if (inputLog) inputLog.value = "";
     }).catch((error) => {
         console.error("Erro ao salvar no Firebase:", error);
-        alert("Erro ao salvar. Verifique sua conexão ou permissões.");
+        alert("Erro ao salvar. Verifique sua conexão.");
     });
 }
 
-// Escuta mensagens em tempo real (Chat Comunitário)
+// ÚNICO Escutador para o Chat Comunitário
 db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
     const data = snapshot.val();
     const chatWin = document.getElementById('alou-chat-window');
+    
     if (!chatWin) return; 
 
     const msgDiv = document.createElement('div');
@@ -402,6 +343,7 @@ db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
     msgDiv.style.background = "#fff";
     msgDiv.style.color = "#333";
     msgDiv.style.alignSelf = "flex-start";
+    msgDiv.style.marginBottom = "8px";
     
     const d = new Date(data.timestamp);
     const hora = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
