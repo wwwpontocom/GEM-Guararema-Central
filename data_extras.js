@@ -1,11 +1,39 @@
 Object.assign(BIBLIOTECA_LIVRO, {
-      "vamos_aprender": {
+     "vamos_aprender": {
         keywords: ["vamos aprender", "basico", "importante", "informações", "introdução", "instrumentos", "violino", "flauta", "afinação"],
         fase: "Extras", 
         titulo: "VAMOS APRENDER", 
         icone: "💡",
         resumo: "Informações básicas e fundamentais para o início dos seus estudos musicais no GEM.",
         html_content: `
+            <style>
+                .indice-item {
+                    padding: 10px 15px;
+                    border-left: 3px solid #4a90e2;
+                    margin-bottom: 8px;
+                    background: #f8f9fa;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    display: block;
+                    border-radius: 0 5px 5px 0;
+                    color: #333;
+                    font-family: sans-serif;
+                }
+                .indice-item:hover {
+                    background: #eef5ff;
+                    border-left-width: 6px;
+                    padding-left: 12px;
+                }
+                .indice-disabled {
+                    padding: 10px 15px;
+                    border-left: 3px solid #ccc;
+                    color: #999;
+                    margin-bottom: 8px;
+                    background: #f1f1f1;
+                    border-radius: 0 5px 5px 0;
+                    font-family: sans-serif;
+                }
+            </style>
             <div style="font-family: sans-serif; line-height: 1.6; color: #333;">
                 <p style="background: #fff3cd; padding: 10px; border-left: 5px solid #ffc107; border-radius: 4px;">
                     <strong>Orientações Iniciais:</strong> Estude com dedicação cada conceito básico abaixo para fundamentar seu aprendizado técnico.
