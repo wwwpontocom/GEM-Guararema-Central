@@ -714,6 +714,13 @@ function selectTab(tabId) {
         }
     }
     // ---------------------------
+     else if (tabId === 'programa') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        if (typeof mostrarConteudo === "function") {
+            mostrarConteudo('programa_minimo');
+        }
+    }
+      
   else if (tabId === 'instrumentos') {
         if (typeof switchTab === "function") switchTab('assistente');
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
