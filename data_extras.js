@@ -118,9 +118,11 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
                <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
              
-                <div style="text-align: center;">
-                   <img src="assets/img/vio2.jpg" alt="Técnica Mão Direita 2" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
-                    <p style="font-size: 11px; color: #666;">Figura 2: Flexibilidade</p>
+                <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
+                    <div style="text-align: center;">
+                        <img src="assets/img/vio2.jpg" alt="Técnica Mão Direita 2" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
+                        <p style="font-size: 11px; color: #666;">Figura 2: Flexibilidade</p>
+                    </div>
                 </div>
                 <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
                     <button onclick="mostrarConteudo('vamos_aprender')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar ao Índice</button>
