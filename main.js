@@ -742,6 +742,24 @@ function selectTab(tabId) {
     });
 }
 
+function mostrarConteudo(chave) {
+    const renderArea = document.getElementById('render-area');
+    if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO[chave]) {
+        // Injeta o conteúdo HTML da fase clicada
+        renderArea.innerHTML = BIBLIOTECA_LIVRO[chave].html_content;
+        
+        // Opcional: Rola para o topo para o usuário ler do início
+        renderArea.scrollTop = 0;
+        
+        // Se quiser que o título no topo mude para o título da lição:
+        const activeTabNameEl = document.getElementById('active-tab-name');
+        if (activeTabNameEl) {
+            activeTabNameEl.innerText = BIBLIOTECA_LIVRO[chave].titulo;
+        }
+    } else {
+        console.error("Erro: Conteúdo não encontrado para a chave:", chave);
+    }
+}
 
 function renderTurmas() {
     const area = document.getElementById('render-area');
