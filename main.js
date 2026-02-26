@@ -714,12 +714,11 @@ function selectTab(tabId) {
         }
     }
     // ---------------------------
-    else if (tabId === 'instrumentos') {
+  else if (tabId === 'instrumentos') {
         if (typeof switchTab === "function") switchTab('assistente');
-        
-        // Chamamos a função centralizada em vez de injetar o HTML manualmente
-        if (typeof mostrarConteudo === "function") {
-            mostrarConteudo('vamos_aprender');
+        if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
+            renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
+            renderArea.scrollTop = 0;
         }
     }
     // --- NOVO BLOCO PARA PLANO DE AULA ---
