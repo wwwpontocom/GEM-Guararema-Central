@@ -781,6 +781,7 @@ function mostrarConteudo(chave) {
         }
 
 
+
 function renderTurmas() {
     const area = document.getElementById('render-area');
     if (!area) return;
