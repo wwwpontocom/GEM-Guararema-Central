@@ -693,7 +693,8 @@ function selectTab(tabId) {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
-        'programa': 'Programa Mínimo', 'plano': 'Plano de Aula'
+        'programa': 'Programa Mínimo', 'plano': 'Plano de Aula',
+        'msa': 'MSA'
     };
     
     const activeLabel = labels[tabId] || 'GEM';
@@ -705,7 +706,15 @@ function selectTab(tabId) {
     // 3. Lógica de Injeção de Conteúdo
     const renderArea = document.getElementById('render-area');
     
-    if (tabId === 'instrumentos') {
+  // --- NOVO BLOCO PARA MSA ---
+    if (tabId === 'msa') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        if (typeof mostrarConteudo === "function") {
+            mostrarConteudo('indice'); 
+        }
+    }
+    // ---------------------------
+    else if (tabId === 'instrumentos') {
         if (typeof switchTab === "function") switchTab('assistente');
         if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["vamos_aprender"]) {
             renderArea.innerHTML = BIBLIOTECA_LIVRO["vamos_aprender"].html_content;
