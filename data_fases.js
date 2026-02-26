@@ -239,4 +239,4 @@ let BIBLIOTECA_LIVRO = {
             `,
             pagina: "10"
         }
- });
+ };
