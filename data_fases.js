@@ -1,60 +1,63 @@
 let BIBLIOTECA_LIVRO = {
-       "indice": {
-    keywords: ["indice", "sumario", "conteudo", "fases", "topicos", "ajuda", "começar"],
-    fase: "GERAL", 
-    titulo: "ÍNDICE - MSAM", 
-    icone: "☰",
-    resumo: "Aqui está o índice do manual. Você pode clicar nos tópicos para navegar rapidamente.",
-    html_content: `
-        <style>
-            .indice-item {
-                padding: 10px 15px;
-                border-left: 3px solid #4a90e2;
-                margin-bottom: 8px;
-                background: #f8f9fa;
-                cursor: pointer;
-                transition: all 0.2s;
-                display: block;
-                border-radius: 0 5px 5px 0;
-            }
-            .indice-item:hover {
-                background: #eef5ff;
-                border-left-width: 6px;
-                padding-left: 12px;
-            }
-            .indice-disabled {
-                padding: 10px 15px;
-                border-left: 3px solid #ccc;
-                color: #999;
-                margin-bottom: 8px;
-                background: #f1f1f1;
-                border-radius: 0 5px 5px 0;
-            }
-        </style>
-        <ul style="list-style: none; padding: 0;">
-            <li style="margin-bottom: 15px;"><strong>Fase 1</strong></li>
-            
-            <li class="indice-item" onclick="mostrarConteudo('fase_1_musica_som')">
-                1.1 - Música e Som (Pág. 9)
-            </li>
-            
-            <li class="indice-item" onclick="mostrarConteudo('fase_1_elementos_musica')">
-                1.2 - Elementos da Música (Pág. 9)
-            </li>
-            
-            <li class="indice-item" onclick="mostrarConteudo('fase_1_propriedades_som')">
-                1.3 - Propriedades do Som (Pág. 10)
-            </li>
+    "indice": {
+        keywords: ["indice", "sumario", "conteudo", "fases", "topicos", "ajuda", "começar"],
+        fase: "GERAL", 
+        titulo: "ÍNDICE - MSAM", 
+        icone: "☰",
+        resumo: "Aqui está o índice do manual. Você pode clicar nos tópicos para navegar rapidamente.",
+        html_content: `
+            <style>
+                .indice-item {
+                    padding: 10px 15px;
+                    border-left: 3px solid #4a90e2;
+                    margin-bottom: 8px;
+                    background: #f8f9fa;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    display: block;
+                    border-radius: 0 5px 5px 0;
+                    color: #333;
+                    font-family: sans-serif;
+                }
+                .indice-item:hover {
+                    background: #eef5ff;
+                    border-left-width: 6px;
+                    padding-left: 12px;
+                }
+                .indice-disabled {
+                    padding: 10px 15px;
+                    border-left: 3px solid #ccc;
+                    color: #999;
+                    margin-bottom: 8px;
+                    background: #f1f1f1;
+                    border-radius: 0 5px 5px 0;
+                    font-family: sans-serif;
+                }
+            </style>
+            <ul style="list-style: none; padding: 0;">
+                <li style="margin-bottom: 15px; font-family: sans-serif;"><strong>Fase 1</strong></li>
+                
+                <li class="indice-item" onclick="mostrarConteudo('fase_1_musica_som')">
+                    1.1 - Música e Som (Pág. 9)
+                </li>
+                
+                <li class="indice-item" onclick="mostrarConteudo('fase_1_elementos_musica')">
+                    1.2 - Elementos da Música (Pág. 9)
+                </li>
+                
+                <li class="indice-item" onclick="mostrarConteudo('fase_1_propriedades_som')">
+                    1.3 - Propriedades do Som (Pág. 10)
+                </li>
 
-            <li style="margin: 20px 0 15px 0;"><strong>Fase 2</strong></li>
-            
-            <li class="indice-disabled">
-                2.1 - Figuras de Ritmo (Pág. 11) - <em>Em breve</em>
-            </li>
-        </ul>
-    `,
-    pagina: "Índice"
-},
+                <li style="margin: 20px 0 15px 0; font-family: sans-serif;"><strong>Fase 2</strong></li>
+                
+                <li class="indice-disabled">
+                    2.1 - Figuras de Ritmo (Pág. 11) - <em>Em breve</em>
+                </li>
+            </ul>
+        `,
+        pagina: "Índice"
+    },
         "fase_1_musica_som": {
             keywords: ["musica", "som", "instrumentos", "teclado", "cordas", "madeiras", "metais", "orquestra", "onda", "sentimento"],
             fase: "Fase 1", 
