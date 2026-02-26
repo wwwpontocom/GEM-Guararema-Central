@@ -116,8 +116,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 </tr>
             </table>
 
-               <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
-             
+            
                 <div style="display: flex; gap: 10px; margin: 15px 0; justify-content: center;">
                     <div style="text-align: center;">
                         <img src="assets/img/vio2.jpg" alt="Técnica Mão Direita 2" style="width: 100%; max-width: 250px; border-radius: 8px; border: 1px solid #ccc;">
