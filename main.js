@@ -688,12 +688,12 @@ function selectTab(tabId) {
     // 1. Fecha o menu
     toggleMenu();
     
-    // 2. Atualiza nome na Nav
+    // 2. Atualiza nome na Nav (ADICIONADO 'plano')
     const labels = {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
-        'programa': 'Programa Mínimo'
+        'programa': 'Programa Mínimo', 'plano': 'Plano de Aula'
     };
     
     const activeLabel = labels[tabId] || 'GEM';
@@ -712,15 +712,22 @@ function selectTab(tabId) {
             renderArea.scrollTop = 0;
         }
     } 
+    // --- NOVO BLOCO PARA PLANO DE AULA ---
+    else if (tabId === 'plano') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO["plano_aulas"]) {
+            renderArea.innerHTML = BIBLIOTECA_LIVRO["plano_aulas"].html_content;
+            renderArea.scrollTop = 0;
+        }
+    }
+    // -------------------------------------
     else if (tabId === 'turmas') {
-        // IGUAL À AI: Apenas chama a função e deixa ela trabalhar
         if (typeof switchTab === "function") switchTab('assistente');
         if (typeof renderTurmas === "function") {
             renderTurmas(); 
         }
     } 
     else {
-        // 4. Chama sua função de troca de aba padrão para abas comuns
         if (typeof switchTab === "function") {
             switchTab(tabId);
         }
@@ -734,6 +741,7 @@ function selectTab(tabId) {
         }
     });
 }
+
 
 function renderTurmas() {
     const area = document.getElementById('render-area');
