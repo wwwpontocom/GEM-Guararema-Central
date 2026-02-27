@@ -1,25 +1,31 @@
+// --- FIX IS HERE: CHRONOLOGICAL ORDER AND DETAILED PROMPTS ---
+
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
         keywords: ["licoes", "alunos", "professor", "gravar", "registro", "presença"],
         fase: "Extras",
         titulo: "CONTROLE DE LIÇÕES",
         icone: "✏️",
-        resumo: "Registro individual de progresso com lista dinâmica via Firebase.",
+        resumo: "Registro detalhado com ordem cronológica e status de aprovação.",
         html_content: `
             <style>
                 .licoes-wrapper { padding: 15px; background: #f9f9f9; min-height: 100vh; }
                 .selector-box { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
-                .student-table { width: 100%; border-collapse: collapse; background: white; font-size: 12px; margin-top: 10px; }
-                .student-table th { background: #4a90e2; color: white; padding: 10px; border: 1px solid #357abd; }
-                .student-table td { border: 1px solid #ddd; padding: 8px; text-align: center; height: 30px; }
+                .student-table { width: 100%; border-collapse: collapse; background: white; font-size: 11px; margin-top: 10px; }
+                .student-table th { background: #333; color: white; padding: 8px; border: 1px solid #000; text-transform: uppercase; }
+                .student-table td { border: 1px solid #000; padding: 6px; text-align: center; height: 25px; color: #333; }
                 .btn-action { border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; color: white; }
                 .btn-add { background: #8e44ad; }
-                .btn-save-licao { background: #27ae60; }
-                .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; background: #eee; border-radius: 5px; }
+                .btn-save-licao { background: #27ae60; width: 100%; margin: 10px 0; }
+                .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff; }
+                .status-aprovado { color: #27ae60; font-weight: bold; font-size: 9px; }
+                .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
                 
                 @media print {
                     .no-print, .btn-action, .selector-box { display: none !important; }
                     .student-table { width: 100%; font-size: 10px; }
+                    .licoes-wrapper { background: white; padding: 0; }
+                    body { background: white; }
                 }
             </style>
 
@@ -32,7 +38,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
                     </select>
-                    <button class="btn-pdf" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ Gerar Relatório PDF</button>
+                    <button class="btn-pdf" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ Imprimir Ficha de Progresso</button>
                 </div>
 
                 <div id="ficha-aluno" style="display:none;">
@@ -46,11 +52,11 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     <table class="student-table">
                         <thead>
                             <tr>
-                                <th>DATA</th>
-                                <th>SOLFEJO</th>
-                                <th>MÉTODO</th>
-                                <th>HINO</th>
-                                <th>INSTRUTOR</th>
+                                <th style="width: 15%;">DIA / MÊS</th>
+                                <th style="width: 25%;">SOLFEJO</th>
+                                <th style="width: 25%;">MÉTODO</th>
+                                <th style="width: 15%;">HINO</th>
+                                <th style="width: 20%;">INSTRUTOR</th>
                             </tr>
                         </thead>
                         <tbody id="body-licoes"></tbody>
@@ -61,13 +67,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <script>
                 var currentID = "";
 
-                // 1. Escuta a lista de alunos em tempo real
                 function sincronizarListaAlunos() {
-                    const dbLista = firebase.database().ref('lista_alunos');
-                    dbLista.on('value', (snapshot) => {
+                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
                         const select = document.getElementById('aluno-select');
                         select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
-                        
                         snapshot.forEach((child) => {
                             const aluno = child.val();
                             select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}">\${aluno.nome} (\${aluno.instrumento})</option>\`;
@@ -75,26 +78,21 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     });
                 }
 
-                // 2. Cadastra novo aluno via Prompt
                 function promptNovoAluno() {
                     const nome = prompt("Nome completo do aluno:");
                     if(!nome) return;
                     const instrumento = prompt("Instrumento:");
-                    
-                    const novoRef = firebase.database().ref('lista_alunos').push();
-                    novoRef.set({ nome, instrumento });
+                    firebase.database().ref('lista_alunos').push({ nome, instrumento });
                 }
 
                 function initTabelaAluno(id) {
                     if(!id) { document.getElementById('ficha-aluno').style.display = 'none'; return; }
                     currentID = id;
                     document.getElementById('ficha-aluno').style.display = 'block';
-                    
                     const sel = document.getElementById('aluno-select');
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text.split(' (')[0];
-                    document.getElementById('instr-aluno-header').innerText = "INSTR: " + option.getAttribute('data-instr');
-
+                    document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
                     loadLicoes(id);
                 }
 
@@ -102,8 +100,19 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     firebase.database().ref('licoes_alunos/' + id).on('value', (snapshot) => {
                         const tbody = document.getElementById('body-licoes');
                         tbody.innerHTML = "";
-                        snapshot.forEach(child => {
-                            const l = child.val();
+                        const licoes = [];
+                        snapshot.forEach(child => { 
+                            licoes.push(child.val()); 
+                        });
+
+                        // Ordenação por data (formato DD/MM)
+                        licoes.sort((a, b) => {
+                            const dateA = a.data.split('/').reverse().join('');
+                            const dateB = b.data.split('/').reverse().join('');
+                            return dateA.localeCompare(dateB);
+                        });
+
+                        licoes.forEach(l => {
                             tbody.innerHTML += \`<tr>
                                 <td>\${l.data}</td>
                                 <td>\${l.solfejo}</td>
@@ -116,21 +125,33 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 }
 
                 function abrirPromptGravar() {
-                    const dataL = prompt("Data (DD/MM):", new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
+                    const dataL = prompt("Data da Lição (DD/MM):", new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
                     if(!dataL || !currentID) return;
                     
+                    const helperStatus = "\\n(Digite 'A' para Aprovado ou 'E' para Estudar)";
+
+                    const s_lic = prompt("SOLFEJO - Lição e Página:") || "-";
+                    const s_sts = (prompt("SOLFEJO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
+                    
+                    const m_lic = prompt("MÉTODO - Lição e Página:") || "-";
+                    const m_sts = (prompt("MÉTODO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
+
+                    const hino = prompt("Hino:") || "-";
+                    const h_sts = (prompt("HINO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
+
+                    const instrutor = prompt("Nome do Instrutor:") || "-";
+
                     const licao = {
                         data: dataL,
-                        solfejo: prompt("Solfejo:") || "-",
-                        metodo: prompt("Método:") || "-",
-                        hino: prompt("Hino:") || "-",
-                        instrutor: prompt("Instrutor:") || "-"
+                        solfejo: s_lic + s_sts,
+                        metodo: m_lic + m_sts,
+                        hino: hino + h_sts,
+                        instrutor: instrutor
                     };
 
                     firebase.database().ref('licoes_alunos/' + currentID).push(licao);
                 }
 
-                // Inicia a sincronização ao carregar o módulo
                 sincronizarListaAlunos();
             </script>
         `,
