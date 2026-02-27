@@ -22,6 +22,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .obs-card h4 { margin: 0 0 12px 0; color: #b71c1c; display: flex; align-items: center; gap: 8px; font-size: 15px; }
                 .obs-list { margin: 0; padding: 0; list-style: none; }
                 .obs-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; color: #444; }
+                .instr-name-btn { 
+        font-weight: bold; color: #b71c1c; text-transform: uppercase; 
+        width: 100%; border: none; background: #f1f1f1; cursor: pointer;
+        padding: 8px 5px; text-align: left; transition: 0.2s;
+    }
+    .instr-name-btn:hover { background: #e0e0e0; color: #d32f2f; }
             </style>
       <div class="prog-container">
                 <div class="prog-index">
@@ -97,8 +103,18 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr id="row_violino"><td class="instr-name">Violino</td><td>N. LAOUREX Vol. 1 pág. 35 OU Schimoll pág. 46 (113) + H. SITT Vol. 1 lição 6</td><td>N. LAOUREX Vol. 1 compl. + Vol. 3 pág. 15 OU Schimoll pág. 67 (162) + H. SITT Vol. 1 lição 14</td><td>N. LAOUREX Vol. 1 compl. + Vol. 3 pág. 24 e 44-55 OU MÉTODO Schimoll completo</td></tr>
-                        <tr id="row_viola"><td class="instr-name">Viola</td><td>BEGINNING STRINGS lição VI + BERTA VOLMER Vol. 1 pág. 31</td><td>BERTA VOLMER Vol. 1 pág. 52 + A TUNE A DAY Vol. 3 pág. 16</td><td>BERTA VOLMER Vol. 1 compl. + A TUNE A DAY Vol. 3 completo</td></tr>
+                        <tr id="row_violino">
+            <td><button class="instr-name-btn" onclick="abrirPopup(['<b>🎻 VIOLINO</b><br><br><b>RJM:</b> Laourex Vol. 1 p.35 ou Schimoll p.46 + H. Sitt L.6','<b>🎻 VIOLINO</b><br><br><b>Ofic:</b> Laourex 1 e 3 ou Schimoll Compl.'])">Violino 🔍</button></td>
+            <td>N. LAOUREX Vol. 1 pág. 35 OU Schimoll pág. 46 (113) + H. SITT Vol. 1 lição 6</td>
+            <td>N. LAOUREX Vol. 1 compl. + Vol. 3 pág. 15 OU Schimoll pág. 67 (162) + H. SITT Vol. 1 lição 14</td>
+            <td>N. LAOUREX Vol. 1 compl. + Vol. 3 pág. 24 e 44-55 OU MÉTODO Schimoll completo</td>
+        </tr>
+        <tr id="row_viola">
+            <td><button class="instr-name-btn" onclick="abrirPopup(['<b>🎻 VIOLA</b><br><br><b>RJM:</b> Beginning Strings L.VI + Berta Volmer Vol. 1 p.31','<b>🎻 VIOLA</b><br><br><b>Ofic:</b> Berta Volmer 1 Compl. + A Tune a Day 3 Compl.'])">Viola 🔍</button></td>
+            <td>BEGINNING STRINGS lição VI + BERTA VOLMER Vol. 1 pág. 31</td>
+            <td>BERTA VOLMER Vol. 1 pág. 52 + A TUNE A DAY Vol. 3 pág. 16</td>
+            <td>BERTA VOLMER Vol. 1 compl. + A TUNE A DAY Vol. 3 completo</td>
+        </tr> 
                         <tr id="row_cello"><td class="instr-name">Violoncelo</td><td>BEGINNING STRINGS lição VI + DOTZAUER Vol. 1 lição 35</td><td>DOTZAUER Vol. 1 compl. + Vol. 2 pág. 03 (111)</td><td>DOTZAUER Vol. 1 compl. + Vol. 2 pág. 19 (154)</td></tr>
                         <tr id="row_flauta"><td class="instr-name">Flauta</td><td>Rubank Elementary compl. OU PARÈS lição 41 OU GALLI pág. 41</td><td>Rubank Intermediate pág. 29 OU PARÈS lição 52 OU GALLI completo</td><td>Rubank Intermediate compl. OU PARÈS lição 62 OU GALLI completo</td></tr>
                         <tr id="row_oboe"><td class="instr-name">Oboé</td><td>Rubank Elementary compl. OU GIAMPIERI pág. 21</td><td>Rubank Intermediate pág. 15 OU GIAMPIERI pág. 30</td><td>Rubank Intermediate pág. 35 OU GIAMPIERI pág. 50</td></tr>
