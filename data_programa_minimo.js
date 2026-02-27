@@ -23,15 +23,35 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .obs-list { margin: 0; padding: 0; list-style: none; }
                 .obs-list li { padding: 8px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; color: #444; }
             </style>
-            <div class="prog-container">
+         <div class="prog-container">
                 <div class="prog-index">
-                    <div class="index-group-label">Navegação Rápida</div>
-                    <button class="index-btn" onclick="scrollToRow('row_violino')">Violino</button>
-                    <button class="index-btn" onclick="scrollToRow('row_flauta')">Flauta</button>
-                    <button class="index-btn" onclick="scrollToRow('row_clarinete')">Clarinete</button>
-                    <button class="index-btn" onclick="scrollToRow('row_sax')">Sax</button>
-                    <button class="index-btn" onclick="scrollToRow('row_trompete')">Trompete</button>
-                    <button class="index-btn" onclick="scrollToRow('row_teoria')">Teoria/Hinário</button>
+                    <div class="index-group-label">Navegação Rápida (Clique para ver detalhes)</div>
+                    
+                    <button class="index-btn" onclick="abrirPopup([
+                        '<b>🎻 VIOLINO - 2023</b><br><br><b>RJM:</b> Laourex Vol. 1 p.35 ou Schimoll p.46 + H. Sitt Vol. 1 L.6',
+                        '<b>🎻 VIOLINO (Continuação)</b><br><br><b>Cultos:</b> Laourex Vol. 1 Compl. + Vol. 3 p.15 ou Schimoll p.67 + H. Sitt L.14',
+                        '<b>🎻 VIOLINO (Final)</b><br><br><b>Oficialização:</b> Laourex Vol. 1 e 3 (p.24, 44-55) ou Schimoll Completo'
+                    ]); scrollToRow('row_violino')">Violino</button>
+
+                    <button class="index-btn" onclick="abrirPopup([
+                        '<b>🎶 FLAUTA - 2023</b><br><br><b>RJM:</b> Rubank Elementary ou Parès L.41 ou Galli p.41',
+                        '<b>🎶 FLAUTA</b><br><br><b>Cultos/Ofic.:</b> Rubank Intermediate ou Parès L.52/62 ou Galli Completo'
+                    ]); scrollToRow('row_flauta')">Flauta</button>
+
+                    <button class="index-btn" onclick="abrirPopup([
+                        '<b>🎷 SAXOFONES - 2023</b><br><br><b>RJM:</b> Giampieri p.21 ou Amadeu Russo p.25',
+                        '<b>🎷 SAXOFONES</b><br><br><b>Oficialização:</b> Giampieri p.50 ou Amadeu Russo p.55-60'
+                    ]); scrollToRow('row_sax')">Sax</button>
+
+                    <button class="index-btn" onclick="abrirPopup([
+                        '<b>🎺 TROMPETE - 2023</b><br><br><b>RJM:</b> Rubank Elementary completo',
+                        '<b>🎺 TROMPETE</b><br><br><b>Oficialização:</b> Getchel Second Book completo ou Amadeu Russo p.55-60'
+                    ]); scrollToRow('row_trompete')">Trompete</button>
+                    
+                    <button class="index-btn" onclick="abrirPopup([
+                        '<b>📚 TEORIA & GERAL</b><br><br><b>MSA:</b> Até fase 12 (RJM), Até fase 15 (Cultos), Completo (Oficialização)',
+                        '<b>🎼 SOLFEJO & HINÁRIO</b><br><br><b>Hinos:</b> 431-480 (RJM), Todos (Cultos/Ofic.)<br><b>Vozes:</b> Principal, Alternativa e Soprano'
+                    ]); scrollToRow('row_teoria')">Teoria/Hinário</button>
                 </div>
 
                 <table class="prog-table">
