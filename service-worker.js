@@ -5,6 +5,7 @@ const ASSETS_TO_CACHE = [
     './style.css',
     './data_fases.js',
     './data_extras.js',
+    './data_licoes.js',
     './data_logs.js',
     './main.js',
     'https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js',
