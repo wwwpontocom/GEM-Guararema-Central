@@ -1,4 +1,4 @@
-// --- FIX IS HERE: CHRONOLOGICAL ORDER, DETAILED PROMPTS AND EDIT/DELETE ---
+// --- FIX IS HERE: GLOBAL SCOPE FUNCTION ENSURANCE ---
 
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
@@ -16,7 +16,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .student-table td { border: 1px solid #000; padding: 6px; text-align: center; color: #333; }
                 .btn-action { border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; color: white; }
                 .btn-add { background: #8e44ad; }
-                .btn-save-licao { background: #27ae60; width: 100%; margin: 10px 0; }
+                .btn-save-licao { background: #27ae60; width: 100%; margin: 10px 0; display: block !important; }
                 .btn-edit { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; }
                 .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff; }
                 .status-aprovado { color: #27ae60; font-weight: bold; font-size: 9px; }
@@ -33,9 +33,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 <div class="selector-box no-print">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <label><b>Selecione o Aluno:</b></label>
-                        <button class="btn-action btn-add" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>
+                        <button type="button" class="btn-action btn-add" onclick="promptNovoAluno()">➕ Novo Aluno</button>
                     </div>
-                    <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="window.initTabelaAluno(this.value)">
+                    <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
                     </select>
                     <button class="btn-pdf" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ Imprimir Ficha de Progresso</button>
@@ -47,7 +47,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <span id="instr-aluno-header">INSTRUMENTO: ---</span>
                     </div>
 
-                    <button class="btn-action btn-save-licao no-print" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
+                    <button type="button" class="btn-action btn-save-licao no-print" onclick="abrirPromptGravar()">💾 Gravar Nova Lição</button>
 
                     <table class="student-table">
                         <thead>
@@ -66,40 +66,25 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-                window.sincronizarListaAlunos = function() {
-                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
-                        const select = document.getElementById('aluno-select');
-                        if(!select) return;
-                        select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
-                        snapshot.forEach((child) => {
-                            const aluno = child.val();
-                            select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}">\${aluno.nome} (\${aluno.instrumento})</option>\`;
-                        });
-                    });
-                };
-
-               window.promptNovoAluno = function() {
+                // Forçamos as funções para o objeto window imediatamente
+                window.promptNovoAluno = function() {
                     const nome = prompt("Nome completo do aluno:");
                     if(!nome) return;
                     const instrumento = prompt("Instrumento:");
                     if(!instrumento) return;
 
-                    firebase.database().ref('lista_alunos').push({ 
-                        nome: nome, 
-                        instrumento: instrumento 
-                    }).then(() => {
-                        alert("Aluno cadastrado com sucesso!");
-                        // Força a sincronização manual caso o listener demore
-                        if(typeof window.sincronizarListaAlunos === "function") {
-                            window.sincronizarListaAlunos();
-                        }
-                    }).catch(err => alert("Erro ao cadastrar: " + err.message));
+                    firebase.database().ref('lista_alunos').push({ nome, instrumento })
+                        .then(() => alert("Aluno cadastrado com sucesso!"))
+                        .catch(e => alert("Erro: " + e.message));
                 };
 
                 window.initTabelaAluno = function(id) {
-                    if(!id) { document.getElementById('ficha-aluno').style.display = 'none'; return; }
+                    const ficha = document.getElementById('ficha-aluno');
+                    if(!id) { if(ficha) ficha.style.display = 'none'; return; }
+                    
                     window.currentID = id;
-                    document.getElementById('ficha-aluno').style.display = 'block';
+                    ficha.style.display = 'block';
+                    
                     const sel = document.getElementById('aluno-select');
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text.split(' (')[0];
@@ -114,13 +99,11 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         tbody.innerHTML = "";
                         const licoes = [];
                         snapshot.forEach(child => { 
-                            let data = child.val();
-                            data.key = child.key; // Guardamos a chave para editar/deletar
-                            licoes.push(data); 
+                            let item = child.val();
+                            item.key = child.key;
+                            licoes.push(item); 
                         });
-
                         licoes.sort((a, b) => a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join('')));
-
                         licoes.forEach(l => {
                             tbody.innerHTML += \`<tr>
                                 <td>\${l.data}</td>
@@ -129,8 +112,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <td>\${l.hino}</td>
                                 <td>\${l.instrutor}</td>
                                 <td class="col-acoes no-print">
-                                    <button class="btn-edit" onclick="window.editarLicao('\${l.key}')">✏️</button>
-                                    <button class="btn-edit" onclick="window.excluirLicao('\${l.key}')">🗑️</button>
+                                    <button class="btn-edit" onclick="editarLicao('\${l.key}')">✏️</button>
+                                    <button class="btn-edit" onclick="excluirLicao('\${l.key}')">🗑️</button>
                                 </td>
                             </tr>\`;
                         });
@@ -138,7 +121,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 };
 
                 window.abrirPromptGravar = function() {
-                    if(!window.currentID) return;
+                    if(!window.currentID) return alert("Selecione um aluno.");
                     const licaoBase = { data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), solfejo: "-", metodo: "-", hino: "-", instrutor: "-" };
                     window.processarLicao(null, licaoBase);
                 };
@@ -146,8 +129,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 window.editarLicao = function(key) {
                     firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
                         const l = snapshot.val();
-                        // Limpar as tags HTML para o prompt não ficar feio
-                        const limpar = (str) => str.split('<br>')[0];
+                        const limpar = (str) => str ? str.split('<br>')[0] : "";
                         window.processarLicao(key, {
                             data: l.data,
                             solfejo: limpar(l.solfejo),
@@ -161,34 +143,28 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 window.processarLicao = function(key, defaults) {
                     const dataL = prompt("Data (DD/MM):", defaults.data);
                     if(!dataL) return;
-                    
-                    const helper = "\\n(A = Aprovado / E = Estudar)";
-                    const fSts = (v, s) => v + (s.toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
-
-                    const s_lic = prompt("SOLFEJO - Lição/Pág:", defaults.solfejo);
-                    const s_sts = fSts(s_lic, prompt("SOLFEJO - Status" + helper));
-
-                    const m_lic = prompt("MÉTODO - Lição/Pág:", defaults.metodo);
-                    const m_sts = fSts(m_lic, prompt("MÉTODO - Status" + helper));
-
-                    const h_lic = prompt("HINO:", defaults.hino);
-                    const h_sts = fSts(h_lic, prompt("HINO - Status" + helper));
-
-                    const inst = prompt("Instrutor:", defaults.instrutor);
-
-                    const licao = { data: dataL, solfejo: s_sts, metodo: m_sts, hino: h_sts, instrutor: inst };
-
+                    const h = "\\n(A = Aprovado / E = Estudar)";
+                    const f = (v, promptMsg) => {
+                        const s = (prompt(promptMsg + h) || "E").toUpperCase();
+                        return v + (s === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
+                    };
+                    const licao = {
+                        data: dataL,
+                        solfejo: f(prompt("SOLFEJO - Lição/Pág:", defaults.solfejo), "SOLFEJO"),
+                        metodo: f(prompt("MÉTODO - Lição/Pág:", defaults.metodo), "MÉTODO"),
+                        hino: f(prompt("HINO:", defaults.hino), "HINO"),
+                        instrutor: prompt("Instrutor:", defaults.instrutor)
+                    };
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
                     if(key) ref.child(key).update(licao); else ref.push(licao);
                 };
 
                 window.excluirLicao = function(key) {
-                    if(confirm("Deseja excluir este registro permanentemente?")) {
-                        firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
-                    }
+                    if(confirm("Excluir registro?")) firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
                 };
 
-                window.sincronizarListaAlunos();
+                // Execução inicial
+                if(typeof firebase !== 'undefined') window.sincronizarListaAlunos();
             </script>
         `,
         pagina: "Extra"
