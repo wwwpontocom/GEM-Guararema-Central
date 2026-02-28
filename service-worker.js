@@ -1,4 +1,4 @@
-const CACHE_NAME = 'msa-gm-central-v1';
+const CACHE_NAME = 'gem-gm-central-v1';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
