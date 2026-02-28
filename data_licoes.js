@@ -124,37 +124,4 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     });
                 }
 
-                function abrirPromptGravar() {
-                    const dataL = prompt("Data da Lição (DD/MM):", new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
-                    if(!dataL || !currentID) return;
-                    
-                    const helperStatus = "\\n(Digite 'A' para Aprovado ou 'E' para Estudar)";
-
-                    const s_lic = prompt("SOLFEJO - Lição e Página:") || "-";
-                    const s_sts = (prompt("SOLFEJO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
-                    
-                    const m_lic = prompt("MÉTODO - Lição e Página:") || "-";
-                    const m_sts = (prompt("MÉTODO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
-
-                    const hino = prompt("Hino:") || "-";
-                    const h_sts = (prompt("HINO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
-
-                    const instrutor = prompt("Nome do Instrutor:") || "-";
-
-                    const licao = {
-                        data: dataL,
-                        solfejo: s_lic + s_sts,
-                        metodo: m_lic + m_sts,
-                        hino: hino + h_sts,
-                        instrutor: instrutor
-                    };
-
-                    firebase.database().ref('licoes_alunos/' + currentID).push(licao);
-                }
-
-                sincronizarListaAlunos();
-            </script>
-        `,
-        pagina: "Extra"
-    }
-});
+             
