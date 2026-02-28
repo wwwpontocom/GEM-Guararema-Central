@@ -33,9 +33,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 <div class="selector-box no-print">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <label><b>Selecione o Aluno:</b></label>
-                        <button class="btn-action btn-add" onclick="promptNovoAluno()">➕ Novo Aluno</button>
+                        <button class="btn-action btn-add" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>
                     </div>
-                    <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="initTabelaAluno(this.value)">
+                    <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="window.initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
                     </select>
                     <button class="btn-pdf" style="margin-top:10px; width:100%;" onclick="window.print()">🖨️ Imprimir Ficha de Progresso</button>
@@ -47,7 +47,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <span id="instr-aluno-header">INSTRUMENTO: ---</span>
                     </div>
 
-                    <button class="btn-action btn-save-licao no-print" onclick="abrirPromptGravar()">💾 Gravar Nova Lição</button>
+                    <button class="btn-action btn-save-licao no-print" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
 
                     <table class="student-table">
                         <thead>
@@ -65,47 +65,57 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-                var currentID = "";
-
-                function sincronizarListaAlunos() {
-                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
+                // Garantir que as funções sejam globais para os botões funcionarem
+                window.sincronizarListaAlunos = function() {
+                    const dbLista = firebase.database().ref('lista_alunos');
+                    dbLista.on('value', (snapshot) => {
                         const select = document.getElementById('aluno-select');
+                        if(!select) return;
                         select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
                         snapshot.forEach((child) => {
                             const aluno = child.val();
                             select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}">\${aluno.nome} (\${aluno.instrumento})</option>\`;
                         });
                     });
-                }
+                };
 
-                function promptNovoAluno() {
+                window.promptNovoAluno = function() {
                     const nome = prompt("Nome completo do aluno:");
                     if(!nome) return;
                     const instrumento = prompt("Instrumento:");
-                    firebase.database().ref('lista_alunos').push({ nome, instrumento });
-                }
+                    firebase.database().ref('lista_alunos').push({ 
+                        nome: nome, 
+                        instrumento: instrumento 
+                    }).then(() => {
+                        alert("Aluno cadastrado com sucesso!");
+                    }).catch(err => alert("Erro: " + err.message));
+                };
 
-                function initTabelaAluno(id) {
-                    if(!id) { document.getElementById('ficha-aluno').style.display = 'none'; return; }
-                    currentID = id;
+                window.initTabelaAluno = function(id) {
+                    if(!id) { 
+                        const area = document.getElementById('ficha-aluno');
+                        if(area) area.style.display = 'none'; 
+                        return; 
+                    }
+                    window.currentID = id;
                     document.getElementById('ficha-aluno').style.display = 'block';
+                    
                     const sel = document.getElementById('aluno-select');
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text.split(' (')[0];
                     document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
-                    loadLicoes(id);
-                }
+                    window.loadLicoes(id);
+                };
 
-                function loadLicoes(id) {
+                window.loadLicoes = function(id) {
                     firebase.database().ref('licoes_alunos/' + id).on('value', (snapshot) => {
                         const tbody = document.getElementById('body-licoes');
+                        if(!tbody) return;
                         tbody.innerHTML = "";
                         const licoes = [];
-                        snapshot.forEach(child => { 
-                            licoes.push(child.val()); 
-                        });
+                        snapshot.forEach(child => { licoes.push(child.val()); });
 
-                        // Ordenação por data (formato DD/MM)
+                        // Ordenação cronológica por data (formato DD/MM)
                         licoes.sort((a, b) => {
                             const dateA = a.data.split('/').reverse().join('');
                             const dateB = b.data.split('/').reverse().join('');
@@ -122,37 +132,39 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </tr>\`;
                         });
                     });
-                }
+                };
 
-                function abrirPromptGravar() {
+                window.abrirPromptGravar = function() {
                     const dataL = prompt("Data da Lição (DD/MM):", new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
-                    if(!dataL || !currentID) return;
+                    if(!dataL || !window.currentID) {
+                        alert("Por favor, selecione um aluno antes de gravar.");
+                        return;
+                    }
                     
                     const helperStatus = "\\n(Digite 'A' para Aprovado ou 'E' para Estudar)";
-
+                    
                     const s_lic = prompt("SOLFEJO - Lição e Página:") || "-";
                     const s_sts = (prompt("SOLFEJO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
                     
                     const m_lic = prompt("MÉTODO - Lição e Página:") || "-";
                     const m_sts = (prompt("MÉTODO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
-
+                    
                     const hino = prompt("Hino:") || "-";
                     const h_sts = (prompt("HINO - Status" + helperStatus) || "").toUpperCase() === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>';
-
+                    
                     const instrutor = prompt("Nome do Instrutor:") || "-";
 
-                    const licao = {
+                    firebase.database().ref('licoes_alunos/' + window.currentID).push({
                         data: dataL,
                         solfejo: s_lic + s_sts,
                         metodo: m_lic + m_sts,
                         hino: hino + h_sts,
                         instrutor: instrutor
-                    };
+                    });
+                };
 
-                    firebase.database().ref('licoes_alunos/' + currentID).push(licao);
-                }
-
-                sincronizarListaAlunos();
+                // Inicializar a lista ao carregar o módulo
+                window.sincronizarListaAlunos();
             </script>
         `,
         pagina: "Extra"
