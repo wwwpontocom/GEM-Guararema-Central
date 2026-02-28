@@ -858,23 +858,3 @@ function voltarAoInicio() {
     }
 }
 
-function abrirPromptGravar() {
-    const dataL = prompt("Data (DD/MM):", new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}));
-    if(!dataL || !currentID) return;
-    
-    // Criando o objeto com os dados
-    const licao = {
-        data: dataL,
-        solfejo: prompt("Solfejo:") || "-",
-        metodo: prompt("Método:") || "-",
-        hino: prompt("Hino:") || "-",
-        instrutor: prompt("Instrutor:") || "-"
-    };
-
-    // O uso da barra '/' cria automaticamente a "seta" (pasta) no console do Firebase
-    // Estrutura: licoes_alunos -> [ID_DO_ALUNO] -> [ID_DA_LICAO]
-    firebase.database().ref('licoes_alunos/' + currentID).push(licao)
-        .then(() => {
-            console.log("Caminho criado com sucesso em: licoes_alunos/" + currentID);
-        });
-}
