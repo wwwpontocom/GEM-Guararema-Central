@@ -69,6 +69,9 @@ function validarEObterNome() {
     function renderPage(chave) {
     const dados = BIBLIOTECA_LIVRO[chave];
     const area = document.getElementById('render-area');
+    if(!area) return; // Prevent crash
+    
+    area.style.display = 'block'; // Ensure it's visible
     area.style.opacity = 0;
     
     setTimeout(() => {
