@@ -78,11 +78,22 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     });
                 };
 
-                window.promptNovoAluno = function() {
+               window.promptNovoAluno = function() {
                     const nome = prompt("Nome completo do aluno:");
                     if(!nome) return;
                     const instrumento = prompt("Instrumento:");
-                    firebase.database().ref('lista_alunos').push({ nome, instrumento });
+                    if(!instrumento) return;
+
+                    firebase.database().ref('lista_alunos').push({ 
+                        nome: nome, 
+                        instrumento: instrumento 
+                    }).then(() => {
+                        alert("Aluno cadastrado com sucesso!");
+                        // Força a sincronização manual caso o listener demore
+                        if(typeof window.sincronizarListaAlunos === "function") {
+                            window.sincronizarListaAlunos();
+                        }
+                    }).catch(err => alert("Erro ao cadastrar: " + err.message));
                 };
 
                 window.initTabelaAluno = function(id) {
