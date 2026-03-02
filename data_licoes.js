@@ -102,7 +102,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
                     
                     const busca = document.getElementById('input-busca');
-                    if(busca) busca.value = ""; // Limpa busca ao trocar aluno
+                    if(busca) busca.value = ""; 
                     
                     window.loadLicoes(id);
                 };
@@ -132,7 +132,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 </td>
                             </tr>\`;
                         });
-                        window.filtrarTabela(); // Reaplica filtro se houver texto
+                        window.filtrarTabela(); 
                     });
                 };
 
