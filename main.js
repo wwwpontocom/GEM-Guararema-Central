@@ -425,8 +425,8 @@ window.addEventListener('appinstalled', () => {
 });
 
 function toggleChat(forceOpen = false) {
-    const sidebar = document.querySelector('.chat-sidebar');
-    const btn = document.querySelector('.toggle-chat-btn');
+   const sidebar = document.querySelector('.chat-sidebar');
+    const header = document.querySelector('.chat-header');
     if (!sidebar) return;
 
     if (forceOpen) {
