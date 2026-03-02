@@ -457,6 +457,7 @@ function toggleChat(forceOpen = false) {
 document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.chat-header');
     const userInput = document.getElementById('user-input');
+ const sidebar = document.querySelector('.chat-sidebar');
 
     // 1. Toggle on header click
     if (header) {
