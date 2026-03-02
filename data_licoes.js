@@ -98,20 +98,20 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             <label>Quem ensinou:</label>
                             <select id="m-instrutor">
                                 <option value="">-- Selecione --</option>
-                                <option value="Instrutor 1">Alecson</option>
-                                <option value="Instrutor 2">Alessandro</option>
-                                <option value="Instrutor 3">Breno</option>
-                                 <option value="Instrutor 4">Davi</option>
-                                <option value="Instrutor 5">Dudu</option>
-                                <option value="Instrutor 6">Jonny</option>
-                                 <option value="Instrutor 7">João</option>
-                                <option value="Instrutor 8">Leo</option>
-                                <option value="Instrutor 9">Marcos</option>
-                                 <option value="Instrutor 10">Osvaldo</option>
-                                <option value="Instrutor 11">Rodrigo</option>
-                                <option value="Instrutor 12">Ronaldo</option>
-                                 <option value="Instrutor 13">Rudi</option>
-                                <option value="Instrutor 14">Vitor</option>
+                                <option value="Alecson">Alecson</option>
+                                <option value="Alessandro">Alessandro</option>
+                                <option value="Breno">Breno</option>
+                                 <option value="Davi">Davi</option>
+                                <option value="Dudu">Dudu</option>
+                                <option value="Jonny">Jonny</option>
+                                 <option value="João">João</option>
+                                <option value="Leo">Leo</option>
+                                <option value="Marcos">Marcos</option>
+                                 <option value="Osvaldo">Osvaldo</option>
+                                <option value="Rodrigo">Rodrigo</option>
+                                <option value="Ronaldo">Ronaldo</option>
+                                 <option value="Rudi">Rudi</option>
+                                <option value="Vitor">Vitor</option>
                             </select>
                         </div>
 
