@@ -437,9 +437,9 @@ function toggleChat(forceOpen = false) {
 
     const isMinimized = sidebar.classList.contains('minimized');
     
-    // Update Icon based on platform and state
-    if (btn) {
-       btn.innerText = '';
+   // Update header text based on state
+    if (header) {
+        header.innerText = isMinimized ? 'Abrir Assistente GEM' : 'Fechar Assistente GEM';
     }
 
     // Scroll to bottom if opened
@@ -477,25 +477,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        userInput.addEventListener('focus', () => {
-            toggleChat(true); // Open immediately when clicked
+      userInput.addEventListener('focus', () => {
+            if (sidebar && sidebar.classList.contains('minimized')) {
+                toggleChat(true); // Open immediately when clicked
+            }
         });
     }
 
     // 3. Initial Library Update
     atualizarBibliotecaComMensagens();
 
-    // FORÇAR INICIAR MINIMIZADO
-    const sidebar = document.querySelector('.chat-sidebar');
+   // 4. Force Start Minimized with correct text
     if (sidebar) {
         sidebar.classList.add('minimized');
-        const btn = document.querySelector('.toggle-chat-btn');
-        if (btn) {
-           btn.innerText = '';
+        if (header) {
+            header.innerText = 'Abrir Assistente GEM';
         }
     }
     
-    // 4. Start listening to logs
+    // 5. Start listening to logs
     escutarLogs();
 });
 
