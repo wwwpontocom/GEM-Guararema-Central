@@ -55,11 +55,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     <table class="student-table" id="tabela-registro">
                         <thead>
                             <tr>
-                                <th style="width: 12%;">DATA</th>
-                                <th style="width: 25%;">SOLFEJO</th>
-                                <th style="width: 25%;">MÉTODO</th>
-                                <th style="width: 13%;">HINO</th>
-                                <th style="width: 15%;">INSTRUTOR</th>
+                                <th style="width: 10%;">DATA</th>
+                                <th style="width: 15%;">BONA</th>
+                                <th style="width: 15%;">MSA</th>
+                                <th style="width: 20%;">MÉTODO</th>
+                                <th style="width: 12%;">HINO</th>
+                                <th style="width: 18%;">INSTRUTOR</th>
                                 <th class="col-acoes no-print" style="width: 10%;">AÇÕES</th>
                             </tr>
                         </thead>
@@ -122,7 +123,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         licoes.forEach(l => {
                             tbody.innerHTML += \`<tr>
                                 <td>\${l.data}</td>
-                                <td>\${l.solfejo}</td>
+                                <td>\${l.bona || "-"}</td>
+                                <td>\${l.msa || "-"}</td>
                                 <td>\${l.metodo}</td>
                                 <td>\${l.hino}</td>
                                 <td>\${l.instrutor}</td>
@@ -154,7 +156,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
                 window.abrirPromptGravar = function() {
                     if(!window.currentID) return alert("Selecione um aluno.");
-                    const licaoBase = { data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), solfejo: "-", metodo: "-", hino: "-", instrutor: "-" };
+                    const licaoBase = { data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "-" };
                     window.processarLicao(null, licaoBase);
                 };
 
@@ -164,7 +166,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         const limpar = (str) => str ? str.split('<br>')[0] : "";
                         window.processarLicao(key, {
                             data: l.data,
-                            solfejo: limpar(l.solfejo),
+                            bona: limpar(l.bona),
+                            msa: limpar(l.msa),
                             metodo: limpar(l.metodo),
                             hino: limpar(l.hino),
                             instrutor: l.instrutor
@@ -186,8 +189,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         return txt + statusHTML;
                     };
 
-                    const solfejo = promptStatus(defaults.solfejo, "SOLFEJO");
-                    if(solfejo === null) return;
+                    const bona = promptStatus(defaults.bona || "-", "BONA");
+                    if(bona === null) return;
+                    const msa = promptStatus(defaults.msa || "-", "MSA");
+                    if(msa === null) return;
                     const metodo = promptStatus(defaults.metodo, "MÉTODO");
                     if(metodo === null) return;
                     const hino = promptStatus(defaults.hino, "HINO");
@@ -195,7 +200,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const instrutor = prompt("Instrutor:", defaults.instrutor);
                     if(instrutor === null) return;
 
-                    const licao = { data: dataL, solfejo: solfejo, metodo: metodo, hino: hino, instrutor: instrutor };
+                    const licao = { data: dataL, bona: bona, msa: msa, metodo: metodo, hino: hino, instrutor: instrutor };
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
                     
                     if(key) ref.child(key).update(licao); else ref.push(licao);
