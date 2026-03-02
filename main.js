@@ -439,11 +439,7 @@ function toggleChat(forceOpen = false) {
     
     // Update Icon based on platform and state
     if (btn) {
-        if (window.innerWidth <= 768) {
-            btn.innerText = isMinimized ? '▲' : '▼';
-        } else {
-            btn.innerText = isMinimized ? '▶' : '◀';
-        }
+       btn.innerText = '';
     }
 
     // Scroll to bottom if opened
@@ -495,13 +491,14 @@ document.addEventListener('DOMContentLoaded', () => {
         sidebar.classList.add('minimized');
         const btn = document.querySelector('.toggle-chat-btn');
         if (btn) {
-            btn.innerText = window.innerWidth <= 768 ? '▲' : '▶';
+           btn.innerText = '';
         }
     }
     
     // 4. Start listening to logs
     escutarLogs();
 });
+
 let currentSlide = 0;
 let touchStartX = 0;
 let touchEndX = 0;
