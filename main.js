@@ -488,11 +488,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 3. Initial Library Update
     atualizarBibliotecaComMensagens();
+
+    // FORÇAR INICIAR MINIMIZADO
+    const sidebar = document.querySelector('.chat-sidebar');
+    if (sidebar) {
+        sidebar.classList.add('minimized');
+        const btn = document.querySelector('.toggle-chat-btn');
+        if (btn) {
+            btn.innerText = window.innerWidth <= 768 ? '▲' : '▶';
+        }
+    }
     
     // 4. Start listening to logs
     escutarLogs();
 });
-
 let currentSlide = 0;
 let touchStartX = 0;
 let touchEndX = 0;
