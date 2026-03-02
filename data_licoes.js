@@ -1,4 +1,4 @@
-// --- FIX IS HERE: AUTOMATIC STUDENT LINKING AND FIREBASE UPDATE ---
+// --- FIX IS HERE: AUTOMATIC STUDENT LINKING, FIREBASE UPDATE AND SEARCH FILTER ---
 
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
@@ -6,7 +6,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         fase: "Extras",
         titulo: "CONTROLE DE LIÇÕES",
         icone: "✏️",
-        resumo: "Registro detalhado com ordem cronológica e ações de edição.",
+        resumo: "Registro detalhado com ordem cronológica, edição e busca rápida.",
         html_content: `
             <style>
                 .licoes-wrapper { padding: 15px; background: #f9f9f9; min-height: 100vh; font-family: sans-serif; }
@@ -21,9 +21,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff; }
                 .status-aprovado { color: #27ae60; font-weight: bold; font-size: 9px; }
                 .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
+                .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
                 
                 @media print {
-                    .no-print, .btn-action, .selector-box, .col-acoes, .btn-save-licao { display: none !important; }
+                    .no-print, .btn-action, .selector-box, .col-acoes, .btn-save-licao, .search-box { display: none !important; }
                     .student-table { width: 100%; font-size: 10px; }
                     .licoes-wrapper { background: white; padding: 0; }
                 }
@@ -46,9 +47,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <span id="instr-aluno-header">INSTRUMENTO: ---</span>
                     </div>
 
-                    <button type="button" class="btn-save-licao no-print" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
+                    <div class="no-print">
+                        <input type="text" id="input-busca" class="search-box" placeholder="🔍 Buscar por data, lição, hino ou instrutor..." onkeyup="window.filtrarTabela()">
+                        <button type="button" class="btn-save-licao" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
+                    </div>
 
-                    <table class="student-table">
+                    <table class="student-table" id="tabela-registro">
                         <thead>
                             <tr>
                                 <th style="width: 12%;">DATA</th>
@@ -65,7 +69,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-                // Mantém a lista de alunos sincronizada e preserva a seleção atual
                 window.sincronizarListaAlunos = function() {
                     firebase.database().ref('lista_alunos').on('value', (snapshot) => {
                         const select = document.getElementById('aluno-select');
@@ -75,7 +78,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         snapshot.forEach((child) => {
                             const aluno = child.val();
                             const selected = child.key === currentVal ? 'selected' : '';
-                            select.innerHTML += \`<option value="\".concat(child.key, "\" data-instr=\"").concat(aluno.instrumento, "\" ").concat(selected, ">").concat(aluno.nome, "</option>\`);
+                            select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}" \${selected}>\${aluno.nome}</option>\`;
                         });
                     });
                 };
@@ -97,6 +100,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
                     document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
+                    
+                    const busca = document.getElementById('input-busca');
+                    if(busca) busca.value = ""; // Limpa busca ao trocar aluno
+                    
                     window.loadLicoes(id);
                 };
 
@@ -111,7 +118,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             item.key = child.key;
                             licoes.push(item); 
                         });
-                        // Ordenação por data (converte DD/MM para formato comparável)
                         licoes.sort((a, b) => a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join('')));
                         licoes.forEach(l => {
                             tbody.innerHTML += \`<tr>
@@ -126,7 +132,24 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 </td>
                             </tr>\`;
                         });
+                        window.filtrarTabela(); // Reaplica filtro se houver texto
                     });
+                };
+
+                window.filtrarTabela = function() {
+                    const input = document.getElementById('input-busca');
+                    const filter = input.value.toUpperCase();
+                    const tbody = document.getElementById('body-licoes');
+                    const tr = tbody.getElementsByTagName('tr');
+
+                    for (let i = 0; i < tr.length; i++) {
+                        let rowText = tr[i].textContent || tr[i].innerText;
+                        if (rowText.toUpperCase().indexOf(filter) > -1) {
+                            tr[i].style.display = "";
+                        } else {
+                            tr[i].style.display = "none";
+                        }
+                    }
                 };
 
                 window.abrirPromptGravar = function() {
@@ -155,7 +178,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
                     const promptStatus = (v, label) => {
                         const txt = prompt(label + " - Lição/Pág:", v);
-                        if(txt === null) return null; // Cancelou
+                        if(txt === null) return null; 
                         const st = prompt("Status para " + label + "\\n(A = Aprovado / E = Estudar):", "A");
                         const statusHTML = (st && st.toUpperCase() === 'A') 
                             ? '<br><span class="status-aprovado">Aprovado</span>' 
@@ -165,24 +188,17 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
                     const solfejo = promptStatus(defaults.solfejo, "SOLFEJO");
                     if(solfejo === null) return;
-
                     const metodo = promptStatus(defaults.metodo, "MÉTODO");
                     if(metodo === null) return;
-
                     const hino = promptStatus(defaults.hino, "HINO");
                     if(hino === null) return;
-
                     const instrutor = prompt("Instrutor:", defaults.instrutor);
                     if(instrutor === null) return;
 
                     const licao = { data: dataL, solfejo: solfejo, metodo: metodo, hino: hino, instrutor: instrutor };
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
                     
-                    if(key) {
-                        ref.child(key).update(licao).then(() => alert("Lição atualizada!"));
-                    } else {
-                        ref.push(licao).then(() => alert("Lição gravada!"));
-                    }
+                    if(key) ref.child(key).update(licao); else ref.push(licao);
                 };
 
                 window.excluirLicao = function(key) {
