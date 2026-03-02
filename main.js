@@ -771,36 +771,29 @@ function mostrarConteudo(chave) {
     
     if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO[chave]) {
         const dados = BIBLIOTECA_LIVRO[chave];
-
-        // Se for o índice, mostramos apenas o conteúdo dele. 
-        // Se for uma lição, montamos o Header dinamicamente:
         let cabecalhoFinal = "";
         
         if (chave !== 'indice') {
             cabecalhoFinal = `
-                <style>
-                    .fase-header { background: #888; color: white; text-align: center; padding: 8px; font-size: 20px; border-radius: 4px; margin-bottom: 20px; font-family: sans-serif; }
-                    .section-title { background: #e3f2fd; border-bottom: 3px solid #4a90e2; padding: 10px; display: flex; align-items: center; margin: 20px 0 10px 0; font-family: sans-serif; }
-                    .icon-box { background: #4a90e2; color: white; border-radius: 4px; padding: 4px 8px; margin-right: 12px; font-weight: bold; }
-                    h2 { margin: 0; font-size: 16px; text-transform: uppercase; }
-                    .instrument-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 15px 0; background: #f9f9f9; padding: 10px; border-radius: 5px; }
-                    @media (min-width: 600px) { .instrument-grid { grid-template-columns: repeat(4, 1fr); } }
-                </style>
-                <div class="fase-header">${dados.fase}</div>
-                <div class="section-title">
-                    <div class="icon-box">${dados.icone}</div>
-                    <h2>${dados.titulo}</h2>
+                <div class="fase-header" style="background:#888; color:white; text-align:center; padding:8px; font-size:20px; border-radius:4px; margin-bottom:20px;">\${dados.fase}</div>
+                <div class="section-title" style="background:#e3f2fd; border-bottom:3px solid #4a90e2; padding:10px; display:flex; align-items:center; margin:20px 0 10px 0;">
+                    <div class="icon-box" style="background:#4a90e2; color:white; border-radius:4px; padding:4px 8px; margin-right:12px; font-weight:bold;">\${dados.icone}</div>
+                    <h2 style="margin:0; font-size:16px; text-transform:uppercase;">\${dados.titulo}</h2>
                 </div>
             `;
         }
 
-        // Injeta Cabeçalho Montado + Conteúdo do Objeto
         renderArea.innerHTML = cabecalhoFinal + dados.html_content;
+
+        // Força a execução de qualquer <script> que venha na string
+        const scripts = renderArea.querySelectorAll("script");
+        scripts.forEach(oldScript => {
+            const newScript = document.createElement("script");
+            newScript.text = oldScript.text;
+            document.body.appendChild(newScript).parentNode.removeChild(newScript);
+        });
         
-        if (activeTabNameEl) {
-            activeTabNameEl.innerText = dados.titulo;
-        }
-        
+        if (activeTabNameEl) activeTabNameEl.innerText = dados.titulo;
         renderArea.scrollTop = 0;
     }
 }
