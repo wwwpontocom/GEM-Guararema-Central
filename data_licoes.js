@@ -23,13 +23,16 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
                 .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
                 
-                /* Modal Styles */
-                #modal-licao { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); }
-                .modal-content { background:white; margin: 10% auto; padding:20px; border-radius:10px; width:90%; max-width:400px; }
-                .modal-content h3 { margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px; }
-                .form-group { margin-bottom: 10px; }
-                .form-group label { display:block; font-size:12px; font-weight:bold; margin-bottom:3px; }
-                .form-group input, .form-group select { width:100%; padding:8px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; }
+                /* New Modal Styles */
+                #modal-licao { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); overflow-y: auto; }
+                .modal-content { background:white; margin: 5% auto; padding:20px; border-radius:10px; width:90%; max-width:450px; }
+                .modal-section { border: 1px solid #ddd; padding: 10px; border-radius: 5px; margin-bottom: 10px; background: #fff; }
+                .modal-section-title { font-weight: bold; font-size: 12px; color: #444; margin-bottom: 8px; display: block; border-bottom: 1px solid #eee; }
+                .form-row { display: flex; gap: 10px; margin-bottom: 5px; }
+                .form-group { flex: 1; }
+                .form-group label { display:block; font-size:11px; font-weight:bold; margin-bottom:2px; }
+                .form-group input, .form-group select { width:100%; padding:6px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; font-size: 13px; }
+                .radio-group { display: flex; gap: 15px; align-items: center; margin-top: 5px; font-size: 12px; }
                 .modal-footer { display:flex; justify-content: space-between; margin-top:15px; }
 
                 @media print {
@@ -42,13 +45,55 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <div class="licoes-wrapper">
                 <div id="modal-licao">
                     <div class="modal-content">
-                        <h3 id="modal-titulo">Gravar Lição</h3>
+                        <h3 id="modal-titulo" style="margin-top:0">Gravar Lição</h3>
                         <input type="hidden" id="modal-key">
-                        <div class="form-group"><label>Data:</label><input type="text" id="m-data" placeholder="DD/MM"></div>
-                        <div class="form-group"><label>Bona (ex: 12 A):</label><input type="text" id="m-bona"></div>
-                        <div class="form-group"><label>MSA (ex: 1.5 E):</label><input type="text" id="m-msa"></div>
-                        <div class="form-group"><label>Método:</label><input type="text" id="m-metodo"></div>
-                        <div class="form-group"><label>Hino:</label><input type="text" id="m-hino"></div>
+                        
+                        <div class="form-group" style="margin-bottom:15px">
+                            <label>Data (DD/MM):</label>
+                            <input type="text" id="m-data">
+                        </div>
+
+                        <div class="modal-section">
+                            <span class="modal-section-title">BONA</span>
+                            <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-p"></div>
+                            </div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="st-bona" value="A" checked> Aprovado</label>
+                                <label><input type="radio" name="st-bona" value="E"> Estudar</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-section">
+                            <span class="modal-section-title">MSA</span>
+                            <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-p"></div>
+                            </div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="st-msa" value="A" checked> Aprovado</label>
+                                <label><input type="radio" name="st-msa" value="E"> Estudar</label>
+                            </div>
+                        </div>
+
+                        <div class="modal-section">
+                            <span class="modal-section-title">MÉTODO</span>
+                            <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-p"></div>
+                            </div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="st-metodo" value="A" checked> Aprovado</label>
+                                <label><input type="radio" name="st-metodo" value="E"> Estudar</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-bottom:10px">
+                            <label>Hino:</label>
+                            <input type="text" id="m-hino">
+                        </div>
+
                         <div class="form-group">
                             <label>Instrutor:</label>
                             <select id="m-instrutor">
@@ -58,6 +103,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <option value="Instrutor 3">Instrutor 3</option>
                             </select>
                         </div>
+
                         <div class="modal-footer">
                             <button class="btn-action" style="background:#7f8c8d" onclick="document.getElementById('modal-licao').style.display='none'">Cancelar</button>
                             <button class="btn-action" style="background:#27ae60" onclick="window.salvarModal()">Salvar Registro</button>
@@ -135,6 +181,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
                     document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
+                    if(document.getElementById('input-busca')) document.getElementById('input-busca').value = "";
                     window.loadLicoes(id);
                 };
 
@@ -189,15 +236,32 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 window.editarLicao = function(key) {
                     firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
                         const l = snapshot.val();
-                        const limpar = (str) => str ? str.split('<br>')[0] : "";
-                        window.processarLicao(key, {
-                            data: l.data,
-                            bona: limpar(l.bona),
-                            msa: limpar(l.msa),
-                            metodo: limpar(l.metodo),
-                            hino: limpar(l.hino),
-                            instrutor: l.instrutor
-                        });
+                        const extrair = (str) => {
+                            if(!str || str === "-") return { val: "", status: "A" };
+                            const limpo = str.split('<br>')[0];
+                            const status = str.includes('status-estudar') ? "E" : "A";
+                            const partes = limpo.split(' p.');
+                            return { l: partes[0] || "", p: partes[1] || "", status: status };
+                        };
+                        
+                        const b = extrair(l.bona);
+                        const m = extrair(l.msa);
+                        const met = extrair(l.metodo);
+
+                        document.getElementById('modal-licao').style.display = 'block';
+                        document.getElementById('modal-key').value = key;
+                        document.getElementById('m-data').value = l.data;
+                        document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
+                        document.querySelector(\`input[name="st-bona"][value="\${b.status}"]\`).checked = true;
+                        
+                        document.getElementById('m-msa-l').value = m.l; document.getElementById('m-msa-p').value = m.p;
+                        document.querySelector(\`input[name="st-msa"][value="\${m.status}"]\`).checked = true;
+
+                        document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
+                        document.querySelector(\`input[name="st-metodo"][value="\${met.status}"]\`).checked = true;
+
+                        document.getElementById('m-hino').value = l.hino ? l.hino.split('<br>')[0] : "";
+                        document.getElementById('m-instrutor').value = l.instrutor;
                     });
                 };
 
@@ -206,28 +270,30 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
                     document.getElementById('modal-key').value = key || "";
                     document.getElementById('m-data').value = defaults.data;
-                    document.getElementById('m-bona').value = defaults.bona;
-                    document.getElementById('m-msa').value = defaults.msa;
-                    document.getElementById('m-metodo').value = defaults.metodo;
-                    document.getElementById('m-hino').value = defaults.hino;
-                    document.getElementById('m-instrutor').value = defaults.instrutor;
+                    document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
+                    document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
+                    document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
+                    document.getElementById('m-hino').value = "";
+                    document.getElementById('m-instrutor').value = "";
                 };
 
                 window.salvarModal = function() {
                     const key = document.getElementById('modal-key').value;
-                    const formatar = (val) => {
-                        if(!val || val === "-") return "-";
-                        const p = val.trim().split(" ");
-                        const st = (p[1] || "A").toUpperCase();
-                        return p[0] + (st === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
+                    const format = (idL, idP, name) => {
+                        const l = document.getElementById(idL).value;
+                        const p = document.getElementById(idP).value;
+                        const st = document.querySelector(\`input[name="\${name}"]:checked\`).value;
+                        if(!l && !p) return "-";
+                        let txt = l + (p ? ' p.' + p : '');
+                        return txt + (st === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
                     };
 
                     const licao = {
                         data: document.getElementById('m-data').value,
-                        bona: formatar(document.getElementById('m-bona').value),
-                        msa: formatar(document.getElementById('m-msa').value),
-                        metodo: formatar(document.getElementById('m-metodo').value),
-                        hino: formatar(document.getElementById('m-hino').value),
+                        bona: format('m-bona-l', 'm-bona-p', 'st-bona'),
+                        msa: format('m-msa-l', 'm-msa-p', 'st-msa'),
+                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo'),
+                        hino: document.getElementById('m-hino').value,
                         instrutor: document.getElementById('m-instrutor').value
                     };
 
