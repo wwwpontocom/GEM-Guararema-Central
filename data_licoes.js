@@ -176,33 +176,45 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 };
 
                 window.processarLicao = function(key, defaults) {
-                    const dataL = prompt("Data (DD/MM):", defaults.data);
+                    const dataL = prompt("1. DATA (DD/MM):", defaults.data);
                     if(!dataL) return;
 
-                    const promptStatus = (v, label) => {
-                        const txt = prompt(label + " - Lição/Pág:", v);
-                        if(txt === null) return null; 
-                        const st = prompt("Status para " + label + "\\n(A = Aprovado / E = Estudar):", "A");
-                        const statusHTML = (st && st.toUpperCase() === 'A') 
+                    const formatarInput = (raw, label) => {
+                        if(!raw || raw === "-") return "-";
+                        const partes = raw.trim().split(" ");
+                        const valor = partes[0];
+                        const status = (partes[1] || "A").toUpperCase();
+                        const statusHTML = (status === 'A') 
                             ? '<br><span class="status-aprovado">Aprovado</span>' 
                             : '<br><span class="status-estudar">Estudar</span>';
-                        return txt + statusHTML;
+                        return valor + statusHTML;
                     };
 
-                    const bona = promptStatus(defaults.bona || "-", "BONA");
-                    if(bona === null) return;
-                    const msa = promptStatus(defaults.msa || "-", "MSA");
-                    if(msa === null) return;
-                    const metodo = promptStatus(defaults.metodo, "MÉTODO");
-                    if(metodo === null) return;
-                    const hino = promptStatus(defaults.hino, "HINO");
-                    if(hino === null) return;
-                    const instrutor = prompt("Instrutor:", defaults.instrutor);
+                    const bInput = prompt("2. BONA (Lição + Espaço + Status A/E):\\nEx: 15 A", defaults.bona);
+                    if(bInput === null) return;
+                    
+                    const mInput = prompt("3. MSA (Lição + Espaço + Status A/E):\\nEx: 2.4 E", defaults.msa);
+                    if(mInput === null) return;
+
+                    const metInput = prompt("4. MÉTODO (Lição + Espaço + Status A/E):", defaults.metodo);
+                    if(metInput === null) return;
+
+                    const hinoInput = prompt("5. HINO (Número + Espaço + Status A/E):", defaults.hino);
+                    if(hinoInput === null) return;
+
+                    const instrutor = prompt("6. INSTRUTOR:", defaults.instrutor);
                     if(instrutor === null) return;
 
-                    const licao = { data: dataL, bona: bona, msa: msa, metodo: metodo, hino: hino, instrutor: instrutor };
+                    const licao = { 
+                        data: dataL, 
+                        bona: formatarInput(bInput, "BONA"), 
+                        msa: formatarInput(mInput, "MSA"), 
+                        metodo: formatarInput(metInput, "MÉTODO"), 
+                        hino: formatarInput(hinoInput, "HINO"), 
+                        instrutor: instrutor 
+                    };
+
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-                    
                     if(key) ref.child(key).update(licao); else ref.push(licao);
                 };
 
