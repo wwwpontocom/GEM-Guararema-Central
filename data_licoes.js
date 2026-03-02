@@ -23,14 +23,48 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
                 .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
                 
+                /* Modal Styles */
+                #modal-licao { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); }
+                .modal-content { background:white; margin: 10% auto; padding:20px; border-radius:10px; width:90%; max-width:400px; }
+                .modal-content h3 { margin-top:0; border-bottom:1px solid #eee; padding-bottom:10px; }
+                .form-group { margin-bottom: 10px; }
+                .form-group label { display:block; font-size:12px; font-weight:bold; margin-bottom:3px; }
+                .form-group input, .form-group select { width:100%; padding:8px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; }
+                .modal-footer { display:flex; justify-content: space-between; margin-top:15px; }
+
                 @media print {
-                    .no-print, .btn-action, .selector-box, .col-acoes, .btn-save-licao, .search-box { display: none !important; }
+                    .no-print, .btn-action, .selector-box, .col-acoes, .btn-save-licao, .search-box, #modal-licao { display: none !important; }
                     .student-table { width: 100%; font-size: 10px; }
                     .licoes-wrapper { background: white; padding: 0; }
                 }
             </style>
 
             <div class="licoes-wrapper">
+                <div id="modal-licao">
+                    <div class="modal-content">
+                        <h3 id="modal-titulo">Gravar Lição</h3>
+                        <input type="hidden" id="modal-key">
+                        <div class="form-group"><label>Data:</label><input type="text" id="m-data" placeholder="DD/MM"></div>
+                        <div class="form-group"><label>Bona (ex: 12 A):</label><input type="text" id="m-bona"></div>
+                        <div class="form-group"><label>MSA (ex: 1.5 E):</label><input type="text" id="m-msa"></div>
+                        <div class="form-group"><label>Método:</label><input type="text" id="m-metodo"></div>
+                        <div class="form-group"><label>Hino:</label><input type="text" id="m-hino"></div>
+                        <div class="form-group">
+                            <label>Instrutor:</label>
+                            <select id="m-instrutor">
+                                <option value="">-- Selecione --</option>
+                                <option value="Instrutor 1">Instrutor 1</option>
+                                <option value="Instrutor 2">Instrutor 2</option>
+                                <option value="Instrutor 3">Instrutor 3</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn-action" style="background:#7f8c8d" onclick="document.getElementById('modal-licao').style.display='none'">Cancelar</button>
+                            <button class="btn-action" style="background:#27ae60" onclick="window.salvarModal()">Salvar Registro</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="selector-box no-print">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <label><b>Selecione o Aluno:</b></label>
@@ -101,10 +135,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const option = sel.options[sel.selectedIndex];
                     document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
                     document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
-                    
-                    const busca = document.getElementById('input-busca');
-                    if(busca) busca.value = ""; 
-                    
                     window.loadLicoes(id);
                 };
 
@@ -134,7 +164,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 </td>
                             </tr>\`;
                         });
-                        window.filtrarTabela(); 
                     });
                 };
 
@@ -143,21 +172,18 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const filter = input.value.toUpperCase();
                     const tbody = document.getElementById('body-licoes');
                     const tr = tbody.getElementsByTagName('tr');
-
                     for (let i = 0; i < tr.length; i++) {
                         let rowText = tr[i].textContent || tr[i].innerText;
-                        if (rowText.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
+                        tr[i].style.display = rowText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
                     }
                 };
 
                 window.abrirPromptGravar = function() {
                     if(!window.currentID) return alert("Selecione um aluno.");
-                    const licaoBase = { data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "-" };
-                    window.processarLicao(null, licaoBase);
+                    window.processarLicao(null, { 
+                        data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), 
+                        bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "" 
+                    });
                 };
 
                 window.editarLicao = function(key) {
@@ -176,46 +202,38 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 };
 
                 window.processarLicao = function(key, defaults) {
-                    const dataL = prompt("1. DATA (DD/MM):", defaults.data);
-                    if(!dataL) return;
+                    document.getElementById('modal-licao').style.display = 'block';
+                    document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
+                    document.getElementById('modal-key').value = key || "";
+                    document.getElementById('m-data').value = defaults.data;
+                    document.getElementById('m-bona').value = defaults.bona;
+                    document.getElementById('m-msa').value = defaults.msa;
+                    document.getElementById('m-metodo').value = defaults.metodo;
+                    document.getElementById('m-hino').value = defaults.hino;
+                    document.getElementById('m-instrutor').value = defaults.instrutor;
+                };
 
-                    const formatarInput = (raw, label) => {
-                        if(!raw || raw === "-") return "-";
-                        const partes = raw.trim().split(" ");
-                        const valor = partes[0];
-                        const status = (partes[1] || "A").toUpperCase();
-                        const statusHTML = (status === 'A') 
-                            ? '<br><span class="status-aprovado">Aprovado</span>' 
-                            : '<br><span class="status-estudar">Estudar</span>';
-                        return valor + statusHTML;
+                window.salvarModal = function() {
+                    const key = document.getElementById('modal-key').value;
+                    const formatar = (val) => {
+                        if(!val || val === "-") return "-";
+                        const p = val.trim().split(" ");
+                        const st = (p[1] || "A").toUpperCase();
+                        return p[0] + (st === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
                     };
 
-                    const bInput = prompt("2. BONA (Lição + Espaço + Status A/E):\\nEx: 15 A", defaults.bona);
-                    if(bInput === null) return;
-                    
-                    const mInput = prompt("3. MSA (Lição + Espaço + Status A/E):\\nEx: 2.4 E", defaults.msa);
-                    if(mInput === null) return;
-
-                    const metInput = prompt("4. MÉTODO (Lição + Espaço + Status A/E):", defaults.metodo);
-                    if(metInput === null) return;
-
-                    const hinoInput = prompt("5. HINO (Número + Espaço + Status A/E):", defaults.hino);
-                    if(hinoInput === null) return;
-
-                    const instrutor = prompt("6. INSTRUTOR:", defaults.instrutor);
-                    if(instrutor === null) return;
-
-                    const licao = { 
-                        data: dataL, 
-                        bona: formatarInput(bInput, "BONA"), 
-                        msa: formatarInput(mInput, "MSA"), 
-                        metodo: formatarInput(metInput, "MÉTODO"), 
-                        hino: formatarInput(hinoInput, "HINO"), 
-                        instrutor: instrutor 
+                    const licao = {
+                        data: document.getElementById('m-data').value,
+                        bona: formatar(document.getElementById('m-bona').value),
+                        msa: formatar(document.getElementById('m-msa').value),
+                        metodo: formatar(document.getElementById('m-metodo').value),
+                        hino: formatar(document.getElementById('m-hino').value),
+                        instrutor: document.getElementById('m-instrutor').value
                     };
 
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
                     if(key) ref.child(key).update(licao); else ref.push(licao);
+                    document.getElementById('modal-licao').style.display = 'none';
                 };
 
                 window.excluirLicao = function(key) {
