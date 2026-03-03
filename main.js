@@ -861,3 +861,36 @@ function voltarAoInicio() {
     }
 }
 
+let currentZoom = 1;
+
+function changeZoom(delta, reset = false) {
+    const displayArea = document.querySelector('.display-area'); // Target the content area
+    const zoomText = document.getElementById('zoom-level');
+    
+    if (reset) {
+        currentZoom = 1;
+    } else {
+        currentZoom += delta;
+    }
+
+    // Constraints: min 50%, max 200%
+    if (currentZoom < 0.5) currentZoom = 0.5;
+    if (currentZoom > 2) currentZoom = 2;
+
+    if (displayArea) {
+        displayArea.style.zoom = currentZoom;
+        // For browsers that don't support zoom, use:
+        // displayArea.style.transform = `scale(${currentZoom})`;
+        // displayArea.style.transformOrigin = 'top center';
+    }
+
+    if (zoomText) {
+        zoomText.innerText = Math.round(currentZoom * 100) + '%';
+    }
+}
+
+// Ensure the zoom starts at 100% on load
+document.addEventListener('DOMContentLoaded', () => {
+    changeZoom(0, true);
+});
+
