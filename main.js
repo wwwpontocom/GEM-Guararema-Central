@@ -861,3 +861,82 @@ function voltarAoInicio() {
     }
 }
 
+// Persistent Independent Zoom Logic (REPLACING THE OLD CODE)
+let appZoomLevel = parseFloat(localStorage.getItem('appZoom')) || 1.0;
+let docZoomLevel = parseFloat(localStorage.getItem('docZoom')) || 1.0;
+
+function updateZoom(target, delta) {
+    const appElement = document.body;
+    const docElement = document.querySelector('.display-area');
+    const appLabel = document.getElementById('app-zoom-val');
+    const docLabel = document.getElementById('doc-zoom-val');
+
+    if (target === 'app') {
+        appZoomLevel = Math.min(Math.max(appZoomLevel + delta, 0.5), 1.5);
+        appElement.style.zoom = appZoomLevel;
+        localStorage.setItem('appZoom', appZoomLevel);
+        if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
+    } else if (target === 'doc') {
+        docZoomLevel = Math.min(Math.max(docZoomLevel + delta, 0.5), 2.0);
+        if (docElement) docElement.style.zoom = docZoomLevel;
+        localStorage.setItem('docZoom', docZoomLevel);
+        if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
+    }
+}
+
+function applyInitialZooms() {
+    const appLabel = document.getElementById('app-zoom-val');
+    const docLabel = document.getElementById('doc-zoom-val');
+    const docElement = document.querySelector('.display-area');
+
+    document.body.style.zoom = appZoomLevel;
+    if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
+
+    if (docElement) docElement.style.zoom = docZoomLevel;
+    if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
+}
+
+// Single initialization block
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Zoom Initialization
+    applyInitialZooms();
+
+    const header = document.querySelector('.chat-header');
+    const sidebar = document.querySelector('.chat-sidebar');
+    const userInput = document.getElementById('user-input');
+    
+    // 2. Chat Sidebar Toggle logic
+    if (header) {
+        header.addEventListener('click', (e) => {
+            // Prevent toggle if clicking inside the input field
+            if (e.target.tagName !== 'INPUT') toggleChat();
+        });
+    }
+
+    // 3. AUTO-OPEN when user types or focuses
+    if (userInput) {
+        userInput.addEventListener('input', () => {
+            if (sidebar && sidebar.classList.contains('minimized')) {
+                toggleChat(true); // Force open on type
+            }
+        });
+        
+        userInput.addEventListener('focus', () => {
+            if (sidebar && sidebar.classList.contains('minimized')) {
+                toggleChat(true); // Force open on click
+            }
+        });
+    }
+
+    // 4. Initial Library Update & Log listening
+    atualizarBibliotecaComMensagens();
+    escutarLogs();
+
+    // 5. Force Start Minimized (Abaixado) with correct initial text
+    if (sidebar) {
+        sidebar.classList.add('minimized');
+        if (header) {
+            header.innerText = 'Abrir Assistente GEM';
+        }
+    }
+});
