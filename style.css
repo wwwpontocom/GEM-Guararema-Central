@@ -458,52 +458,53 @@ nav {
     }
 }
 
-/* --- NEW ZOOM PANEL SYSTEM --- */
+/* Updated for Navbar placement */
 .zoom-panel {
-    padding: 15px;
-    background: #f9f9f9;
-    border-top: 1px solid #ddd; /* Changed to top if placed at sidebar bottom */
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row; /* Horizontal row */
+    align-items: center;
+    gap: 20px; /* Space between App and Doc controls */
+    background: transparent; /* Seamless with nav */
+    padding: 0;
+    margin: 0;
 }
 
 .zoom-group {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    color: #444;
+    gap: 8px;
+    font-size: 11px;
+    color: white;
 }
 
 .zoom-group label {
     font-weight: bold;
-    flex: 1;
+    white-space: nowrap;
+    opacity: 0.9;
 }
 
 .zoom-group button {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #ccc;
-    background: white;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: #4a90e2; /* Specific Blue */
+    color: white;
     cursor: pointer;
     border-radius: 4px;
-    margin: 0 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
+    font-weight: bold;
+    transition: background 0.2s;
 }
 
 .zoom-group button:hover {
-    background: #e3f2fd;
-    border-color: var(--primary);
+    background: #357abd;
 }
 
 .zoom-group span {
-    width: 45px;
+    width: 35px;
     text-align: center;
-    font-family: 'Courier New', monospace;
-    font-weight: bold;
+    font-family: monospace;
+    font-size: 12px;
 }
