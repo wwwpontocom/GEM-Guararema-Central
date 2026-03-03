@@ -41,7 +41,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <span onclick="setExactBPM(66)" style="cursor:pointer; color: #f44336;"> (66)</span>
                     </div>
                 </div>
-            </div>
+            </div> 
 
             <script>
                 // O áudio original gravado está em 61 BPM
