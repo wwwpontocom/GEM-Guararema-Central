@@ -861,10 +861,11 @@ function voltarAoInicio() {
     }
 }
 
-let currentZoom = 1;
+// Initialize from localStorage or default to 1 (100%)
+let currentZoom = parseFloat(localStorage.getItem('preferredZoom')) || 1;
 
 function changeZoom(delta, reset = false) {
-    const displayArea = document.querySelector('.display-area'); // Target the content area
+    const displayArea = document.querySelector('.display-area'); 
     const zoomText = document.getElementById('zoom-level');
     
     if (reset) {
@@ -877,18 +878,25 @@ function changeZoom(delta, reset = false) {
     if (currentZoom < 0.5) currentZoom = 0.5;
     if (currentZoom > 2) currentZoom = 2;
 
+    // Apply the zoom
     if (displayArea) {
         displayArea.style.zoom = currentZoom;
-        // For browsers that don't support zoom, use:
-        // displayArea.style.transform = `scale(${currentZoom})`;
-        // displayArea.style.transformOrigin = 'top center';
     }
 
+    // Update the UI text
     if (zoomText) {
         zoomText.innerText = Math.round(currentZoom * 100) + '%';
     }
+
+    // --- SAVE TO STORAGE ---
+    localStorage.setItem('preferredZoom', currentZoom);
 }
 
+// Load the saved preference on startup
+document.addEventListener('DOMContentLoaded', () => {
+    // Instead of forcing a reset to 1, we apply the currentZoom (the stored value)
+    changeZoom(0, false);
+});
 // Ensure the zoom starts at 100% on load
 document.addEventListener('DOMContentLoaded', () => {
     changeZoom(0, true);
