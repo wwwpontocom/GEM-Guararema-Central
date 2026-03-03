@@ -888,8 +888,15 @@ function applyInitialZooms() {
     const appLabel = document.getElementById('app-zoom-val');
     const docLabel = document.getElementById('doc-zoom-val');
     const docElement = document.querySelector('.display-area');
+    const mainContainer = document.getElementById('main-container');
 
-    document.body.style.zoom = appZoomLevel;
+    // Apply zoom to main container instead of body to prevent sidebar/nav freezing
+    if (mainContainer) {
+        mainContainer.style.zoom = appZoomLevel;
+    } else {
+        document.body.style.zoom = appZoomLevel;
+    }
+    
     if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
 
     if (docElement) docElement.style.zoom = docZoomLevel;
@@ -898,45 +905,51 @@ function applyInitialZooms() {
 
 // Single initialization block
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Zoom Initialization
-    applyInitialZooms();
+    try {
+        // 1. Zoom Initialization
+        applyInitialZooms();
 
-    const header = document.querySelector('.chat-header');
-    const sidebar = document.querySelector('.chat-sidebar');
-    const userInput = document.getElementById('user-input');
-    
-    // 2. Chat Sidebar Toggle logic
-    if (header) {
-        header.addEventListener('click', (e) => {
-            // Prevent toggle if clicking inside the input field
-            if (e.target.tagName !== 'INPUT') toggleChat();
-        });
-    }
-
-    // 3. AUTO-OPEN when user types or focuses
-    if (userInput) {
-        userInput.addEventListener('input', () => {
-            if (sidebar && sidebar.classList.contains('minimized')) {
-                toggleChat(true); // Force open on type
-            }
-        });
+        const header = document.querySelector('.chat-header');
+        const sidebar = document.querySelector('.chat-sidebar');
+        const userInput = document.getElementById('user-input');
         
-        userInput.addEventListener('focus', () => {
-            if (sidebar && sidebar.classList.contains('minimized')) {
-                toggleChat(true); // Force open on click
-            }
-        });
-    }
-
-    // 4. Initial Library Update & Log listening
-    atualizarBibliotecaComMensagens();
-    escutarLogs();
-
-    // 5. Force Start Minimized (Abaixado) with correct initial text
-    if (sidebar) {
-        sidebar.classList.add('minimized');
+        // 2. Chat Sidebar Toggle logic
         if (header) {
-            header.innerText = 'Abrir Assistente GEM';
+            header.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT') {
+                    console.log("Header clicked, toggling...");
+                    toggleChat();
+                }
+            });
         }
+
+        // 3. AUTO-OPEN when user types or focuses
+        if (userInput) {
+            userInput.addEventListener('input', () => {
+                if (sidebar && sidebar.classList.contains('minimized')) {
+                    toggleChat(true);
+                }
+            });
+            
+            userInput.addEventListener('focus', () => {
+                if (sidebar && sidebar.classList.contains('minimized')) {
+                    toggleChat(true);
+                }
+            });
+        }
+
+        // 4. Background tasks (Wrapped in try/catch to prevent freezing)
+        if (typeof atualizarBibliotecaComMensagens === "function") atualizarBibliotecaComMensagens();
+        if (typeof escutarLogs === "function") escutarLogs();
+
+        // 5. Force Start Minimized
+        if (sidebar) {
+            sidebar.classList.add('minimized');
+            if (header) {
+                header.innerText = 'Abrir Assistente GEM';
+            }
+        }
+    } catch (error) {
+        console.error("Initialization error:", error);
     }
 });
