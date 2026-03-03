@@ -425,7 +425,7 @@ window.addEventListener('appinstalled', () => {
 });
 
 function toggleChat(forceOpen = false) {
-   const sidebar = document.querySelector('.chat-sidebar');
+    const sidebar = document.querySelector('.chat-sidebar');
     const header = document.querySelector('.chat-header');
     if (!sidebar) return;
 
@@ -436,19 +436,14 @@ function toggleChat(forceOpen = false) {
     }
 
     const isMinimized = sidebar.classList.contains('minimized');
-    
-   // Update header text based on state
     if (header) {
         header.innerText = isMinimized ? 'Abrir Assistente GEM' : 'Fechar Assistente GEM';
     }
 
-    // Scroll to bottom if opened
     if (!isMinimized) {
         const win = document.getElementById('chat-window');
         if (win) {
-            setTimeout(() => {
-                win.scrollTop = win.scrollHeight;
-            }, 300);
+            setTimeout(() => { win.scrollTop = win.scrollHeight; }, 300);
         }
     }
 }
@@ -861,24 +856,31 @@ function voltarAoInicio() {
     }
 }
 
-// Persistent Independent Zoom Logic (REPLACING THE OLD CODE)
+// Persistent Independent Scale Logic (Replacing Zoom to prevent freezing)
 let appZoomLevel = parseFloat(localStorage.getItem('appZoom')) || 1.0;
 let docZoomLevel = parseFloat(localStorage.getItem('docZoom')) || 1.0;
 
 function updateZoom(target, delta) {
-    const appElement = document.body;
+    const mainContainer = document.getElementById('main-container');
     const docElement = document.querySelector('.display-area');
     const appLabel = document.getElementById('app-zoom-val');
     const docLabel = document.getElementById('doc-zoom-val');
 
     if (target === 'app') {
         appZoomLevel = Math.min(Math.max(appZoomLevel + delta, 0.5), 1.5);
-        appElement.style.zoom = appZoomLevel;
+        if (mainContainer) {
+            mainContainer.style.transform = `scale(${appZoomLevel})`;
+            mainContainer.style.transformOrigin = "top left";
+            mainContainer.style.width = `${100 / appZoomLevel}%`;
+            mainContainer.style.height = `calc((100vh - var(--nav-height)) / ${appZoomLevel})`;
+        }
         localStorage.setItem('appZoom', appZoomLevel);
         if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
     } else if (target === 'doc') {
         docZoomLevel = Math.min(Math.max(docZoomLevel + delta, 0.5), 2.0);
-        if (docElement) docElement.style.zoom = docZoomLevel;
+        if (docElement) {
+            docElement.style.zoom = docZoomLevel; // Zoom is usually safe for inner content
+        }
         localStorage.setItem('docZoom', docZoomLevel);
         if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
     }
@@ -890,23 +892,26 @@ function applyInitialZooms() {
     const docElement = document.querySelector('.display-area');
     const mainContainer = document.getElementById('main-container');
 
-    // Apply zoom to main container instead of body to prevent sidebar/nav freezing
     if (mainContainer) {
-        mainContainer.style.zoom = appZoomLevel;
-    } else {
-        document.body.style.zoom = appZoomLevel;
+        mainContainer.style.transform = `scale(${appZoomLevel})`;
+        mainContainer.style.transformOrigin = "top left";
+        // Adjust width/height to compensate for scale and prevent layout overflow
+        mainContainer.style.width = `${100 / appZoomLevel}%`;
+        mainContainer.style.height = `calc((100vh - var(--nav-height)) / ${appZoomLevel})`;
     }
     
     if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
 
-    if (docElement) docElement.style.zoom = docZoomLevel;
+    if (docElement) {
+        docElement.style.zoom = docZoomLevel;
+    }
     if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
 }
 
 // Single initialization block
 document.addEventListener('DOMContentLoaded', () => {
     try {
-        // 1. Zoom Initialization
+        // 1. Zoom/Scale Initialization (Now using the safer transform logic)
         applyInitialZooms();
 
         const header = document.querySelector('.chat-header');
@@ -916,40 +921,50 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Chat Sidebar Toggle logic
         if (header) {
             header.addEventListener('click', (e) => {
+                // Ignore clicks if they happen specifically on the input inside the header
                 if (e.target.tagName !== 'INPUT') {
-                    console.log("Header clicked, toggling...");
                     toggleChat();
                 }
             });
         }
 
         // 3. AUTO-OPEN when user types or focuses
+        // This is crucial for UX—opening the assistant as soon as the user interacts.
         if (userInput) {
             userInput.addEventListener('input', () => {
                 if (sidebar && sidebar.classList.contains('minimized')) {
-                    toggleChat(true);
+                    toggleChat(true); // Force open
                 }
             });
             
             userInput.addEventListener('focus', () => {
                 if (sidebar && sidebar.classList.contains('minimized')) {
-                    toggleChat(true);
+                    toggleChat(true); // Force open
                 }
             });
         }
 
-        // 4. Background tasks (Wrapped in try/catch to prevent freezing)
-        if (typeof atualizarBibliotecaComMensagens === "function") atualizarBibliotecaComMensagens();
-        if (typeof escutarLogs === "function") escutarLogs();
+        // 4. Background tasks (Wrapped in checks to prevent "undefined" errors)
+        if (typeof atualizarBibliotecaComMensagens === "function") {
+            atualizarBibliotecaComMensagens();
+        }
+        if (typeof escutarLogs === "function") {
+            escutarLogs();
+        }
 
         // 5. Force Start Minimized
+        // This ensures the App starts clean, especially on mobile.
         if (sidebar) {
             sidebar.classList.add('minimized');
             if (header) {
                 header.innerText = 'Abrir Assistente GEM';
             }
         }
+        
+        console.log("GEM Platform initialized successfully.");
+
     } catch (error) {
-        console.error("Initialization error:", error);
+        // This prevents the whole script from "dying" if a small error occurs.
+        console.error("Critical Initialization Error:", error);
     }
 });
