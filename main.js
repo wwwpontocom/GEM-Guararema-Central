@@ -703,7 +703,7 @@ function selectTab(tabId) {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
-        'programa': 'Programa Mínimo', 'audios': 'Biblioteca de Áudios', 'plano': 'Plano de Aula',
+        'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
         'msa': 'MSA'
     };
     
