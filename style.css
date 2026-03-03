@@ -360,6 +360,7 @@ nav {
     .instrument-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+
 @media all and (display-mode: standalone) {
     /* REMOVED: html { zoom: 1 !important; } - This allows our JS zoom to work */
     
@@ -458,60 +459,52 @@ nav {
     }
 }
 
-/* Updated for Navbar placement */
+/* --- NEW ZOOM PANEL SYSTEM --- */
 .zoom-panel {
+    padding: 15px;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd; /* Changed to top if placed at sidebar bottom */
     display: flex;
-    flex-direction: row; /* Horizontal row */
-    align-items: center;
-    gap: 20px; /* Space between App and Doc controls */
-    background: transparent; /* Seamless with nav */
-    padding: 0;
-    margin: 0;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .zoom-group {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: white;
-}
-
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 768px) {
-    .zoom-panel {
-        display: none; /* Hides the entire zoom panel on mobile */
-    }
+    justify-content: space-between;
+    font-size: 13px;
+    color: #444;
 }
 
 .zoom-group label {
     font-weight: bold;
-    white-space: nowrap;
-    opacity: 0.9;
+    flex: 1;
 }
 
 .zoom-group button {
-    width: 24px;
-    height: 24px;
-    border: none;
-    background: #4a90e2; /* Specific Blue */
-    color: white;
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ccc;
+    background: white;
     cursor: pointer;
     border-radius: 4px;
+    margin: 0 5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
 }
 
 .zoom-group button:hover {
-    background: #357abd;
+    background: #e3f2fd;
+    border-color: var(--primary);
 }
 
 .zoom-group span {
-    width: 35px;
+    width: 45px;
     text-align: center;
-    font-family: monospace;
-    font-size: 12px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
 }
