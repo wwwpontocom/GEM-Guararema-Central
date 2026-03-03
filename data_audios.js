@@ -36,9 +36,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     </div>
                     
                     <div class="speed-labels" style="margin-top: 15px; font-size: 0.9em; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
-                        <span onclick="setExactBPM(40)" style="cursor:pointer; color: #666;">Lento (40)</span> | 
+                        <span onclick="setExactBPM(56)" style="cursor:pointer; color: #666;"> (56)</span> | 
                         <span onclick="setExactBPM(61)" style="cursor:pointer; color: #2196F3; font-weight: bold;">Média Sugerida (61)</span> | 
-                        <span onclick="setExactBPM(90)" style="cursor:pointer; color: #f44336;">Rápido (90)</span>
+                        <span onclick="setExactBPM(66)" style="cursor:pointer; color: #f44336;"> (66)</span>
                     </div>
                 </div>
             </div>
