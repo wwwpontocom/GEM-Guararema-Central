@@ -21,6 +21,22 @@
         <div style="font-weight: bold; font-size: 16px; letter-spacing: 0.5px;">GEM<span style="color: #4a90e2;">GM CENTRAL</span></div>
     </div>
 
+        
+<div class="zoom-panel">
+        <div class="zoom-group">
+            <label>APP:</label>
+            <button onclick="updateZoom('app', -0.1)" aria-label="Decrease app zoom">-</button>
+            <span id="app-zoom-val">100%</span>
+            <button onclick="updateZoom('app', 0.1)" aria-label="Increase app zoom">+</button>
+        </div>
+
+        <div class="zoom-group">
+            <label>DOC:</label>
+            <button onclick="updateZoom('doc', -0.1)" aria-label="Decrease document zoom">-</button>
+            <span id="doc-zoom-val">100%</span>
+            <button onclick="updateZoom('doc', 0.1)" aria-label="Increase document zoom">+</button>
+        </div>
+    </div>
     
     <div style="display: flex; gap: 15px; align-items: center;">
         <div id="active-tab-name" style="font-size: 10px; opacity: 0.7; text-transform: uppercase; background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 4px; display: none; /* Escondido no mobile via CSS se desejar */">Assistente</div>
