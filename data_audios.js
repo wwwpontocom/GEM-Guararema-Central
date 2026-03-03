@@ -1,6 +1,6 @@
 Object.assign(BIBLIOTECA_LIVRO, {
         "biblioteca_audios": {
-            keywords: ["áudio", "mp3", "velocidade", "treino", "metrônomo", "biblioteca"],
+            keywords: ["áudio", "mp3", "velocidade", "treino", "metrônomo"],
             fase: "Extras",
             titulo: "BIBLIOTECA DE ÁUDIOS",
             icone: "🎧",
