@@ -462,4 +462,32 @@ nav {
         min-width: 600px; /* Impede que a página "encolha" demais */
     }
 }
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 8px;
+    justify-content: center;
+    margin: 10px;
+}
+
+.zoom-controls button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.zoom-controls span {
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 40px;
+    text-align: center;
+}
 /* --- END OF FIX --- */
