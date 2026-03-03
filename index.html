@@ -24,15 +24,16 @@
 <div class="zoom-panel">
     <div class="zoom-group">
         <label>App Zoom:</label>
-        <button onclick="updateZoom('app', -0.1)">-</button>
+        <button onclick="updateZoom('app', -0.1)" aria-label="Decrease app zoom">-</button>
         <span id="app-zoom-val">100%</span>
-        <button onclick="updateZoom('app', 0.1)">+</button>
+        <button onclick="updateZoom('app', 0.1)" aria-label="Increase app zoom">+</button>
     </div>
+
     <div class="zoom-group">
         <label>Document Zoom:</label>
-        <button onclick="updateZoom('doc', -0.1)">-</button>
+        <button onclick="updateZoom('doc', -0.1)" aria-label="Decrease document zoom">-</button>
         <span id="doc-zoom-val">100%</span>
-        <button onclick="updateZoom('doc', 0.1)">+</button>
+        <button onclick="updateZoom('doc', 0.1)" aria-label="Increase document zoom">+</button>
     </div>
 </div>
     
