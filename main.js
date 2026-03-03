@@ -856,3 +856,79 @@ function voltarAoInicio() {
     }
 }
 
+// Persistent Independent Scale Logic (Isolated to Content Area only)
+let docZoomLevel = parseFloat(localStorage.getItem('docZoom')) || 1.0;
+
+function updateZoom(target, delta) {
+    const docLabel = document.getElementById('doc-zoom-val');
+    const docElement = document.querySelector('.display-area');
+
+    if (target === 'doc') {
+        docZoomLevel = Math.min(Math.max(docZoomLevel + delta, 0.5), 2.0);
+        if (docElement) {
+            // Apply zoom ONLY to the content, not the body or sidebar
+            docElement.style.zoom = docZoomLevel;
+        }
+        localStorage.setItem('docZoom', docZoomLevel);
+        if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
+    }
+    // Note: 'app' zoom is removed here because it was breaking your layout.
+}
+
+function applyInitialZooms() {
+    const docLabel = document.getElementById('doc-zoom-val');
+    const docElement = document.querySelector('.display-area');
+
+    if (docElement) {
+        docElement.style.zoom = docZoomLevel;
+    }
+    if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
+}
+
+// Single initialization block
+document.addEventListener('DOMContentLoaded', () => {
+    try {
+        // 1. Restore the safe content-only zoom
+        applyInitialZooms();
+
+        const header = document.querySelector('.chat-header');
+        const sidebar = document.querySelector('.chat-sidebar');
+        const userInput = document.getElementById('user-input');
+        
+        // 2. Chat Sidebar Toggle logic
+        if (header) {
+            header.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT') {
+                    toggleChat();
+                }
+            });
+        }
+
+        // 3. AUTO-OPEN when user types or focuses
+        if (userInput) {
+            ['input', 'focus'].forEach(evt => {
+                userInput.addEventListener(evt, () => {
+                    if (sidebar && sidebar.classList.contains('minimized')) {
+                        toggleChat(true);
+                    }
+                });
+            });
+        }
+
+        // 4. Background tasks
+        if (typeof atualizarBibliotecaComMensagens === "function") atualizarBibliotecaComMensagens();
+        if (typeof escutarLogs === "function") escutarLogs();
+
+        // 5. Force Start Minimized
+        if (sidebar) {
+            sidebar.classList.add('minimized');
+            if (header) {
+                header.innerText = 'Abrir Assistente GEM';
+            }
+        }
+
+        console.log("Assistant initialized safely without global zoom.");
+    } catch (error) {
+        console.error("Initialization error:", error);
+    }
+});
