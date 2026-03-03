@@ -361,33 +361,30 @@ nav {
 }
 
 @media all and (display-mode: standalone) {
-    /* Força o corpo do app a ignorar o zoom herdado do browser */
+    /* REMOVED: html { zoom: 1 !important; } - This allows our JS zoom to work */
+    
     html {
-        zoom: 1 !important;
-        -moz-transform: scale(1);
         -moz-transform-origin: 0 0;
     }
     
-    /* Garante que os textos não fiquem minúsculos */
     :root {
-        --nav-height: 55px; /* Ligeiro aumento para melhor toque no app */
+        --nav-height: 55px; 
     }
 
     body {
-        /* Previne o "pinch-to-zoom" acidental que pode quebrar o layout no desktop app */
         touch-action: pan-x pan-y;
     }
     
-    /* Ajuste fino para a barra de navegação no modo App */
     nav {
         height: var(--nav-height);
-        padding-top: env(safe-area-inset-top); /* Suporte para notch de celulares se usado em mobile app */
+        padding-top: env(safe-area-inset-top);
     }
 }
+
 .side-menu {
     position: fixed;
     top: 0;
-    left: -280px; /* Escondido */
+    left: -280px;
     width: 280px;
     height: 100%;
     background: white;
@@ -455,39 +452,58 @@ nav {
     display: block;
 }
 
-/* Caso o zoom de 50% ainda afete elementos fixos, 
-   podemos forçar o tamanho mínimo da fonte para leitura */
 @media screen and (min-width: 769px) {
     .page {
-        min-width: 600px; /* Impede que a página "encolha" demais */
+        min-width: 600px;
     }
 }
 
-.zoom-controls {
+/* --- NEW ZOOM PANEL SYSTEM --- */
+.zoom-panel {
+    padding: 15px;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd; /* Changed to top if placed at sidebar bottom */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.zoom-group {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px;
-    background: rgba(0,0,0,0.05);
-    border-radius: 8px;
-    justify-content: center;
-    margin: 10px;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #444;
 }
 
-.zoom-controls button {
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 2px 8px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.zoom-controls span {
-    font-size: 12px;
+.zoom-group label {
     font-weight: bold;
-    min-width: 40px;
-    text-align: center;
+    flex: 1;
 }
-/* --- END OF FIX --- */
+
+.zoom-group button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #ccc;
+    background: white;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.zoom-group button:hover {
+    background: #e3f2fd;
+    border-color: var(--primary);
+}
+
+.zoom-group span {
+    width: 45px;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+}
