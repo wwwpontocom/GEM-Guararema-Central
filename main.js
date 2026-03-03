@@ -138,7 +138,7 @@ function switchTab(tab) {
     // 1. Mapeamento de todas as abas do sistema
     const allTabs = [
         'assistente', 'alou', 'agenda', 'cronograma', 
-        'turmas', 'moo', 'instrumentos', 'exercicios', 'programa'
+        'turmas', 'moo', 'instrumentos', 'exercicios', 'audios', 'programa'
     ];
     
     // 2. Reset Geral: Esconde todas e limpa estilos
@@ -703,7 +703,7 @@ function selectTab(tabId) {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
-        'programa': 'Programa Mínimo', 'plano': 'Plano de Aula',
+        'programa': 'Programa Mínimo', 'audios': 'Biblioteca de Áudios', 'plano': 'Plano de Aula',
         'msa': 'MSA'
     };
     
@@ -728,6 +728,14 @@ function selectTab(tabId) {
         if (typeof switchTab === "function") switchTab('assistente');
         if (typeof mostrarConteudo === "function") {
             mostrarConteudo('programa_minimo');
+        }
+    }
+      
+      else if (tabId === 'audios' || tabId === 'biblioteca') {
+        if (typeof switchTab === "function") switchTab('assistente');
+        // Usamos a chave 'biblioteca_audios' que criamos no objeto BIBLIOTECA_LIVRO
+        if (typeof mostrarConteudo === "function") {
+            mostrarConteudo('biblioteca_audios');
         }
     }
       
