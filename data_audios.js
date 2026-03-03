@@ -14,6 +14,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     o áudio do Hino está na média sugerida, modifique o BPM (velocidade, andamento), e tente solfejar, 
                     ou mesmo cantar o hino e veja a diferença.
                 </p>
+                
 
                 <div class="audio-card" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-top: 20px;">
                     <audio id="player-estudo" controls style="width: 100%;">
