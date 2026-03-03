@@ -29,8 +29,6 @@ body {
 }
 
 /* Painel Lateral do Chat */
-/* Update your .chat-sidebar and .chat-header to ensure they ignore scale-related clipping */
-
 .chat-sidebar { 
     width: 350px; 
     background: white; 
@@ -39,21 +37,14 @@ body {
     flex-direction: column; 
     height: 100%; 
     flex-shrink: 0;
-    /* Ensure the sidebar stays on top and animates smoothly */
-    position: relative;
-    z-index: 1005;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s ease;
-    /* Fix for Chromium zoom bug: */
-    backface-visibility: hidden;
-    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s ease; 
 }
 
-/* State Minimized: Slide left */
+/* Estado Minimizado (Desktop e Mobile Landscape: Slide para Esquerda) */
 .chat-sidebar.minimized {
     transform: translateX(-305px); 
 }
 
-/* Fix for the Header width during zoom */
 .chat-header { 
     background: var(--primary); 
     color: white; 
@@ -65,7 +56,7 @@ body {
     align-items: center;
     gap: 10px;
     flex-shrink: 0; 
-    width: 100%; /* Changed from 350px to 100% to fill the sidebar container */
+    width: 350px; 
 }
 
 .chat-sidebar.minimized .chat-header {
@@ -122,26 +113,6 @@ input {
     display: flex; 
     justify-content: center; 
     background: var(--bg);
-    /* This allows the Doc Zoom to work without affecting the sidebar */
-    transform-origin: top center;
-}
-
-/* Mobile Fix: Ensure the sidebar doesn't "jump" when zooming on mobile */
-@media (max-width: 768px) {
-    .chat-sidebar {
-        width: 100%;
-        height: 350px; 
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        transform: translateY(0);
-        transition: height 0.4s ease, transform 0.4s ease;
-    }
-
-    .chat-sidebar.minimized {
-        height: 50px !important;
-        transform: translateY(0) !important; /* Force stay at bottom */
-    }
 }
 
 .page { 
@@ -489,52 +460,30 @@ nav {
 }
 
 /* --- NEW ZOOM PANEL SYSTEM --- */
-.zoom-panel {
-    padding: 12px;
-    background: #ffffff;
-    border-top: 1px solid #eee;
+.zoom-controls {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     gap: 8px;
-    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
-}
-
-.zoom-group {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13px;
-    color: #444;
-}
-
-.zoom-group label {
-    font-weight: bold;
-    flex: 1;
-}
-
-.zoom-group button {
-    width: 28px;
-    height: 28px;
-    border: 1px solid #ccc;
-    background: white;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 0 5px;
-    display: flex;
-    align-items: center;
+    padding: 10px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 8px;
     justify-content: center;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
+    margin: 10px;
 }
 
-.zoom-group button:hover {
-    background: #e3f2fd;
-    border-color: var(--primary);
+.zoom-controls button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 8px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
-.zoom-group span {
-    width: 45px;
-    text-align: center;
-    font-family: 'Courier New', monospace;
+.zoom-controls span {
+    font-size: 12px;
     font-weight: bold;
+    min-width: 40px;
+    text-align: center;
 }
