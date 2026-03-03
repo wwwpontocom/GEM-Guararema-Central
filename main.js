@@ -871,6 +871,7 @@ function changeZoom(delta, reset = false) {
     if (reset) {
         currentZoom = 1;
     } else {
+        // Se delta for 0, mantemos o currentZoom atual (vindo do localStorage)
         currentZoom += delta;
     }
 
@@ -888,16 +889,19 @@ function changeZoom(delta, reset = false) {
         zoomText.innerText = Math.round(currentZoom * 100) + '%';
     }
 
-    // --- SAVE TO STORAGE ---
+    // Save to storage
     localStorage.setItem('preferredZoom', currentZoom);
+    console.log("Zoom saved:", currentZoom); // Debug para confirmar no console
 }
 
 // Load the saved preference on startup
 document.addEventListener('DOMContentLoaded', () => {
-    // Instead of forcing a reset to 1, we apply the currentZoom (the stored value)
+    // Pegamos o valor mais recente do storage logo no início
+    const savedZoom = localStorage.getItem('preferredZoom');
+    if (savedZoom !== null) {
+        currentZoom = parseFloat(savedZoom);
+    }
+    
+    // Chamamos com delta 0 e reset false para APENAS aplicar o que foi carregado
     changeZoom(0, false);
-});
-// Ensure the zoom starts at 100% on load
-document.addEventListener('DOMContentLoaded', () => {
-    changeZoom(0, true);
 });
