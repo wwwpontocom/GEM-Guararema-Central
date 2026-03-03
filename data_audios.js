@@ -8,27 +8,35 @@ Object.assign(BIBLIOTECA_LIVRO, {
         html_content: `
             <div class="audio-library">
                 <h3>Hino de Estudo - Exemplo</h3>
-                <p>Ajuste a velocidade do metrônomo (BPM):</p>
                 
-                <div class="audio-card" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+                <p style="background: #e3f2fd; padding: 15px; border-left: 5px solid #2196F3; border-radius: 4px; font-size: 14px; line-height: 1.5; color: #333;">
+                    Com intuito de treinar nossas habilidades, seja Métrica, seja de Solfejo, tente o exercício a seguir: 
+                    o áudio do Hino está na média sugerida, modifique o BPM (velocidade, andamento), e tente solfejar, 
+                    ou mesmo cantar o hino e veja a diferença.
+                </p>
+
+                <div class="audio-card" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px; margin-top: 20px;">
                     <audio id="player-estudo" controls style="width: 100%;">
                         <source src="assets/hinos/Hino1.mp3" type="audio/mpeg">
                         Seu navegador não suporta o elemento de áudio.
                     </audio>
                     
                     <div class="controls" style="margin-top: 15px; display: flex; gap: 10px; align-items: center; justify-content: center;">
-                        <button onclick="changeBPM(-1)" style="padding: 5px 15px;">- 1 BPM</button>
-                        <div style="text-align: center; min-width: 120px;">
-                            <span id="speed-display" style="font-size: 1.2em; font-weight: bold; color: #2196F3;">61 BPM</span>
+                        <button onclick="changeBPM(-1)" style="padding: 8px 15px; cursor: pointer;">- 1 BPM</button>
+                        
+                        <div style="text-align: center; min-width: 140px;">
+                            <div style="font-size: 0.8em; color: #888; text-transform: uppercase;">Andamento Atual</div>
+                            <span id="speed-display" style="font-size: 1.5em; font-weight: bold; color: #2196F3;">61 BPM</span>
                             <br>
-                            <small id="multiplier-display" style="color: #666;">(1.00x)</small>
+                            <small id="multiplier-display" style="color: #999;">(1.00x)</small>
                         </div>
-                        <button onclick="changeBPM(1)" style="padding: 5px 15px;">+ 1 BPM</button>
+                        
+                        <button onclick="changeBPM(1)" style="padding: 8px 15px; cursor: pointer;">+ 1 BPM</button>
                     </div>
                     
                     <div class="speed-labels" style="margin-top: 15px; font-size: 0.9em; text-align: center; border-top: 1px solid #eee; padding-top: 10px;">
                         <span onclick="setExactBPM(40)" style="cursor:pointer; color: #666;">Lento (40)</span> | 
-                        <span onclick="setExactBPM(61)" style="cursor:pointer; color: #2196F3;">Original (61)</span> | 
+                        <span onclick="setExactBPM(61)" style="cursor:pointer; color: #2196F3; font-weight: bold;">Média Sugerida (61)</span> | 
                         <span onclick="setExactBPM(90)" style="cursor:pointer; color: #f44336;">Rápido (90)</span>
                     </div>
                 </div>
@@ -44,10 +52,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const displayBPM = document.getElementById('speed-display');
                     const displayMult = document.getElementById('multiplier-display');
                     
-                    // Cálculo: Nova Velocidade = BPM Desejado / BPM Original
+                    // Cálculo da Velocidade: Razão entre o BPM alvo e o original
                     let playbackRate = currentBPM / BASE_BPM;
                     
-                    // Limites de segurança do navegador (0.06x a 16x, mas usamos 0.5x a 2.0x por qualidade)
+                    // Limites de qualidade (O áudio costuma degradar abaixo de 0.5x ou acima de 2.0x)
                     if (playbackRate < 0.5) {
                         playbackRate = 0.5;
                         currentBPM = Math.round(BASE_BPM * 0.5);
@@ -57,7 +65,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         currentBPM = Math.round(BASE_BPM * 2.0);
                     }
 
-                    audio.playbackRate = playbackRate;
+                    if (audio) {
+                        audio.playbackRate = playbackRate;
+                        // Garante que o áudio não mude de tom (preserva o timbre)
+                        audio.preservesPitch = true; 
+                    }
+                    
                     displayBPM.innerText = currentBPM + " BPM";
                     displayMult.innerText = "(" + playbackRate.toFixed(2) + "x)";
                 }
