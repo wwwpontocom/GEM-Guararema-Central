@@ -861,36 +861,63 @@ function voltarAoInicio() {
     }
 }
 
-let currentZoom = 1;
+// Persistent Independent Zoom Logic (REPLACING THE OLD CODE)
+let appZoomLevel = parseFloat(localStorage.getItem('appZoom')) || 1.0;
+let docZoomLevel = parseFloat(localStorage.getItem('docZoom')) || 1.0;
 
-function changeZoom(delta, reset = false) {
-    const displayArea = document.querySelector('.display-area'); // Target the content area
-    const zoomText = document.getElementById('zoom-level');
-    
-    if (reset) {
-        currentZoom = 1;
-    } else {
-        currentZoom += delta;
-    }
+function updateZoom(target, delta) {
+    const appElement = document.body;
+    const docElement = document.querySelector('.display-area');
+    const appLabel = document.getElementById('app-zoom-val');
+    const docLabel = document.getElementById('doc-zoom-val');
 
-    // Constraints: min 50%, max 200%
-    if (currentZoom < 0.5) currentZoom = 0.5;
-    if (currentZoom > 2) currentZoom = 2;
-
-    if (displayArea) {
-        displayArea.style.zoom = currentZoom;
-        // For browsers that don't support zoom, use:
-        // displayArea.style.transform = `scale(${currentZoom})`;
-        // displayArea.style.transformOrigin = 'top center';
-    }
-
-    if (zoomText) {
-        zoomText.innerText = Math.round(currentZoom * 100) + '%';
+    if (target === 'app') {
+        appZoomLevel = Math.min(Math.max(appZoomLevel + delta, 0.5), 1.5);
+        appElement.style.zoom = appZoomLevel;
+        localStorage.setItem('appZoom', appZoomLevel);
+        if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
+    } else if (target === 'doc') {
+        docZoomLevel = Math.min(Math.max(docZoomLevel + delta, 0.5), 2.0);
+        if (docElement) docElement.style.zoom = docZoomLevel;
+        localStorage.setItem('docZoom', docZoomLevel);
+        if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
     }
 }
 
-// Ensure the zoom starts at 100% on load
-document.addEventListener('DOMContentLoaded', () => {
-    changeZoom(0, true);
-});
+function applyInitialZooms() {
+    const appLabel = document.getElementById('app-zoom-val');
+    const docLabel = document.getElementById('doc-zoom-val');
+    const docElement = document.querySelector('.display-area');
 
+    document.body.style.zoom = appZoomLevel;
+    if (appLabel) appLabel.innerText = Math.round(appZoomLevel * 100) + '%';
+
+    if (docElement) docElement.style.zoom = docZoomLevel;
+    if (docLabel) docLabel.innerText = Math.round(docZoomLevel * 100) + '%';
+}
+
+// Single initialization block
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Zoom Initialization
+    applyInitialZooms();
+
+    // 2. Chat Sidebar & Header logic
+    const header = document.querySelector('.chat-header');
+    const sidebar = document.querySelector('.chat-sidebar');
+    
+    if (header) {
+        header.addEventListener('click', (e) => {
+            if (e.target.tagName !== 'INPUT') toggleChat();
+        });
+    }
+
+    // 3. Initial Library Update & Log listening
+    atualizarBibliotecaComMensagens();
+    escutarLogs();
+
+    // 4. Force Start Minimized
+    if (sidebar) {
+        sidebar.classList.add('minimized');
+        if (header) header.innerText = 'Abrir Assistente GEM';
+    }
+});
