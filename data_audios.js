@@ -11,10 +11,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     <p>Utilize os controles abaixo para ajustar a velocidade (BPM):</p>
                     
                     <div class="audio-card" style="border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
-                        <audio id="player-estudo" controls style="width: 100%;">
-                            <source src="link_do_seu_audio.mp3" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
+                       <audio id="player-estudo" controls style="width: 100%;">
+        <source src="assets/hinos/Hino1.mp3" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
                         
                         <div class="controls" style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
                             <button onclick="changeSpeed(-0.1)">- Diminuir</button>
