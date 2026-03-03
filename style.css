@@ -29,6 +29,8 @@ body {
 }
 
 /* Painel Lateral do Chat */
+/* Update your .chat-sidebar and .chat-header to ensure they ignore scale-related clipping */
+
 .chat-sidebar { 
     width: 350px; 
     background: white; 
@@ -37,14 +39,21 @@ body {
     flex-direction: column; 
     height: 100%; 
     flex-shrink: 0;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), height 0.4s ease; 
+    /* Ensure the sidebar stays on top and animates smoothly */
+    position: relative;
+    z-index: 1005;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s ease;
+    /* Fix for Chromium zoom bug: */
+    backface-visibility: hidden;
+    will-change: transform;
 }
 
-/* Estado Minimizado (Desktop e Mobile Landscape: Slide para Esquerda) */
+/* State Minimized: Slide left */
 .chat-sidebar.minimized {
     transform: translateX(-305px); 
 }
 
+/* Fix for the Header width during zoom */
 .chat-header { 
     background: var(--primary); 
     color: white; 
@@ -56,7 +65,7 @@ body {
     align-items: center;
     gap: 10px;
     flex-shrink: 0; 
-    width: 350px; 
+    width: 100%; /* Changed from 350px to 100% to fill the sidebar container */
 }
 
 .chat-sidebar.minimized .chat-header {
@@ -113,6 +122,26 @@ input {
     display: flex; 
     justify-content: center; 
     background: var(--bg);
+    /* This allows the Doc Zoom to work without affecting the sidebar */
+    transform-origin: top center;
+}
+
+/* Mobile Fix: Ensure the sidebar doesn't "jump" when zooming on mobile */
+@media (max-width: 768px) {
+    .chat-sidebar {
+        width: 100%;
+        height: 350px; 
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        transform: translateY(0);
+        transition: height 0.4s ease, transform 0.4s ease;
+    }
+
+    .chat-sidebar.minimized {
+        height: 50px !important;
+        transform: translateY(0) !important; /* Force stay at bottom */
+    }
 }
 
 .page { 
@@ -461,12 +490,13 @@ nav {
 
 /* --- NEW ZOOM PANEL SYSTEM --- */
 .zoom-panel {
-    padding: 15px;
-    background: #f9f9f9;
-    border-top: 1px solid #ddd; /* Changed to top if placed at sidebar bottom */
+    padding: 12px;
+    background: #ffffff;
+    border-top: 1px solid #eee;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
 }
 
 .zoom-group {
