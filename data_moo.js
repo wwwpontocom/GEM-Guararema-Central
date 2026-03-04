@@ -109,27 +109,24 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <p>Toque no nome da voz para ouvir a sonoridade correspondente na orquestra:</p>
             
             <div class="interactive-voices" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <button onclick="playVoice('soprano_8a')" style="padding:15px; background:#e3f2fd; border:1px solid #2196F3; border-radius:8px; cursor:pointer;">Soprano 8ª (Agudo)</button>
+                <button onclick="playVoice('soprano8va')" style="padding:15px; background:#e3f2fd; border:1px solid #2196F3; border-radius:8px; cursor:pointer;">Soprano 8ª (Agudo)</button>
                 <button onclick="playVoice('soprano')" style="padding:15px; background:#e3f2fd; border:1px solid #2196F3; border-radius:8px; cursor:pointer;">Soprano</button>
                 <button onclick="playVoice('contralto')" style="padding:15px; background:#fce4ec; border:1px solid #f06292; border-radius:8px; cursor:pointer;">Contralto</button>
                 <button onclick="playVoice('tenor')" style="padding:15px; background:#fff3e0; border:1px solid #ffb74d; border-radius:8px; cursor:pointer;">Tenor</button>
                 <button onclick="playVoice('baixo')" style="padding:15px; background:#f1f8e9; border:1px solid #8bc34a; border-radius:8px; cursor:pointer;">Baixo</button>
-                <button onclick="playVoice('baixo_8a')" style="padding:15px; background:#f1f8e9; border:1px solid #8bc34a; border-radius:8px; cursor:pointer;">Baixo 8ª (Grave)</button>
+                <button onclick="playVoice('baixo8vb')" style="padding:15px; background:#f1f8e9; border:1px solid #8bc34a; border-radius:8px; cursor:pointer;">Baixo 8ª (Grave)</button>
             </div>
 
-            <audio id="voice-player">
-                <source id="voice-source" src="" type="audio/mpeg">
-            </audio>
+            <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
 
-            <div class="image-container">
-                <img src="assets/moo/page6.jpg" alt="Gráfico da Página 6">
-            </div>
+            <div class="image-container"><img src="assets/moo/page6.jpg" alt="Gráfico da Página 6"></div>
 
             <script>
-                function playVoice(voice) {
+                function playVoice(voiceKey) {
                     const audio = document.getElementById('voice-player');
                     const source = document.getElementById('voice-source');
-                    source.src = 'assets/audio/moo/' + voice + '.mp3';
+                    // O caminho aponta para assets/tessituras/ seguido do nome do arquivo
+                    source.src = 'assets/tessituras/' + voiceKey + '_tessitura.mp3';
                     audio.load();
                     audio.play();
                 }
