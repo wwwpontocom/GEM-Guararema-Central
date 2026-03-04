@@ -98,45 +98,65 @@ Object.assign(BIBLIOTECA_LIVRO, {
     },
 
     // PÁGINA 6: Distribuição das Vozes (Interativo)
-    "moo_p6": {
-        keywords: ["vozes", "soprano", "contralto", "tenor", "baixo", "oitavas"],
-        fase: "MOO",
-        titulo: "Página 6 - DISTRIBUIÇÃO DAS VOZES",
-        icone: "🎼",
-        resumo: "Interativo: Clique nas vozes para ouvir as oitavas correspondentes.",
-        html_content: `
-            <h3>Distribuição das Vozes e Oitavas</h3>
-            <p>Toque no nome da voz para ouvir a sonoridade correspondente na orquestra:</p>
+   "moo_p6": {
+    keywords: ["vozes", "soprano", "contralto", "tenor", "baixo", "oitavas"],
+    fase: "MOO",
+    titulo: "Página 6 - DISTRIBUIÇÃO DAS VOZES",
+    icone: "🎼",
+    resumo: "Interativo: Distribuição vertical das vozes (Tessituras).",
+    html_content: `
+        <h3 style="text-align:center;">Distribuição das Vozes e Oitavas</h3>
+        <p style="text-align:center; font-size: 0.9em; color: #666;">Toque na camada para ouvir a tessitura correspondente:</p>
+        
+        <div class="tessitura-stack" style="display: flex; flex-direction: column; gap: 8px; max-width: 400px; margin: 0 auto 20px auto;">
             
-            <div class="interactive-voices" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
-                <button onclick="playVoice('soprano8va')" style="padding:15px; background:#e3f2fd; border:1px solid #2196F3; border-radius:8px; cursor:pointer;">Soprano 8ª (Agudo)</button>
-                <button onclick="playVoice('soprano')" style="padding:15px; background:#e3f2fd; border:1px solid #2196F3; border-radius:8px; cursor:pointer;">Soprano</button>
-                <button onclick="playVoice('contralto')" style="padding:15px; background:#fce4ec; border:1px solid #f06292; border-radius:8px; cursor:pointer;">Contralto</button>
-                <button onclick="playVoice('tenor')" style="padding:15px; background:#fff3e0; border:1px solid #ffb74d; border-radius:8px; cursor:pointer;">Tenor</button>
-                <button onclick="playVoice('baixo')" style="padding:15px; background:#f1f8e9; border:1px solid #8bc34a; border-radius:8px; cursor:pointer;">Baixo</button>
-                <button onclick="playVoice('baixo8vb')" style="padding:15px; background:#f1f8e9; border:1px solid #8bc34a; border-radius:8px; cursor:pointer;">Baixo 8ª (Grave)</button>
-            </div>
+            <button onclick="playVoice('soprano8va')" style="width:100%; padding:12px; background:#bbdefb; border:2px solid #2196f3; border-radius:15px; font-weight:bold; cursor:pointer;">
+                SOPRANO 8ª (Agudo) 🎵
+            </button>
 
-            <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
+            <button onclick="playVoice('soprano')" style="width:100%; padding:12px; background:#e3f2fd; border:2px solid #64b5f6; border-radius:15px; font-weight:bold; cursor:pointer;">
+                SOPRANO
+            </button>
 
-            <div class="image-container"><img src="assets/moo/page6.jpg" alt="Gráfico da Página 6"></div>
+            <button onclick="playVoice('contralto')" style="width:100%; padding:12px; background:#fce4ec; border:2px solid #f06292; border-radius:15px; font-weight:bold; cursor:pointer;">
+                CONTRALTO
+            </button>
 
-            <script>
-                function playVoice(voiceKey) {
-                    const audio = document.getElementById('voice-player');
-                    const source = document.getElementById('voice-source');
-                    // O caminho aponta para assets/tessituras/ seguido do nome do arquivo
-                    source.src = 'assets/tessituras/' + voiceKey + '_tessitura.mp3';
-                    audio.load();
-                    audio.play();
-                }
-            </script>
+            <button onclick="playVoice('tenor')" style="width:100%; padding:12px; background:#fff3e0; border:2px solid #ffb74d; border-radius:15px; font-weight:bold; cursor:pointer;">
+                TENOR
+            </button>
 
-            <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
-                <button onclick="mostrarConteudo('moo_p5')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
-                <button onclick="mostrarConteudo('moo_p7')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Próxima Página ➜</button>
-            </div>
-        `,
-        pagina: "6"
-    }
+            <button onclick="playVoice('baixo')" style="width:100%; padding:12px; background:#f1f8e9; border:2px solid #8bc34a; border-radius:15px; font-weight:bold; cursor:pointer;">
+                BAIXO
+            </button>
+
+            <button onclick="playVoice('baixo8vb')" style="width:100%; padding:12px; background:#dcedc8; border:2px solid #689f38; border-radius:15px; font-weight:bold; cursor:pointer;">
+                BAIXO 8ª (Grave) 🎶
+            </button>
+
+        </div>
+
+        <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
+
+        <div class="image-container" style="text-align:center; margin-top:20px;">
+            <img src="assets/moo/page6.jpg" alt="Gráfico da Página 6" style="max-width:100%; border-radius:10px; border: 1px solid #ddd;">
+        </div>
+
+        <script>
+            function playVoice(voiceKey) {
+                const audio = document.getElementById('voice-player');
+                const source = document.getElementById('voice-source');
+                source.src = 'assets/tessituras/' + voiceKey + '_tessitura.mp3';
+                audio.load();
+                audio.play();
+            }
+        </script>
+
+        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
+            <button onclick="mostrarConteudo('moo_p5')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
+            <button onclick="mostrarConteudo('moo_p7')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Próxima Página ➜</button>
+        </div>
+    `,
+    pagina: "6"
+}
 });
