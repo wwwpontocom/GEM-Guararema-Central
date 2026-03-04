@@ -98,55 +98,123 @@ Object.assign(BIBLIOTECA_LIVRO, {
     },
 
     // PÁGINA 6: Distribuição das Vozes (Interativo)
-  "moo_p6": {
+ "moo_p6": {
     keywords: ["vozes", "soprano", "contralto", "tenor", "baixo", "oitavas"],
     fase: "MOO",
     titulo: "Página 6 - DISTRIBUIÇÃO DAS VOZES",
     icone: "🎼",
-    resumo: "Interativo: Diagrama visual das tessituras conforme o manual.",
+    resumo: "Interativo: Comparativo entre 'Assim se reproduz' e 'Assim está escrito'.",
     html_content: `
-        <h3 style="text-align:center;">Distribuição das Vozes e Oitavas</h3>
-        
-        <div class="svg-container" style="width: 100%; max-width: 500px; margin: 0 auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));">
-            <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
-                <rect x="10" y="10" width="380" height="45" rx="10" fill="#2196F3" onclick="playVoice('soprano8va')" />
-                <text x="200" y="40" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('soprano8va')">SOPRANO 8ª</text>
+    <style>
+        .moo-container { width: 100%; max-width: 900px; margin: 0 auto; background: white; padding: 20px; font-family: Arial, sans-serif; }
+        .moo-title { font-size: 28px; font-weight: bold; margin-bottom: 30px; }
+        .moo-red { color: #c00000; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
+        .moo-desc { font-style: italic; font-weight: bold; margin-bottom: 20px; font-size: 0.9em; }
+        .moo-flex { display: flex; justify-content: space-between; gap: 20px; }
+        .staff-line { position: relative; display: flex; align-items: flex-start; margin-bottom: 10px; }
+        .pentagrama-mini { width: 45px; height: 35px; border-top: 1px solid #000; border-bottom: 1px solid #000; 
+            background: linear-gradient(to bottom, transparent 18%, #000 18%, #000 22%, transparent 22%, transparent 43%, #000 43%, #000 47%, transparent 47%, transparent 68%, #000 68%, #000 72%, transparent 72%);
+            margin-right: 10px; position: relative; flex-shrink: 0; }
+        .clef-mini { position: absolute; font-size: 35px; left: 2px; user-select: none; }
+        .sol-m { top: -8px; } .fa-m { top: -5px; font-size: 30px; }
+        .bracket-moo { border-left: 2px solid #000; border-top: 2px solid #000; border-bottom: 2px solid #000; width: 8px; margin-right: 8px; align-self: stretch; margin-top: 15px; margin-bottom: 5px; }
+        .label-moo { width: 110px; padding: 4px; border: 1px solid #888; font-weight: bold; cursor: pointer; background: white; font-size: 0.85em; text-align: center; }
+        .inst-moo { width: 300px; padding: 4px; border: 1px solid #888; font-style: italic; cursor: pointer; background: white; font-size: 0.85em; }
+        .moo-row { display: flex; align-items: center; margin-bottom: 4px; transition: 0.2s; }
+        .moo-row:hover { opacity: 0.8; }
+        .border-red { border: 2px solid #c00000 !important; }
+        .written-box { border: 1px solid #888; padding: 4px 15px; min-width: 80px; text-align: center; cursor: pointer; font-size: 13px; }
+    </style>
 
-                <rect x="10" y="60" width="380" height="45" rx="10" fill="#64B5F6" onclick="playVoice('soprano')" />
-                <text x="200" y="90" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('soprano')">SOPRANO</text>
+    <div class="moo-container">
+        <div class="moo-title">Orquestração do H5</div>
 
-                <rect x="10" y="110" width="380" height="45" rx="10" fill="#F06292" onclick="playVoice('contralto')" />
-                <text x="200" y="140" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('contralto')">CONTRALTO</text>
+        <div class="moo-flex">
+            <div style="flex: 2;">
+                <div class="moo-red">Assim se reproduz:</div>
+                <div class="moo-desc">Em 6 linhas melódicas</div>
 
-                <rect x="10" y="160" width="380" height="45" rx="10" fill="#FFB74D" onclick="playVoice('tenor')" />
-                <text x="200" y="190" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('tenor')">TENOR</text>
+                <div style="display: flex;">
+                    <div class="bracket-moo"></div>
+                    <div>
+                        <div class="staff-line">
+                            <div class="pentagrama-mini" style="margin-top: 35px;"><span class="clef-mini sol-m">𝄞</span></div>
+                            <div>
+                                <div class="moo-row" onclick="playVoice('soprano8va')">
+                                    <div class="label-moo border-red">Soprano <i>8a.</i></div>
+                                    <div class="inst-moo border-red">Violino, Flauta.</div>
+                                </div>
+                                <div class="moo-row" onclick="playVoice('soprano')">
+                                    <div class="label-moo">Soprano</div>
+                                    <div class="inst-moo">Oboé, Clarinete, Sax Soprano, Trompete, etc.</div>
+                                </div>
+                                <div class="moo-row" onclick="playVoice('contralto')">
+                                    <div class="label-moo">Contralto</div>
+                                    <div class="inst-moo">Corne Inglês, Sax Alto, Trompa.</div>
+                                </div>
+                            </div>
+                        </div>
 
-                <rect x="10" y="210" width="380" height="45" rx="10" fill="#8BC34A" onclick="playVoice('baixo')" />
-                <text x="200" y="240" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('baixo')">BAIXO</text>
+                        <div class="staff-line">
+                            <div class="pentagrama-mini" style="margin-top: 15px;"><span class="clef-mini fa-m">𝄢</span></div>
+                            <div>
+                                <div class="moo-row" onclick="playVoice('tenor')">
+                                    <div class="label-moo">Tenor</div>
+                                    <div class="inst-moo">Viola, Clar Alto, Sax Tenor, Trombone.</div>
+                                </div>
+                                <div class="moo-row" onclick="playVoice('baixo')">
+                                    <div class="label-moo">Baixo</div>
+                                    <div class="inst-moo">Violoncelo, Fagote, Clar Bx, Sax Bar, Eufônio.</div>
+                                </div>
+                                <div class="moo-row" onclick="playVoice('baixo8vb')">
+                                    <div class="label-moo border-red">Baixo <i>8a.</i></div>
+                                    <div class="inst-moo border-red">Tuba, Pedaleira do Órgão.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <rect x="10" y="260" width="380" height="45" rx="10" fill="#689F38" onclick="playVoice('baixo8vb')" />
-                <text x="200" y="290" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('baixo8vb')">BAIXO 8ª</text>
-            </svg>
+            <div style="flex: 1; border-left: 1px solid #eee; padding-left: 20px;">
+                <div class="moo-red">Assim está escrito:</div>
+                <div class="moo-desc">Em 4 linhas melódicas</div>
+
+                <div class="staff-line">
+                    <div class="pentagrama-mini"><span class="clef-mini sol-m">𝄞</span></div>
+                    <div style="display:flex; flex-direction:column; gap:5px;">
+                        <div class="written-box" onclick="playVoice('soprano')">Soprano</div>
+                        <div class="written-box" onclick="playVoice('contralto')">Contralto</div>
+                    </div>
+                </div>
+                <div style="height:25px;"></div>
+                <div class="staff-line">
+                    <div class="pentagrama-mini"><span class="clef-mini fa-m">𝄢</span></div>
+                    <div style="display:flex; flex-direction:column; gap:5px;">
+                        <div class="written-box" onclick="playVoice('tenor')">Tenor</div>
+                        <div class="written-box" onclick="playVoice('baixo')">Baixo</div>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
 
-        <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
+    <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
 
-        <p style="text-align:center; margin-top:15px; font-style:italic; font-size:0.85em;">Clique nas cores acima para ouvir a tessitura.</p>
+    <script>
+        function playVoice(voiceKey) {
+            const audio = document.getElementById('voice-player');
+            const source = document.getElementById('voice-source');
+            source.src = 'assets/tessituras/' + voiceKey + '_tessitura.mp3';
+            audio.load();
+            audio.play().catch(e => console.warn("Áudio não encontrado:", source.src));
+        }
+    </script>
 
-        <script>
-            function playVoice(voiceKey) {
-                const audio = document.getElementById('voice-player');
-                const source = document.getElementById('voice-source');
-                source.src = 'assets/tessituras/' + voiceKey + '_tessitura.mp3';
-                audio.load();
-                audio.play();
-            }
-        </script>
-
-        <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
-            <button onclick="mostrarConteudo('moo_p5')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
-            <button onclick="mostrarConteudo('moo_p7')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Próxima Página ➜</button>
-        </div>
+    <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
+        <button onclick="mostrarConteudo('moo_p5')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
+        <button onclick="mostrarConteudo('moo_p7')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Próxima Página ➜</button>
+    </div>
     `,
     pagina: "6"
 }
