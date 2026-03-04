@@ -107,10 +107,19 @@ Object.assign(BIBLIOTECA_LIVRO, {
     html_content: `
     <style>
         .moo-container { width: 100%; max-width: 900px; margin: 0 auto; background: white; padding: 20px; font-family: Arial, sans-serif; }
-        .moo-title { font-size: 28px; font-weight: bold; margin-bottom: 30px; }
+        .moo-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; margin-bottom: 20px; }
+        .moo-title { font-size: 28px; font-weight: bold; }
         .moo-red { color: #c00000; font-size: 22px; font-weight: bold; margin-bottom: 5px; }
         .moo-desc { font-style: italic; font-weight: bold; margin-bottom: 20px; font-size: 0.9em; }
         .moo-flex { display: flex; justify-content: space-between; gap: 20px; }
+        
+        /* Ajustes de Responsividade */
+        @media (max-width: 768px) {
+            .moo-flex { flex-direction: column; }
+            .moo-divider { border-left: none !important; border-top: 1px solid #eee; padding-left: 0 !important; padding-top: 20px; }
+            .inst-moo { width: 100% !important; max-width: none; }
+        }
+
         .staff-line { position: relative; display: flex; align-items: flex-start; margin-bottom: 10px; }
         .pentagrama-mini { width: 45px; height: 35px; border-top: 1px solid #000; border-bottom: 1px solid #000; 
             background: linear-gradient(to bottom, transparent 18%, #000 18%, #000 22%, transparent 22%, transparent 43%, #000 43%, #000 47%, transparent 47%, transparent 68%, #000 68%, #000 72%, transparent 72%);
@@ -127,7 +136,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
     </style>
 
     <div class="moo-container">
-        <div class="moo-title">Orquestração do H5</div>
+        <div class="moo-header">
+            <div class="moo-title">Orquestração do H5</div>
+            <button onclick="abrirPopup('<h3>Distribuição das Vozes</h3><p>Embora os hinos estejam escritos em 4 linhas melódicas, a orquestração se reproduz em <b>6 linhas</b>:</p><ul><li><b>Soprano 8ª:</b> Instrumentos agudos (Violino/Flauta) tocam uma oitava acima.</li><li><b>Soprano:</b> Melodia principal na altura escrita.</li><li><b>Contralto e Tenor:</b> Preenchimento harmônico.</li><li><b>Baixo:</b> Alicerce da harmonia.</li><li><b>Baixo 8ª:</b> Tuba e Pedaleira reforçam oitavando abaixo.</li></ul>', '📝')" style="background:none; border:none; color:#c00000; cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Explicação]</button>
+        </div>
 
         <div class="moo-flex">
             <div style="flex: 2;">
@@ -176,7 +188,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 </div>
             </div>
 
-            <div style="flex: 1; border-left: 1px solid #eee; padding-left: 20px;">
+            <div class="moo-divider" style="flex: 1; border-left: 1px solid #eee; padding-left: 20px;">
                 <div class="moo-red">Assim está escrito:</div>
                 <div class="moo-desc">Em 4 linhas melódicas</div>
 
