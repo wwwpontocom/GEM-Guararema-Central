@@ -138,7 +138,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
     <div class="moo-container">
         <div class="moo-header">
             <div class="moo-title">Orquestração do H5</div>
-            <button onclick="abrirPopup('<h3>Distribuição das Vozes</h3><p>Embora os hinos estejam escritos em 4 linhas melódicas, a orquestração se reproduz em <b>6 linhas</b>:</p><ul><li><b>Soprano 8ª:</b> Instrumentos agudos (Violino/Flauta) tocam uma oitava acima.</li><li><b>Soprano:</b> Melodia principal na altura escrita.</li><li><b>Contralto e Tenor:</b> Preenchimento harmônico.</li><li><b>Baixo:</b> Alicerce da harmonia.</li><li><b>Baixo 8ª:</b> Tuba e Pedaleira reforçam oitavando abaixo.</li></ul>', '📝')" style="background:none; border:none; color:#c00000; cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[Ver Explicação]</button>
+            <button onclick="abrirPopup('<h3>Distribuição das Vozes</h3><p>Embora os hinos estejam escritos em 4 linhas melódicas, a orquestração se reproduz em <b>6 linhas</b>:</p><ul><li><b>Soprano 8ª:</b> Instrumentos agudos (Violino/Flauta) tocam uma oitava acima.</li><li><b>Soprano:</b> Melodia principal na altura escrita.</li><li><b>Contralto e Tenor:</b> Preenchimento harmônico.</li><li><b>Baixo:</b> Alicerce da harmonia.</li><li><b>Baixo 8ª:</b> Tuba e Pedaleira reforçam oitavando abaixo.</li></ul>', '📝')" style="background:none; border:none; color:#c00000; cursor:pointer; text-decoration:underline; font-weight:bold; padding:0;">[ 💡 Saiba Mais]</button>
         </div>
 
         <div class="moo-flex">
