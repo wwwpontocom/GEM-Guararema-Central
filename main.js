@@ -746,6 +746,12 @@ function selectTab(tabId) {
             renderArea.scrollTop = 0;
         }
     }
+
+   else if (tabId === 'moo') {
+    if (typeof switchTab === "function") switchTab('assistente');
+    mostrarConteudo('moo_p1'); // Inicia na página 1
+}
+    
     // --- NOVO BLOCO PARA PLANO DE AULA ---
     else if (tabId === 'plano') {
         if (typeof switchTab === "function") switchTab('assistente');
