@@ -98,49 +98,40 @@ Object.assign(BIBLIOTECA_LIVRO, {
     },
 
     // PÁGINA 6: Distribuição das Vozes (Interativo)
-   "moo_p6": {
+  "moo_p6": {
     keywords: ["vozes", "soprano", "contralto", "tenor", "baixo", "oitavas"],
     fase: "MOO",
     titulo: "Página 6 - DISTRIBUIÇÃO DAS VOZES",
     icone: "🎼",
-    resumo: "Interativo: Distribuição vertical das vozes (Tessituras).",
+    resumo: "Interativo: Diagrama visual das tessituras conforme o manual.",
     html_content: `
         <h3 style="text-align:center;">Distribuição das Vozes e Oitavas</h3>
-        <p style="text-align:center; font-size: 0.9em; color: #666;">Toque na camada para ouvir a tessitura correspondente:</p>
         
-        <div class="tessitura-stack" style="display: flex; flex-direction: column; gap: 8px; max-width: 400px; margin: 0 auto 20px auto;">
-            
-            <button onclick="playVoice('soprano8va')" style="width:100%; padding:12px; background:#bbdefb; border:2px solid #2196f3; border-radius:15px; font-weight:bold; cursor:pointer;">
-                SOPRANO 8ª (Agudo) 🎵
-            </button>
+        <div class="svg-container" style="width: 100%; max-width: 500px; margin: 0 auto; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));">
+            <svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
+                <rect x="10" y="10" width="380" height="45" rx="10" fill="#2196F3" onclick="playVoice('soprano8va')" />
+                <text x="200" y="40" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('soprano8va')">SOPRANO 8ª</text>
 
-            <button onclick="playVoice('soprano')" style="width:100%; padding:12px; background:#e3f2fd; border:2px solid #64b5f6; border-radius:15px; font-weight:bold; cursor:pointer;">
-                SOPRANO
-            </button>
+                <rect x="10" y="60" width="380" height="45" rx="10" fill="#64B5F6" onclick="playVoice('soprano')" />
+                <text x="200" y="90" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('soprano')">SOPRANO</text>
 
-            <button onclick="playVoice('contralto')" style="width:100%; padding:12px; background:#fce4ec; border:2px solid #f06292; border-radius:15px; font-weight:bold; cursor:pointer;">
-                CONTRALTO
-            </button>
+                <rect x="10" y="110" width="380" height="45" rx="10" fill="#F06292" onclick="playVoice('contralto')" />
+                <text x="200" y="140" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('contralto')">CONTRALTO</text>
 
-            <button onclick="playVoice('tenor')" style="width:100%; padding:12px; background:#fff3e0; border:2px solid #ffb74d; border-radius:15px; font-weight:bold; cursor:pointer;">
-                TENOR
-            </button>
+                <rect x="10" y="160" width="380" height="45" rx="10" fill="#FFB74D" onclick="playVoice('tenor')" />
+                <text x="200" y="190" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('tenor')">TENOR</text>
 
-            <button onclick="playVoice('baixo')" style="width:100%; padding:12px; background:#f1f8e9; border:2px solid #8bc34a; border-radius:15px; font-weight:bold; cursor:pointer;">
-                BAIXO
-            </button>
+                <rect x="10" y="210" width="380" height="45" rx="10" fill="#8BC34A" onclick="playVoice('baixo')" />
+                <text x="200" y="240" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('baixo')">BAIXO</text>
 
-            <button onclick="playVoice('baixo8vb')" style="width:100%; padding:12px; background:#dcedc8; border:2px solid #689f38; border-radius:15px; font-weight:bold; cursor:pointer;">
-                BAIXO 8ª (Grave) 🎶
-            </button>
-
+                <rect x="10" y="260" width="380" height="45" rx="10" fill="#689F38" onclick="playVoice('baixo8vb')" />
+                <text x="200" y="290" text-anchor="middle" fill="white" font-weight="bold" font-family="Arial" onclick="playVoice('baixo8vb')">BAIXO 8ª</text>
+            </svg>
         </div>
 
         <audio id="voice-player"><source id="voice-source" src="" type="audio/mpeg"></audio>
 
-        <div class="image-container" style="text-align:center; margin-top:20px;">
-            <img src="assets/moo/page6.jpg" alt="Gráfico da Página 6" style="max-width:100%; border-radius:10px; border: 1px solid #ddd;">
-        </div>
+        <p style="text-align:center; margin-top:15px; font-style:italic; font-size:0.85em;">Clique nas cores acima para ouvir a tessitura.</p>
 
         <script>
             function playVoice(voiceKey) {
