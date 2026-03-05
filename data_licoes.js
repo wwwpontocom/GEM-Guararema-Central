@@ -176,16 +176,14 @@ Object.assign(BIBLIOTECA_LIVRO, {
             alunosArr.push(data);
         });
 
-        // Sorts the array alphabetically by the 'nome' property
         alunosArr.sort((a, b) => a.nome.localeCompare(b.nome));
 
-        // Renders the sorted list into the select element
         alunosArr.forEach((aluno) => {
             const selected = aluno.key === currentVal ? 'selected' : '';
             select.innerHTML += `<option value="${aluno.key}" data-instr="${aluno.instrumento}" ${selected}>${aluno.nome}</option>`;
         });
-    }); // This closes the .on('value')
-}; // This closes the function
+    });
+};
 
                 window.promptNovoAluno = function() {
                     const nome = prompt("Nome completo do aluno:");
