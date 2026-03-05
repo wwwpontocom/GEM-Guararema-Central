@@ -161,12 +161,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-                window.sincronizarListaAlunos = function() {
+           window.sincronizarListaAlunos = function() {
     firebase.database().ref('lista_alunos').on('value', (snapshot) => {
         const select = document.getElementById('aluno-select');
         if(!select) return;
         const currentVal = select.value;
-       
+        
         select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
 
         const alunosArr = [];
@@ -184,8 +184,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
             const selected = aluno.key === currentVal ? 'selected' : '';
             select.innerHTML += `<option value="${aluno.key}" data-instr="${aluno.instrumento}" ${selected}>${aluno.nome}</option>`;
         });
-                    });
-                };
+    }); // This closes the .on('value')
+}; // This closes the function
 
                 window.promptNovoAluno = function() {
                     const nome = prompt("Nome completo do aluno:");
