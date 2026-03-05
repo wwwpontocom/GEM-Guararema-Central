@@ -162,16 +162,28 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
             <script>
                 window.sincronizarListaAlunos = function() {
-                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
-                        const select = document.getElementById('aluno-select');
-                        if(!select) return;
-                        const currentVal = select.value;
-                        select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
-                        snapshot.forEach((child) => {
-                            const aluno = child.val();
-                            const selected = child.key === currentVal ? 'selected' : '';
-                            select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}" \${selected}>\${aluno.nome}</option>\`;
-                        });
+    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
+        const select = document.getElementById('aluno-select');
+        if(!select) return;
+        const currentVal = select.value;
+       
+        select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
+
+        const alunosArr = [];
+        snapshot.forEach((child) => {
+            const data = child.val();
+            data.key = child.key;
+            alunosArr.push(data);
+        });
+
+        // Sorts the array alphabetically by the 'nome' property
+        alunosArr.sort((a, b) => a.nome.localeCompare(b.nome));
+
+        // Renders the sorted list into the select element
+        alunosArr.forEach((aluno) => {
+            const selected = aluno.key === currentVal ? 'selected' : '';
+            select.innerHTML += `<option value="${aluno.key}" data-instr="${aluno.instrumento}" ${selected}>${aluno.nome}</option>`;
+        });
                     });
                 };
 
