@@ -29,17 +29,17 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
     <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
         <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido de Turmas:</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-            <button onclick="filtrarCSS('all')" style="padding: 8px 12px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
-            <button onclick="filtrarCSS('teoria1')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
-            <button onclick="filtrarCSS('teoria2')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
-            <button onclick="filtrarCSS('teoria3')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
-            <button onclick="filtrarCSS('manha')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🌅 Manhã</button>
-            <button onclick="filtrarCSS('Violino,Viola')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
+        <div id="filter-container-nav" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            <button onclick="window.filtrarCSS('all')" style="padding: 8px 12px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
+            <button onclick="window.filtrarCSS('teoria1')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
+            <button onclick="window.filtrarCSS('teoria2')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
+            <button onclick="window.filtrarCSS('teoria3')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
+            <button onclick="window.filtrarCSS('manha')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🌅 Manhã</button>
+            <button onclick="window.filtrarCSS('Violino,Viola')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
         </div>
 
         <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
-            <table id="tabela-alunos" style="width:100%; font-size:13px; border-collapse: collapse;">
+            <table id="tabela-alunos-fix" style="width:100%; font-size:13px; border-collapse: collapse;">
                 <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
                 <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
                 <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Luiz Antônio Ináilva</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
@@ -69,20 +69,22 @@ Object.assign(BIBLIOTECA_LIVRO, {
     </div>
 
     <script>
-        function filtrarCSS(classe) {
+        window.filtrarCSS = function(classe) {
             const rows = document.querySelectorAll('.aluno-row');
+            if (!rows.length) return;
+            
             rows.forEach(row => {
                 if (classe === 'all') {
                     row.style.display = 'table-row';
                 } else if (classe.includes(',')) {
-                    const filtros = classe.split(',');
-                    const match = filtros.some(f => row.classList.contains(f));
-                    row.style.display = match ? 'table-row' : 'none';
+                    const fList = classe.split(',');
+                    const hasClass = fList.some(f => row.classList.contains(f));
+                    row.style.display = hasClass ? 'table-row' : 'none';
                 } else {
                     row.style.display = row.classList.contains(classe) ? 'table-row' : 'none';
                 }
             });
-        }
+        };
     </script>
 `,
         pagina: "Agenda"
