@@ -27,86 +27,62 @@ Object.assign(BIBLIOTECA_LIVRO, {
         </button>
     </div>
 
-    <div id="area-filtro-alunos" style="display: block; margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
+    <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
         <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido de Turmas:</p>
         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-            <button onclick="localFiltrar('todos')" style="padding: 8px 12px; background: #fff; border: 1px solid var(--primary); color: var(--primary); border-radius: 4px; font-size: 11px; cursor: pointer; font-weight: bold;">Todos</button>
-            <button onclick="localFiltrar('teoria1')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
-            <button onclick="localFiltrar('teoria2')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
-            <button onclick="localFiltrar('teoria3')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
-            <button onclick="localFiltrar('manha')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🌅 Manhã</button>
-            <button onclick="localFiltrar('cordas')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
-            <button onclick="localFiltrar('madeiras')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
-            <button onclick="localFiltrar('metais')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
+            <button onclick="filtrarCSS('all')" style="padding: 8px 12px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
+            <button onclick="filtrarCSS('teoria1')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
+            <button onclick="filtrarCSS('teoria2')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
+            <button onclick="filtrarCSS('teoria3')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
+            <button onclick="filtrarCSS('manha')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🌅 Manhã</button>
+            <button onclick="filtrarCSS('Violino,Viola')" style="padding: 8px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
         </div>
 
-        <div id="lista-dinamica-alunos" style="background: white; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 150px; max-height: 400px; overflow-y: auto; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);">
-            <p style="color: #999; font-size: 12px; text-align: center;">Carregando lista...</p>
+        <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
+            <table id="tabela-alunos" style="width:100%; font-size:13px; border-collapse: collapse;">
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Luiz Antônio Ináilva</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Pedro</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Rafael Josantos</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Samuel Carlos de Eira</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria1 Viola"> <td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td> <td style="text-align:right; padding:10px; color:#888;">Viola</td> </tr>
+                <tr class="aluno-row teoria1 Saxofone"> <td style="padding:10px; border-bottom:1px solid #eee;">Arthur Rasado</td> <td style="text-align:right; padding:10px; color:#888;">Saxofone</td> </tr>
+                <tr class="aluno-row teoria1 Flauta"> <td style="padding:10px; border-bottom:1px solid #eee;">Breno Soutos</td> <td style="text-align:right; padding:10px; color:#888;">Flauta</td> </tr>
+                <tr class="aluno-row teoria1 Eufônio"> <td style="padding:10px; border-bottom:1px solid #eee;">Davi Rodralves</td> <td style="text-align:right; padding:10px; color:#888;">Eufônio</td> </tr>
+                <tr class="aluno-row teoria1 Flauta"> <td style="padding:10px; border-bottom:1px solid #eee;">Lucas Gabriel dos Aatos</td> <td style="text-align:right; padding:10px; color:#888;">Flauta</td> </tr>
+                <tr class="aluno-row teoria1 TBD"> <td style="padding:10px; border-bottom:1px solid #eee;">Maurício Eira</td> <td style="text-align:right; padding:10px; color:#888;">TBD</td> </tr>
+                <tr class="aluno-row teoria2 Saxofone"> <td style="padding:10px; border-bottom:1px solid #eee;">Evandro Bemoki</td> <td style="text-align:right; padding:10px; color:#888;">Saxofone Alto</td> </tr>
+                <tr class="aluno-row teoria2 Flauta"> <td style="padding:10px; border-bottom:1px solid #eee;">Guilherme Sancelo</td> <td style="text-align:right; padding:10px; color:#888;">Flauta</td> </tr>
+                <tr class="aluno-row teoria2 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Andrew Wallodoro</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria2 Clarinete"> <td style="padding:10px; border-bottom:1px solid #eee;">João Vítor Dedeiros</td> <td style="text-align:right; padding:10px; color:#888;">Clarinete</td> </tr>
+                <tr class="aluno-row teoria2 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Lorenzo Melo Beoki</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria2 Clarinete"> <td style="padding:10px; border-bottom:1px solid #eee;">Luiz Gustavo de Olievedo</td> <td style="text-align:right; padding:10px; color:#888;">Clarinete</td> </tr>
+                <tr class="aluno-row teoria2 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Thiago Alves Vieiilva</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria3 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row teoria3 Viola"> <td style="padding:10px; border-bottom:1px solid #eee;">Robson Des</td> <td style="text-align:right; padding:10px; color:#888;">Viola</td> </tr>
+                <tr class="aluno-row manha Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Caíque</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row manha Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Elton</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+                <tr class="aluno-row manha Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Vanderlei</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
+            </table>
         </div>
     </div>
 
     <script>
-        function localFiltrar(filtro) {
-            const container = document.getElementById('lista-dinamica-alunos');
-            if (!container) return;
-
-            // Embedded data to ensure it works instantly
-            const LISTA_INTERNA = [
-                { "nome": "Arthur Guimeiro", "instrumento": "Viola", "categoria": "teoria1" },
-                { "nome": "Arthur Rasado", "instrumento": "Saxofone", "categoria": "teoria1" },
-                { "nome": "Breno Soutos", "instrumento": "Flauta", "categoria": "teoria1" },
-                { "nome": "Davi Rodralves", "instrumento": "Eufônio", "categoria": "teoria1" },
-                { "nome": "Heitor", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "João Pedro Carreitas", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "Lucas Gabriel dos Aatos", "instrumento": "Flauta", "categoria": "teoria1" },
-                { "nome": "Luiz Antônio Ináilva", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "Maurício Eira", "instrumento": "TBD", "categoria": "teoria1" },
-                { "nome": "Pedro", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "Rafael Josantos", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "Samuel Carlos de Eira", "instrumento": "Violino", "categoria": "teoria1" },
-                { "nome": "Evandro Bemoki", "instrumento": "Saxofone Alto", "categoria": "teoria2" },
-                { "nome": "Guilherme Sancelo", "instrumento": "Flauta", "categoria": "teoria2" },
-                { "nome": "Andrew Wallodoro", "instrumento": "Violino", "categoria": "teoria2" },
-                { "nome": "João Vítor Dedeiros", "instrumento": "Clarinete", "categoria": "teoria2" },
-                { "nome": "Lorenzo Melo Beoki", "instrumento": "Violino", "categoria": "teoria2" },
-                { "nome": "Luiz Gustavo de Olievedo", "instrumento": "Clarinete", "categoria": "teoria2" },
-                { "nome": "Thiago Alves Vieiilva", "instrumento": "Violino", "categoria": "teoria2" },
-                { "nome": "Jefferson Diarreto", "instrumento": "Violino", "categoria": "teoria3" },
-                { "nome": "Robson Des", "instrumento": "Viola", "categoria": "teoria3" },
-                { "nome": "Caíque", "instrumento": "Violino", "categoria": "manha" },
-                { "nome": "Elton", "instrumento": "Violino", "categoria": "manha" },
-                { "nome": "Vanderlei", "instrumento": "Violino", "categoria": "manha" }
-            ];
-
-            let filtrados = [];
-            if (filtro === 'todos') {
-                filtrados = [...LISTA_INTERNA];
-            } else if (filtro === 'cordas') {
-                const f = ['Violino', 'Viola', 'Violoncelo', 'Contrabaixo'];
-                filtrados = LISTA_INTERNA.filter(a => f.includes(a.instrumento));
-            } else if (filtro === 'madeiras') {
-                const f = ['Flauta', 'Clarinete', 'Saxofone', 'Saxofone Alto', 'Saxofone Tenor', 'Oboé'];
-                filtrados = LISTA_INTERNA.filter(a => f.includes(a.instrumento));
-            } else if (filtro === 'metais') {
-                const f = ['Trompa', 'Trompete', 'Trombone', 'Eufônio', 'Tuba'];
-                filtrados = LISTA_INTERNA.filter(a => f.includes(a.instrumento));
-            } else {
-                filtrados = LISTA_INTERNA.filter(a => a.categoria === filtro);
-            }
-
-            filtrados.sort((a, b) => a.nome.localeCompare(b.nome));
-
-            container.innerHTML = '<table style="width:100%; font-size:13px; border-collapse: collapse;">' + 
-                filtrados.map(a => \`
-                    <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:10px 6px;">\${a.nome}</td>
-                        <td style="padding:10px 6px; text-align:right; color:#888;"><i>\${a.instrumento}</i></td>
-                    </tr>
-                \`).join('') + '</table>';
+        function filtrarCSS(classe) {
+            const rows = document.querySelectorAll('.aluno-row');
+            rows.forEach(row => {
+                if (classe === 'all') {
+                    row.style.display = 'table-row';
+                } else if (classe.includes(',')) {
+                    const filtros = classe.split(',');
+                    const match = filtros.some(f => row.classList.contains(f));
+                    row.style.display = match ? 'table-row' : 'none';
+                } else {
+                    row.style.display = row.classList.contains(classe) ? 'table-row' : 'none';
+                }
+            });
         }
-
-        // Initialize display automatically
-        setTimeout(() => localFiltrar('todos'), 150);
     </script>
 `,
         pagina: "Agenda"
