@@ -5,7 +5,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         titulo: "AGENDA E TURMAS", 
         icone: "📅",
         resumo: "Cronograma mensal das turmas e acesso ao calendário de alunos.",
-   html_content: `
+  html_content: `
     <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: #fff;">
         <thead>
             <tr style="background-color: #f2f2f2;">
@@ -44,7 +44,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <button onclick="localFiltrar('metais')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
         </div>
 
-        <div id="lista-dinamica-alunos" style="background: white; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 100px; max-height: 300px; overflow-y: auto;">
+        <div id="lista-dinamica-alunos" style="background: white; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 100px; max-height: 350px; overflow-y: auto;">
             <p style="color: #999; font-size: 12px; text-align: center;">Selecione um filtro...</p>
         </div>
     </div>
@@ -54,35 +54,47 @@ Object.assign(BIBLIOTECA_LIVRO, {
             const container = document.getElementById('lista-dinamica-alunos');
             if (!container) return;
             
-            if (typeof DADOS_ALUNOS === 'undefined' || DADOS_ALUNOS.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:red;">Erro: Dados não carregados do GitHub.</p>';
+            // Check for DADOS_ALUNOS in the global scope
+            const baseDados = window.DADOS_ALUNOS || [];
+            
+            if (baseDados.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">Carregando dados dos alunos...</p>';
                 return;
             }
 
-            let filtrados = [...DADOS_ALUNOS];
+            let filtrados = [];
 
-            if (filtro === 'cordas') {
-                const f = ['Violino', 'Viola', 'Violoncelo', 'Contrabaixo'];
-                filtrados = DADOS_ALUNOS.filter(a => f.includes(a.instrumento));
+            if (filtro === 'todos') {
+                filtrados = [...baseDados];
+            } else if (filtro === 'cordas') {
+                const fam = ['Violino', 'Viola', 'Violoncelo', 'Contrabaixo'];
+                filtrados = baseDados.filter(a => fam.includes(a.instrumento));
             } else if (filtro === 'madeiras') {
-                const f = ['Flauta', 'Clarinete', 'Saxofone', 'Saxofone Alto', 'Saxofone Tenor', 'Oboé'];
-                filtrados = DADOS_ALUNOS.filter(a => f.includes(a.instrumento));
+                const fam = ['Flauta', 'Clarinete', 'Saxofone', 'Saxofone Alto', 'Saxofone Tenor', 'Oboé'];
+                filtrados = baseDados.filter(a => fam.includes(a.instrumento));
             } else if (filtro === 'metais') {
-                const f = ['Trompa', 'Trompete', 'Trombone', 'Eufônio', 'Tuba'];
-                filtrados = DADOS_ALUNOS.filter(a => f.includes(a.instrumento));
-            } else if (filtro !== 'todos') {
-                filtrados = DADOS_ALUNOS.filter(a => a.categoria === filtro);
+                const fam = ['Trompa', 'Trompete', 'Trombone', 'Eufônio', 'Tuba'];
+                filtrados = baseDados.filter(a => fam.includes(a.instrumento));
+            } else {
+                // Filters by categoria (teoria1, teoria2, teoria3, manha)
+                filtrados = baseDados.filter(a => a.categoria === filtro);
             }
 
             filtrados.sort((a, b) => a.nome.localeCompare(b.nome));
 
-            container.innerHTML = '<table style="width:100%; font-size:13px; border-collapse: collapse;">' + 
-                filtrados.map(a => \`
-                    <tr style="border-bottom:1px solid #eee;">
-                        <td style="padding:6px;">\${a.nome}</td>
-                        <td style="padding:6px; text-align:right; color:#888;"><i>\${a.instrumento}</i></td>
-                    </tr>
-                \`).join('') + '</table>';
+            if (filtrados.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:#999; padding: 20px;">Nenhum aluno encontrado neste grupo.</p>';
+            } else {
+                container.innerHTML = \`
+                    <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                        \${filtrados.map(a => \`
+                            <tr style="border-bottom:1px solid #eee;">
+                                <td style="padding:8px;">\${a.nome}</td>
+                                <td style="padding:8px; text-align:right; color:#666;"><i>\${a.instrumento}</i></td>
+                            </tr>
+                        \`).join('')}
+                    </table>\`;
+            }
         }
     </script>
 `,
