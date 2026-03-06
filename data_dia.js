@@ -5,7 +5,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         titulo: "AGENDA E TURMAS", 
         icone: "📅",
         resumo: "Cronograma mensal das turmas e acesso ao calendário de alunos.",
-     html_content: `
+   html_content: `
     <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: #fff;">
         <thead>
             <tr style="background-color: #f2f2f2;">
@@ -21,34 +21,43 @@ Object.assign(BIBLIOTECA_LIVRO, {
         </tbody>
     </table>
 
-    <div style="margin-bottom: 20px;">
-        <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido de Turmas:</p>
-        <div style="display: flex; flex-wrap: wrap; gap: 5px;">
-            <button onclick="localFiltrar('todos')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">Todos</button>
-            <button onclick="localFiltrar('teoria1')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">T1</button>
-            <button onclick="localFiltrar('teoria2')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">T2</button>
-            <button onclick="localFiltrar('teoria3')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">T3</button>
-            <button onclick="localFiltrar('manha')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">🌅 Manhã</button>
-            <button onclick="localFiltrar('cordas')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">🎻 Cordas</button>
-            <button onclick="localFiltrar('madeiras')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">🎷 Madeiras</button>
-            <button onclick="localFiltrar('metais')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; cursor: pointer;">🎺 Metais</button>
-        </div>
-    </div>
-
-    <div id="lista-dinamica-alunos" style="background: white; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 100px; max-height: 300px; overflow-y: auto;">
-        <p style="color: #999; font-size: 12px; text-align: center;">Carregando lista...</p>
-    </div>
-
-    <div style="text-align: center; padding: 15px; background: #eef4fb; border-radius: 8px; margin-top: 20px;">
-        <button onclick="abrirCalendarioEscolar()" style="padding: 10px; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer;">
-            📅 Abrir Calendário de Alunos
+    <div style="text-align: center; padding: 15px; background: #eef4fb; border-radius: 8px; margin-top: 10px;">
+        <button onclick="abrirCalendarioEscolar()" style="padding: 10px; width: 100%; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; margin-bottom: 10px; font-weight: bold;">
+            📅 ABRIR CALENDÁRIO DE ALUNOS
         </button>
+        
+        <button id="btn-carregar-lista" onclick="document.getElementById('area-filtro-alunos').style.display='block'; this.style.display='none'; localFiltrar('todos');" style="padding: 10px; width: 100%; background: #2ecc71; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+            👥 VER LISTA E FILTROS DE ALUNOS
+        </button>
+    </div>
+
+    <div id="area-filtro-alunos" style="display: none; margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
+        <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido de Turmas:</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            <button onclick="localFiltrar('todos')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
+            <button onclick="localFiltrar('teoria1')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
+            <button onclick="localFiltrar('teoria2')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
+            <button onclick="localFiltrar('teoria3')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
+            <button onclick="localFiltrar('manha')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🌅 Manhã</button>
+            <button onclick="localFiltrar('cordas')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
+            <button onclick="localFiltrar('madeiras')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
+            <button onclick="localFiltrar('metais')" style="padding: 6px 12px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
+        </div>
+
+        <div id="lista-dinamica-alunos" style="background: white; border: 1px solid #eee; padding: 10px; border-radius: 5px; min-height: 100px; max-height: 300px; overflow-y: auto;">
+            <p style="color: #999; font-size: 12px; text-align: center;">Selecione um filtro...</p>
+        </div>
     </div>
 
     <script>
         function localFiltrar(filtro) {
             const container = document.getElementById('lista-dinamica-alunos');
-            if (!container || typeof DADOS_ALUNOS === 'undefined') return;
+            if (!container) return;
+            
+            if (typeof DADOS_ALUNOS === 'undefined' || DADOS_ALUNOS.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color:red;">Erro: Dados não carregados do GitHub.</p>';
+                return;
+            }
 
             let filtrados = [...DADOS_ALUNOS];
 
@@ -75,9 +84,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     </tr>
                 \`).join('') + '</table>';
         }
-
-        // Initialize display
-        setTimeout(() => localFiltrar('todos'), 200);
     </script>
 `,
         pagina: "Agenda"
