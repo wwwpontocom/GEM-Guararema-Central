@@ -637,10 +637,14 @@ function abrirCalendarioEscolar() {
 // --- FIX IS HERE: Updated Filtering Logic ---
 function mostrarListaAlunos(dataStr, n) {
     // We map 1st occurrence to teoria1, 2nd to teoria2, etc. (Max 3)
-    const sem = n > 3 ? 3 : n;
+   const sem = n > 3 ? 3 : n;
 
+    // 1. Get students currently in the active theory group
     const alunosTeoria = DADOS_ALUNOS.filter(a => a.categoria === `teoria${sem}`);
-    const alunosOutros = DADOS_ALUNOS.filter(a => a.categoria === `outros${sem}`);
+    
+    // 2. Automatically generate "Outros": Everyone NOT in the current theory group
+    // This excludes those in current theory AND those in 'manha' (if you want manha in others)
+    const alunosOutros = DADOS_ALUNOS.filter(a => a.categoria !== `teoria${sem}`);
 
     const htmlTabela = `
         <div style="font-family: Arial, sans-serif;">
@@ -653,10 +657,10 @@ function mostrarListaAlunos(dataStr, n) {
                         <td style="border-bottom:1px solid #eee; padding:6px;">✅ ${aluno.nome}</td>
                         <td style="border-bottom:1px solid #eee; padding:6px; color:#666; text-align:right;"><i>${aluno.instrumento}</i></td>
                     </tr>
-                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Sem alunos escalados.</td></tr>'}
+                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Sem alunos de teoria hoje.</td></tr>'}
             </table>
 
-            <p><b>🎻 OUTROS ALUNOS - GRUPO ${sem}</b></p>
+            <p><b>🎻 OUTROS ALUNOS (Em Prática)</b></p>
             <table style="width:100%; border-collapse: collapse; color: #777; font-size:13px;">
                 ${alunosOutros.length > 0 ? alunosOutros.map(aluno => `
                     <tr>
