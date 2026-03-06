@@ -598,56 +598,65 @@ async function carregarDadosAlunos() {
 }
 
 // 3. Função para abrir o Calendário (Consolidada)
+// --- FIX IS HERE: Updated Calendar Logic ---
 function abrirCalendarioEscolar() {
     const dataAtual = new Date();
-    const mes = dataAtual.toLocaleString('pt-br', { month: 'long' });
+    const mesIdx = dataAtual.getMonth();
     const ano = dataAtual.getFullYear();
+    const nomeMes = dataAtual.toLocaleString('pt-br', { month: 'long' });
 
     let htmlCalendario = `
         <div style="text-align:center; margin-bottom:15px;">
-            <h3 style="margin:0; text-transform: capitalize;">${mes} ${ano}</h3>
+            <h3 style="margin:0; text-transform: capitalize;">${nomeMes} ${ano}</h3>
         </div>
         <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
-            <div style="font-weight:bold; color:#888;">D</div><div style="font-weight:bold;">S</div>
-            <div style="font-weight:bold;">T</div><div style="font-weight:bold;">Q</div>
-            <div style="font-weight:bold;">Q</div><div style="font-weight:bold;">S</div><div style="font-weight:bold;">S</div>
+            <div style="font-weight:bold; color:#f44336;">D</div><div>S</div><div>T</div><div>Q</div><div>Q</div><div>S</div><div>S</div>
     `;
 
-    // Gerador de dias (Ajustado para 31 dias para cobrir todos os meses)
-    for (let i = 1; i <= 31; i++) {
+    const contagemDias = { 0:0, 1:0, 2:0, 3:0, 4:0, 5:0, 6:0 };
+    const ultimoDia = new Date(ano, mesIdx + 1, 0).getDate();
+
+    for (let i = 1; i <= ultimoDia; i++) {
+        const d = new Date(ano, mesIdx, i);
+        const diaSemana = d.getDay(); 
+        contagemDias[diaSemana]++; 
+        
+        const n = contagemDias[diaSemana]; // Occurrence: 1st, 2nd, 3rd...
+
         htmlCalendario += `
-            <div onclick="mostrarListaAlunos('${i}/${dataAtual.getMonth()+1}')" 
+            <div onclick="mostrarListaAlunos('${i}/${mesIdx+1}', ${n})" 
                  style="padding:8px; border:1px solid #eee; cursor:pointer; border-radius:4px; font-size:12px;">
                 ${i}
             </div>`;
     }
 
-    htmlCalendario += `</div><p style="font-size:11px; margin-top:10px; color:#666;">* Toque em uma data para ver os alunos.</p>`;
+    htmlCalendario += `</div><p style="font-size:11px; margin-top:10px; color:#666;">* Selecione uma data para ver a Turma ${1}, ${2} ou ${3}.</p>`;
     abrirPopup(htmlCalendario, "🗓️");
 }
 
-// 4. Função para mostrar a tabela (Versão Profissional com Filtragem)
-function mostrarListaAlunos(data) {
-    // Filtragem dinâmica baseada no novo JSON de objetos
-    const alunosTeoria = DADOS_ALUNOS.filter(a => a.categoria === 'teoria');
-    const alunosOutros = DADOS_ALUNOS.filter(a => a.categoria === 'outros');
+// --- FIX IS HERE: Updated Filtering Logic ---
+function mostrarListaAlunos(dataStr, n) {
+    // We map 1st occurrence to teoria1, 2nd to teoria2, etc. (Max 3)
+    const sem = n > 3 ? 3 : n;
+
+    const alunosTeoria = DADOS_ALUNOS.filter(a => a.categoria === `teoria${sem}`);
+    const alunosOutros = DADOS_ALUNOS.filter(a => a.categoria === `outros${sem}`);
 
     const htmlTabela = `
         <div style="font-family: Arial, sans-serif;">
-            <h4 style="color:var(--primary); margin-bottom:5px;">📅 Lista: ${data}</h4>
+            <h4 style="color:var(--primary); margin-bottom:5px;">📅 Lista: ${dataStr} (Grupo ${sem})</h4>
             <hr>
-            
-            <p style="margin-top:10px;"><b>📚 TURMA DE TEORIA</b></p>
+            <p style="margin-top:10px;"><b>📚 TURMA DE TEORIA - GRUPO ${sem}</b></p>
             <table style="width:100%; border-collapse: collapse; margin-bottom: 15px; font-size:13px;">
                 ${alunosTeoria.length > 0 ? alunosTeoria.map(aluno => `
                     <tr>
                         <td style="border-bottom:1px solid #eee; padding:6px;">✅ ${aluno.nome}</td>
                         <td style="border-bottom:1px solid #eee; padding:6px; color:#666; text-align:right;"><i>${aluno.instrumento}</i></td>
                     </tr>
-                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Nenhum aluno de teoria.</td></tr>'}
+                `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Sem alunos escalados.</td></tr>'}
             </table>
 
-            <p><b>🎻 OUTROS ALUNOS</b></p>
+            <p><b>🎻 OUTROS ALUNOS - GRUPO ${sem}</b></p>
             <table style="width:100%; border-collapse: collapse; color: #777; font-size:13px;">
                 ${alunosOutros.length > 0 ? alunosOutros.map(aluno => `
                     <tr>
@@ -656,13 +665,9 @@ function mostrarListaAlunos(data) {
                     </tr>
                 `).join('') : '<tr><td colspan="2" style="color:#999; padding:10px;">Nenhum outro aluno.</td></tr>'}
             </table>
-            
-            <button onclick="abrirCalendarioEscolar()" style="margin-top:15px; width:100%; background:#888; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer; font-weight:bold;">
-                ⬅️ Voltar ao Calendário
-            </button>
+            <button onclick="abrirCalendarioEscolar()" style="margin-top:15px; width:100%; background:#888; color:white; border:none; padding:10px; border-radius:4px; cursor:pointer;">⬅️ Voltar</button>
         </div>
     `;
-
     abrirPopup(htmlTabela, "👥");
 }
 
