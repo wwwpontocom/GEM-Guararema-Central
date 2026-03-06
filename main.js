@@ -679,21 +679,25 @@ function mostrarListaAlunos(dataStr, n) {
 carregarDadosAlunos();
 
 function renderizarAgenda() {
-    const container = document.getElementById('agenda-render-area');
+    // Check if we should use the tab or a specific area
+    const container = document.getElementById('tab-agenda') || document.getElementById('agenda-render-area');
     if (!container) return;
 
     container.innerHTML = `
-        <div style="text-align: center;">
+        <div style="text-align: center; padding: 20px;">
             <h2 style="color: var(--primary); margin-bottom: 20px;">📅 Agenda de Aulas</h2>
-            <p style="color: #666; font-size: 14px;">Consulte o calendário escolar e a lista de alunos para o dia selecionado.</p>
-            <br>
-            <button onclick="abrirCalendarioEscolar()" class="btn-calendar">
-                📂 ABRIR CALENDÁRIO COMPLETO
-            </button>
-            <div id="quick-view" style="margin-top: 30px;">
-                </div>
+            <p style="color: #666; font-size: 14px;">Consulte o calendário escolar e a lista de alunos.</p>
+            
+            <div id="conteudo-dinamico-agenda">
+                \${BIBLIOTECA_LIVRO.dia.html_content}
+            </div>
         </div>
     `;
+    
+    // Crucial: Trigger the list loading after rendering the HTML
+    if (typeof localFiltrar === 'function') {
+        setTimeout(() => localFiltrar('todos'), 100);
+    }
 }
 
 function toggleMenu() {
