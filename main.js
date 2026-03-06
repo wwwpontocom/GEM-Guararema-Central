@@ -928,3 +928,39 @@ document.addEventListener('DOMContentLoaded', () => {
     // Chamamos com delta 0 e reset false para APENAS aplicar o que foi carregado
     changeZoom(0, false);
 });
+
+function filtrarListaRapida(filtro) {
+    const container = document.getElementById('lista-dinamica-alunos');
+    if (!container) return;
+
+    let filtrados = DADOS_ALUNOS;
+
+    // Filter Logic
+    if (filtro === 'teoria1' || filtro === 'teoria2' || filtro === 'teoria3' || filtro === 'manha') {
+        filtrados = DADOS_ALUNOS.filter(a => a.categoria === filtro);
+    } else if (filtro === 'cordas') {
+        const familia = ['Violino', 'Viola', 'Violoncelo', 'Contrabaixo'];
+        filtrados = DADOS_ALUNOS.filter(a => familia.includes(a.instrumento));
+    } else if (filtro === 'madeiras') {
+        const familia = ['Flauta', 'Clarinete', 'Saxofone', 'Saxofone Alto', 'Saxofone Tenor', 'Oboé', 'Fagote'];
+        filtrados = DADOS_ALUNOS.filter(a => familia.includes(a.instrumento));
+    } else if (filtro === 'metais') {
+        const familia = ['Trompa', 'Trompete', 'Trombone', 'Eufônio', 'Tuba'];
+        filtrados = DADOS_ALUNOS.filter(a => familia.includes(a.instrumento));
+    }
+
+    // Sort Alphabetically
+    filtrados.sort((a, b) => a.nome.localeCompare(b.nome));
+
+    // Render Table
+    container.innerHTML = `
+        <table style="width:100%; font-size:12px; border-collapse: collapse;">
+            ${filtrados.map(a => `
+                <tr style="border-bottom:1px solid #f9f9f9;">
+                    <td style="padding:5px;">${a.nome}</td>
+                    <td style="padding:5px; text-align:right; color:#888;"><i>${a.instrumento}</i></td>
+                </tr>
+            `).join('')}
+        </table>
+    `;
+}
