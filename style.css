@@ -15,6 +15,28 @@ body {
     overflow: hidden; 
 }
 
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--nav-height);
+    background: var(--primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+    color: white;
+    z-index: 2000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav .nav-icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
 /* Estrutura Principal Desktop & Landscape */
 #main-container {
     display: flex;
@@ -246,6 +268,13 @@ nav .nav-icons {
    ============================================================ */
 @media (max-width: 768px) {
     body { overflow-x: hidden; height: 100vh; display: flex; flex-direction: column; }
+
+    #main-container {
+        display: block; 
+        height: calc(100vh - var(--nav-height));
+        margin-top: var(--nav-height);
+        position: relative;
+    }
     
     /* Ajuste da Nav no Mobile */
 nav {
@@ -335,6 +364,7 @@ nav {
         border-top: 2px solid #ddd;
         box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         transform: translateX(0);
+        transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .chat-header, .input-area { width: 100%; }
