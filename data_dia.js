@@ -1,3 +1,10 @@
+Object.assign(BIBLIOTECA_LIVRO, {
+    "dia": {
+        keywords: ["dia", "agenda", "calendario", "turma", "horario"],
+        fase: "Cronograma", 
+        titulo: "AGENDA E TURMAS", 
+        icone: "📅",
+        resumo: "Cronograma mensal das turmas e acesso ao calendário de alunos.",
 html_content: `
     <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: #fff;">
         <thead>
@@ -96,3 +103,7 @@ html_content: `
         };
     </script>
 `,
+
+        pagina: "Agenda"
+    }
+});
