@@ -760,12 +760,13 @@ function selectTab(tabId) {
     else if (tabId === 'turmas') {
         if (typeof switchTab === "function") switchTab('assistente');
      mostrarConteudo('dia');
-        }
     } 
+        
      else if (tabId === 'licoes') {
     if (typeof switchTab === "function") switchTab('assistente');
     mostrarConteudo('modulo_licoes');
 }
+         
     else {
         if (typeof switchTab === "function") {
             switchTab(tabId);
