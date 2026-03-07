@@ -66,29 +66,7 @@ function validarEObterNome() {
 }
 
 
-    function renderPage(chave) {
-    const dados = BIBLIOTECA_LIVRO[chave];
-    const area = document.getElementById('render-area');
-    if(!area) return; // Prevent crash
-    
-    area.style.display = 'block'; // Ensure it's visible
-    area.style.opacity = 0;
-    
-    setTimeout(() => {
-        area.innerHTML = `
-            <div class="fase-header">${dados.fase}</div>
-            <div class="section-title"><div class="icon-box">${dados.icone}</div><h2>${dados.titulo}</h2></div>
-            <div class="content-text">${dados.html_content}</div>
-            <div class="footer"><span>MÉTODO SIMPLIFICADO (MSAM)</span><span>Pág. ${dados.pagina}</span><span>CCB</span></div>
-        `;
-        area.style.opacity = 1;
-
-        // Se a página aberta for um grupo, ativa a escuta do Firebase para aquele grupo específico
-        if (chave.startsWith('grupo_')) {
-            ativarEscutaEspecifica(chave);
-        }
-    }, 150);
-}
+   
 
 // Nova função para garantir que o histórico carregue na hora
 function ativarEscutaEspecifica(grupo) {
@@ -795,36 +773,65 @@ function selectTab(tabId) {
     });
 }
 
+
 function mostrarConteudo(chave) {
     const renderArea = document.getElementById('render-area');
     const activeTabNameEl = document.getElementById('active-tab-name');
     
-    if (renderArea && typeof BIBLIOTECA_LIVRO !== 'undefined' && BIBLIOTECA_LIVRO[chave]) {
-        const dados = BIBLIOTECA_LIVRO[chave];
-        let cabecalhoFinal = "";
-        
-        if (chave !== 'indice') {
-            cabecalhoFinal = `
-                <div class="fase-header" style="background:#888; color:white; text-align:center; padding:8px; font-size:20px; border-radius:4px; margin-bottom:20px;">\${dados.fase}</div>
-                <div class="section-title" style="background:#e3f2fd; border-bottom:3px solid #4a90e2; padding:10px; display:flex; align-items:center; margin:20px 0 10px 0;">
-                    <div class="icon-box" style="background:#4a90e2; color:white; border-radius:4px; padding:4px 8px; margin-right:12px; font-weight:bold;">\${dados.icone}</div>
-                    <h2 style="margin:0; font-size:16px; text-transform:uppercase;">\${dados.titulo}</h2>
+    if (!renderArea || typeof BIBLIOTECA_LIVRO === 'undefined' || !BIBLIOTECA_LIVRO[chave]) {
+        console.error("Render failed: Area or Data missing for", chave);
+        return;
+    }
+
+    const dados = BIBLIOTECA_LIVRO[chave];
+    
+    // 1. Prepare UI State
+    renderArea.style.display = 'block';
+    renderArea.style.opacity = '0.5'; // Subtle transition feedback
+    renderArea.scrollTop = 0;
+
+    // 2. Build Header (Skip if it's the index)
+    let cabecalhoFinal = "";
+    if (chave !== 'indice') {
+        cabecalhoFinal = `
+            <div class="fase-header" style="background:#888; color:white; text-align:center; padding:8px; font-size:14px; border-radius:4px; margin-bottom:20px;">
+                ${dados.fase}
+            </div>
+            <div class="section-title" style="background:#e3f2fd; border-bottom:3px solid #4a90e2; padding:10px; display:flex; align-items:center; margin:10px 0;">
+                <div class="icon-box" style="background:#4a90e2; color:white; border-radius:4px; padding:4px 8px; margin-right:12px; font-weight:bold;">
+                    ${dados.icone}
                 </div>
-            `;
-        }
+                <h2 style="margin:0; font-size:16px; text-transform:uppercase;">${dados.titulo}</h2>
+            </div>
+        `;
+    }
 
-        renderArea.innerHTML = cabecalhoFinal + dados.html_content;
+    // 3. Inject Full Template
+    renderArea.innerHTML = `
+        ${cabecalhoFinal}
+        <div class="content-text">${dados.html_content}</div>
+        <div class="footer" style="margin-top:20px; padding:10px; border-top:1px solid #eee; display:flex; justify-content:space-between; font-size:10px; color:#888;">
+            <span>MÉTODO SIMPLIFICADO (MSAM)</span>
+            <span>Pág. ${dados.pagina || '---'}</span>
+            <span>CCB Guararema</span>
+        </div>
+    `;
 
-        // Força a execução de qualquer <script> que venha na string
-        const scripts = renderArea.querySelectorAll("script");
-        scripts.forEach(oldScript => {
-            const newScript = document.createElement("script");
-            newScript.text = oldScript.text;
-            document.body.appendChild(newScript).parentNode.removeChild(newScript);
-        });
-        
-        if (activeTabNameEl) activeTabNameEl.innerText = dados.titulo;
-        renderArea.scrollTop = 0;
+    // 4. Update UI labels and Opacity
+    if (activeTabNameEl) activeTabNameEl.innerText = dados.titulo;
+    renderArea.style.opacity = '1';
+
+    // 5. Execute internal scripts (Critical for interactive scores/grids)
+    const scripts = renderArea.querySelectorAll("script");
+    scripts.forEach(oldScript => {
+        const newScript = document.createElement("script");
+        newScript.text = oldScript.text;
+        document.body.appendChild(newScript).parentNode.removeChild(newScript);
+    });
+
+    // 6. Trigger Firebase listeners for specific groups
+    if (chave.startsWith('grupo_') && typeof ativarEscutaEspecifica === 'function') {
+        ativarEscutaEspecifica(chave);
     }
 }
 
@@ -855,6 +862,8 @@ function renderTurmas() {
         }
     }, 150);
 }
+
+
 
 function voltarAoInicio() {
     // 1. Resetar visualmente os containers (Garante que nada fique display: none)
