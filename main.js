@@ -976,38 +976,3 @@ window.toggleAccordion = function(btn) {
         panel.style.maxHeight = panel.scrollHeight + "px";
     }
 };
-
-
-function updateStats() {
-    const masterTable = document.querySelectorAll('.panel table')[0];
-    
-    // Safety check: only run if the master table and stats dashboard are visible
-    if (!masterTable || !document.getElementById('count-total')) return;
-
-    const allRows = masterTable.querySelectorAll('tr');
-    let total = allRows.length;
-    let cordas = 0, madeiras = 0, metais = 0;
-
-    allRows.forEach(row => {
-        // Ensure the row has the expected cells before processing
-        if (row.cells.length >= 2) {
-            const instrument = row.cells[1].innerText.toLowerCase();
-            
-            if (instrument.includes('violin') || instrument.includes('viola')) {
-                cordas++;
-            } else if (instrument.includes('sax') || instrument.includes('flaut') || instrument.includes('clarin')) {
-                madeiras++;
-            } else if (instrument.includes('euf')) {
-                metais++;
-            }
-        }
-    });
-
-    // Update the UI elements
-    document.getElementById('count-total').innerText = total;
-    document.getElementById('count-cordas').innerText = cordas;
-    document.getElementById('count-madeiras').innerText = madeiras;
-    document.getElementById('count-metais').innerText = metais;
-}
-
-
