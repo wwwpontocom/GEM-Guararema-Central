@@ -26,7 +26,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
             📅 ABRIR CALENDÁRIO DE ALUNOS
         </button>
     </div>
-
+    
+ <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
     <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
         <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido:</p>
         <div id="filter-container-nav" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
@@ -40,7 +41,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <button onclick="window.filtrarCSS('Eufônio')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
         </div>
 
-        <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
+       
             <table id="tabela-alunos-fix" style="width:100%; font-size:13px; border-collapse: collapse;">
                 <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
                 <tr class="aluno-row teoria1 Violino"> <td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas</td> <td style="text-align:right; padding:10px; color:#888;">Violino</td> </tr>
