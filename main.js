@@ -1,50 +1,59 @@
- function askAI() {
-        const input = document.getElementById('user-input');
-        const text = input.value.trim().toLowerCase();
-        if (!text) return;
+function askAI() {
+    const input = document.getElementById('user-input');
+    const text = input.value.trim().toLowerCase();
+    if (!text) return;
 
     // Se o usuário pedir histórico, atualizamos a biblioteca antes de buscar
     if (text.includes("conversa") || text.includes("histórico")) {
-        atualizarBibliotecaComMensagens();
-    }
-
-        addMessage(input.value, 'user');
-        input.value = '';
-
-        let bestMatch = null;
-        let highestScore = 0;
-
-        for (let key in BIBLIOTECA_LIVRO) {
-            let score = 0;
-            const item = BIBLIOTECA_LIVRO[key];
-            item.keywords.forEach(k => { if (text.includes(k)) score += 10; });
-            if (item.html_content.toLowerCase().includes(text)) score += 5;
-
-            if (score > highestScore) {
-                highestScore = score;
-                bestMatch = key;
-            }
-        }
-
-        if (bestMatch && highestScore > 0) {
-            const data = BIBLIOTECA_LIVRO[bestMatch];
-            renderPage(bestMatch);
-            
-            let resposta = `Encontrei na pág. ${data.pagina}: ${data.resumo}`;
-            
-            if (text.includes("grave") || text.includes("agudo") || text.includes("altura")) {
-                resposta = "A Altura depende da frequência: sons Graves têm baixa frequência (110Hz) e sons Agudos têm alta frequência (880Hz).";
-            } else if (text.includes("timbre")) {
-                resposta = "O Timbre permite identificar se o som vem de um violino ou de um trompete.";
-            } else if (text.includes("instrumento")) {
-                resposta = "Os instrumentos estão na pág. 9, divididos em Teclados, Cordas, Madeiras e Metais.";
-            }
-
-            addMessage(resposta, 'bot');
-        } else {
-            addMessage("Não encontrei esse tópico. Tente 'índice', 'elementos' ou 'propriedades'.", 'bot');
+        if (typeof atualizarBibliotecaComMensagens === 'function') {
+            atualizarBibliotecaComMensagens();
         }
     }
+
+    addMessage(input.value, 'user');
+    input.value = '';
+
+    let bestMatch = null;
+    let highestScore = 0;
+
+    for (let key in BIBLIOTECA_LIVRO) {
+        let score = 0;
+        const item = BIBLIOTECA_LIVRO[key];
+        
+        // Search logic
+        if (item.keywords) {
+            item.keywords.forEach(k => { if (text.includes(k.toLowerCase())) score += 10; });
+        }
+        if (item.html_content && item.html_content.toLowerCase().includes(text)) score += 5;
+
+        if (score > highestScore) {
+            highestScore = score;
+            bestMatch = key;
+        }
+    }
+
+    if (bestMatch && highestScore > 0) {
+        const data = BIBLIOTECA_LIVRO[bestMatch];
+        
+        // FIX: Changed renderPage to mostrarConteudo
+        mostrarConteudo(bestMatch); 
+        
+        let resposta = `Encontrei na pág. ${data.pagina || '---'}: ${data.resumo || 'Veja o conteúdo na tela.'}`;
+        
+        // Specific overrides for quick facts
+        if (text.includes("grave") || text.includes("agudo") || text.includes("altura")) {
+            resposta = "A Altura depende da frequência: sons Graves têm baixa frequência (110Hz) e sons Agudos têm alta frequência (880Hz).";
+        } else if (text.includes("timbre")) {
+            resposta = "O Timbre permite identificar se o som vem de um violino ou de um trompete.";
+        } else if (text.includes("instrumento")) {
+            resposta = "Os instrumentos estão na pág. 9, divididos em Teclados, Cordas, Madeiras e Metais.";
+        }
+
+        addMessage(resposta, 'bot');
+    } else {
+        addMessage("Não encontrei esse tópico. Tente 'índice', 'elementos' ou 'propriedades'.", 'bot');
+    }
+}
 
 let usuarioLogado = null;
 const SENHA_MESTRA = "1234";
