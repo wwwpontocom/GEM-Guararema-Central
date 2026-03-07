@@ -848,31 +848,9 @@ function mostrarConteudo(chave) {
         ativarEscutaEspecifica(chave);
     }
 }
-
 function renderTurmas() {
-    const area = document.getElementById('render-area');
-    if (!area) return;
-
-    area.style.opacity = 0;
-    
-    setTimeout(() => {
-        area.innerHTML = `
-            <div class="fase-header">📍 CONTROLE DE TEORIA</div>
-          
-            <div style="display: flex; flex-direction: column; gap: 30px; padding: 15px;">
-                <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO A</h3>${BIBLIOTECA_LIVRO["grupo_a"].html_content}</section>
-                <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO B</h3>${BIBLIOTECA_LIVRO["grupo_b"].html_content}</section>
-                <section><h3 style="color:var(--primary); border-bottom:1px solid #ddd;">GRUPO C</h3>${BIBLIOTECA_LIVRO["grupo_c"].html_content}</section>
-            </div>
-            <div class="footer"><span>SISTEMA DE GESTÃO</span><span>CCB Guararema</span></div>
-        `;
-        area.style.opacity = 1;
-
-        // CHAMA IGUAL À AI (Dispara os gatilhos imediatamente após renderizar)
-        if (typeof carregarLogs === "function") {
-            carregarLogs();
-        }
-    }, 150);
+    // Redireciona para o motor principal usando a chave mestre
+    mostrarConteudo('historico_teoria');
 }
 
 
