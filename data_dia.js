@@ -28,7 +28,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
     </div>
     
  <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
-    <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
+  
         <p style="margin-bottom: 10px; font-weight: bold;">🔍 Filtro Rápido:</p>
         <div id="filter-container-nav" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
             <button onclick="window.filtrarCSS('all')" style="padding: 8px 10px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
@@ -39,7 +39,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <button onclick="window.filtrarCSS('Violino,Viola')" style="padding: 8px 10px; background: #fff; border: 1px solid #4a90e2; color: #4a90e2; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
             <button onclick="window.filtrarCSS('Flauta,Saxofone,Clarinete')" style="padding: 8px 10px; background: #fff; border: 1px solid #2ecc71; color: #2ecc71; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
             <button onclick="window.filtrarCSS('Eufônio')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
-        </div>
+      
 
        
             <table id="tabela-alunos-fix" style="width:100%; font-size:13px; border-collapse: collapse;">
