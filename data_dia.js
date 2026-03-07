@@ -125,14 +125,26 @@ html_content: `
     </table>
 </div>
 
-        <button class="acc-btn" onclick="toggleAccordion(this)">🎻 Cordas</button>
-        <div class="panel">
-            <table>
-                <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
-                <tr><td>Arthur Guimeiro</td><td style="text-align:right; color:#888;">Viola</td></tr>
-                <tr><td>Jefferson Diarreto</td><td style="text-align:right; color:#888;">Violino</td></tr>
-            </table>
-        </div>
+       <button class="acc-btn" onclick="toggleAccordion(this)">🎻 Cordas</button>
+<div class="panel">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr><td>Arthur Guimeiro</td><td style="text-align:right; color:#888;">Viola</td></tr>
+        <tr><td>Caíque</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Elton</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Hendril Wallodoro</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Jefferson Diarreto</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>João Pedro Carreitas</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Lorenzo Melo Beoki</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Luiz Antônio Ináilva</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Pedro (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Rafael Josantos</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Robson Des</td><td style="text-align:right; color:#888;">Viola</td></tr>
+        <tr><td>Samuel Carlos de Eira</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Thiago Alves Vieiilva</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Vanderlei</td><td style="text-align:right; color:#888;">Violino</td></tr>
+    </table>
+</div>
 
         <button class="acc-btn" onclick="toggleAccordion(this)">🎷 Madeiras</button>
         <div class="panel">
