@@ -1,4 +1,20 @@
- Object.assign(BIBLIOTECA_LIVRO, { 
+ Object.assign(BIBLIOTECA_LIVRO, {
+  "historico_teoria": {
+        keywords: ["historico de teoria", "teoria", "controle de teoria", "controle de turmas", "grupos"],
+        fase: "Extras",
+        titulo: "HISTÓRICO DE TEORIA",
+        icone: "📅",
+        resumo: "Registro detalhado com ordem cronológica, edição e busca rápida.",
+        html_content: `
+            <div class="theory-control-container">
+                <p>Consulte aqui o histórico das aulas de teoria de cada turma.</p>
+                <div style="background: #f9f9f9; padding: 15px; border-left: 4px solid var(--primary); border-radius: 4px; margin-top: 10px;">
+                    <small style="color: #666;">Dica: Use o campo de busca do Assistente para encontrar datas específicas ou nomes de alunos dentro deste histórico.</small>
+                </div>
+            </div>
+        `
+          },
+  
         "grupo_a": {
             keywords: ["a", "grupo a", "onde estamos a"],
             fase: "Onde Estamos", 
