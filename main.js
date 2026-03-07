@@ -698,9 +698,9 @@ function selectTab(tabId) {
     const labels = {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
-        'moo': 'MOO', 'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
+        'moo': 'MOO',  'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
-        'msa': 'MSA'
+        'msa': 'MSA' , 'teoria': 'Teoria'
     };
     
     const activeLabel = labels[tabId] || 'GEM';
@@ -761,6 +761,11 @@ function selectTab(tabId) {
         if (typeof switchTab === "function") switchTab('assistente');
      mostrarConteudo('dia');
     } 
+
+        else if (tabId === 'teoria') {
+        // Para a aba 📅 Teoria (Logs do Grupo A)
+        mostrarConteudo('grupo_a');
+    }
         
      else if (tabId === 'licoes') {
     if (typeof switchTab === "function") switchTab('assistente');
