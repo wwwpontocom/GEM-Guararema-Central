@@ -191,6 +191,37 @@ html_content: `
     </table>
 </div>
     </div>
+
+    <script>
+        function updateStats() {
+            // Get all rows from the master table (first panel)
+            const allRows = document.querySelectorAll('.panel table')[0].querySelectorAll('tr');
+            
+            let total = allRows.length;
+            let cordas = 0, madeiras = 0, metais = 0;
+
+            allRows.forEach(row => {
+                const instrument = row.cells[1].innerText.toLowerCase();
+                
+                if (instrument.includes('violin') || instrument.includes('viola')) {
+                    cordas++;
+                } else if (instrument.includes('sax') || instrument.includes('flaut') || instrument.includes('clarin')) {
+                    madeiras++;
+                } else if (instrument.includes('euf')) {
+                    metais++;
+                }
+            });
+
+            // Update the UI
+            document.getElementById('count-total').innerText = total;
+            document.getElementById('count-cordas').innerText = cordas;
+            document.getElementById('count-madeiras').innerText = madeiras;
+            document.getElementById('count-metais').innerText = metais;
+        }
+
+        // Run calculation after a short delay to ensure DOM is ready
+        setTimeout(updateStats, 100);
+    </script>
 `,
         pagina: "Agenda"
     }
