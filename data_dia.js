@@ -22,6 +22,12 @@ html_content: `
         }
         .panel table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
         .panel td { padding: 10px; border-bottom: 1px solid #f9f9f9; }
+
+ /* New Statistics Styles */
+       .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+        .stat-card { background: #fff; border: 1px solid #e0e6ed; padding: 10px; border-radius: 6px; text-align: center; }
+        .stat-val { display: block; font-size: 18px; font-weight: bold; color: #4a90e2; }
+        .stat-label { font-size: 11px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>
 
     <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: #fff;">
@@ -43,6 +49,25 @@ html_content: `
         <button onclick="abrirCalendarioEscolar()" style="padding: 10px; width: 100%; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
             📅 ABRIR CALENDÁRIO DE ALUNOS
         </button>
+    </div>
+
+    <div class="stats-grid" id="stats-dashboard">
+        <div class="stat-card">
+            <span class="stat-val" id="count-total">0</span>
+            <span class="stat-label">👥 Total</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-val" id="count-cordas">0</span>
+            <span class="stat-label">🎻 Cordas</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-val" id="count-madeiras">0</span>
+            <span class="stat-label">🎷 Madeiras</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-val" id="count-metais">0</span>
+            <span class="stat-label">🎺 Metais</span>
+        </div>
     </div>
 
     <div style="border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
