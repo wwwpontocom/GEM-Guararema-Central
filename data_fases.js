@@ -2,7 +2,7 @@ let BIBLIOTECA_LIVRO = {
     "indice": {
         keywords: ["indice", "sumario", "conteudo", "fases", "topicos", "ajuda", "começar"],
         fase: "GERAL", 
-        titulo: "ÍNDICE - MSAM", 
+        titulo: "ÍNDICE - MSA", 
         icone: "☰",
         resumo: "Aqui está o índice do manual. Você pode clicar nos tópicos para navegar rapidamente.",
         html_content: `
