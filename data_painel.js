@@ -25,8 +25,10 @@ function exibirPainel() {
                 </div>
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
-                        • Bem-vindo à nova Biblioteca Interativa.<br>
-                        • Ensaio Regional - Guararema Central - 15/03/2026 - àas 14h.
+                        • Bem-vindo à Plataforma GEM Guararema Central.<br>
+                        • Ensaio Regional - Guararema Central - 15/03/2026 - às 14h.
+                        • Ensaio do GEM - Guararema Central - 20/03/2026 - às 19h.
+                        • Ensaio Local - Guararema Central - 29/03/2026 - àas 16h.
                     </div>
                 </div>
             </div>
