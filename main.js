@@ -977,10 +977,7 @@ window.toggleAccordion = function(btn) {
     }
 };
 
-/**
- * Calculates and updates student stats based on the master table.
- * Designed to work with the "Agenda" view.
- */
+
 function updateStats() {
     const masterTable = document.querySelectorAll('.panel table')[0];
     
@@ -1013,7 +1010,4 @@ function updateStats() {
     document.getElementById('count-metais').innerText = metais;
 }
 
-// Global observer or trigger: 
-// Call this function inside your existing 'toggleAccordion' 
-// or wherever you render the library content.
-// Example: setTimeout(updateStats, 150);
+
