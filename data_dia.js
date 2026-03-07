@@ -147,12 +147,24 @@ html_content: `
 </div>
 
         <button class="acc-btn" onclick="toggleAccordion(this)">🎷 Madeiras</button>
-        <div class="panel">
-            <table>
-                <tr><td>Arthur Rasado</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
-                <tr><td>Breno Soutos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
-            </table>
-        </div>
+<div class="panel">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr><td>Arthur Rasado</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
+        <tr><td>Breno Soutos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>Evandro Bemoki</td><td style="text-align:right; color:#888;">Saxofone Alto</td></tr>
+        <tr><td>Guilherme Sancelo</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>João Vítor Dedeiros</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+        <tr><td>Lucas Gabriel dos Aatos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>Luiz Gustavo de Olievedo</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+    </table>
+</div>
+
+<button class="acc-btn" onclick="toggleAccordion(this)">🎺 Metais</button>
+<div class="panel">
+    <table style="width: 100%; border-collapse: collapse;">
+        <tr><td>Davi Rodralves</td><td style="text-align:right; color:#888;">Eufônio</td></tr>
+    </table>
+</div>
     </div>
 `,
         pagina: "Agenda"
