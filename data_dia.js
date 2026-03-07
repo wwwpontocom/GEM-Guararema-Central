@@ -11,15 +11,16 @@ html_content: `
             background-color: #eee; color: #444; cursor: pointer; padding: 12px; width: 100%;
             border: none; text-align: left; outline: none; font-size: 14px; transition: 0.4s;
             border-bottom: 1px solid #ddd; font-weight: bold; display: flex; justify-content: space-between;
+            align-items: center;
         }
-        .active, .acc-btn:hover { background-color: #ccc; }
-        .acc-btn:after { content: '\\002B'; color: #777; font-weight: bold; float: right; margin-left: 5px; }
-        .active:after { content: "\\2212"; }
+        .acc-btn.active, .acc-btn:hover { background-color: #ccc; }
+        .acc-btn:after { content: '\\002B'; color: #777; font-weight: bold; }
+        .acc-btn.active:after { content: "\\2212"; }
         .panel {
             padding: 0 10px; background-color: white; max-height: 0; overflow: hidden;
             transition: max-height 0.2s ease-out; border-bottom: 1px solid #eee;
         }
-        .panel table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .panel table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 10px 0; }
         .panel td { padding: 10px; border-bottom: 1px solid #f9f9f9; }
     </style>
 
@@ -45,7 +46,7 @@ html_content: `
     </div>
 
     <div style="border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
-        <button class="acc-btn">👥 Todos os Alunos</button>
+        <button class="acc-btn" onclick="toggleAccordion(this)">👥 Todos os Alunos</button>
         <div class="panel">
             <table>
                 <tr><td>Heitor (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
@@ -54,7 +55,7 @@ html_content: `
             </table>
         </div>
 
-        <button class="acc-btn">📘 Turma T1</button>
+        <button class="acc-btn" onclick="toggleAccordion(this)">📘 Turma T1</button>
         <div class="panel">
             <table>
                 <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
@@ -63,7 +64,7 @@ html_content: `
             </table>
         </div>
 
-        <button class="acc-btn">📗 Turma T2</button>
+        <button class="acc-btn" onclick="toggleAccordion(this)">📗 Turma T2</button>
         <div class="panel">
             <table>
                 <tr><td>Evandro Bemoki</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
@@ -71,7 +72,7 @@ html_content: `
             </table>
         </div>
 
-        <button class="acc-btn">🎻 Cordas</button>
+        <button class="acc-btn" onclick="toggleAccordion(this)">🎻 Cordas</button>
         <div class="panel">
             <table>
                 <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
@@ -80,7 +81,7 @@ html_content: `
             </table>
         </div>
 
-        <button class="acc-btn">🎷 Madeiras</button>
+        <button class="acc-btn" onclick="toggleAccordion(this)">🎷 Madeiras</button>
         <div class="panel">
             <table>
                 <tr><td>Arthur Rasado</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
@@ -90,17 +91,14 @@ html_content: `
     </div>
 
     <script>
-        var acc = document.getElementsByClassName("acc-btn");
-        for (var i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.maxHeight) {
-                    panel.style.maxHeight = null;
-                } else {
-                    panel.style.maxHeight = panel.scrollHeight + "px";
-                } 
-            });
+        function toggleAccordion(btn) {
+            btn.classList.toggle("active");
+            var panel = btn.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
         }
     </script>
 `,
