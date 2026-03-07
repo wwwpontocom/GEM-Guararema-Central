@@ -1,10 +1,3 @@
-Object.assign(BIBLIOTECA_LIVRO, {
-    "dia": {
-        keywords: ["dia", "agenda", "calendario", "turma", "horario"],
-        fase: "Cronograma", 
-        titulo: "AGENDA E TURMAS", 
-        icone: "📅",
-        resumo: "Cronograma mensal das turmas e acesso ao calendário de alunos.",
 html_content: `
     <table style="width:100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px; background: #fff;">
         <thead>
@@ -28,69 +21,78 @@ html_content: `
     </div>
 
     <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
-        <p style="margin-bottom: 10px; font-weight: bold;">🔍 Selecionar Lista:</p>
+        <p style="margin-bottom: 10px; font-weight: bold;">📂 Selecionar Turma/Instrumento:</p>
         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-            <button onclick="window.trocarLista('todos')" style="padding: 8px 10px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
-            <button onclick="window.trocarLista('t1')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
-            <button onclick="window.trocarLista('t2')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
-            <button onclick="window.trocarLista('t3')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
-            <button onclick="window.trocarLista('cordas')" style="padding: 8px 10px; background: #fff; border: 1px solid #4a90e2; color: #4a90e2; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
-            <button onclick="window.trocarLista('madeiras')" style="padding: 8px 10px; background: #fff; border: 1px solid #2ecc71; color: #2ecc71; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
-            <button onclick="window.trocarLista('metais')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
+            <button onclick="window.toggleAccordion('list-todos')" style="padding: 8px 10px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
+            <button onclick="window.toggleAccordion('list-t1')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
+            <button onclick="window.toggleAccordion('list-t2')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
+            <button onclick="window.toggleAccordion('list-t3')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
+            <button onclick="window.toggleAccordion('list-cordas')" style="padding: 8px 10px; background: #fff; border: 1px solid #4a90e2; color: #4a90e2; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
+            <button onclick="window.toggleAccordion('list-madeiras')" style="padding: 8px 10px; background: #fff; border: 1px solid #2ecc71; color: #2ecc71; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
+            <button onclick="window.toggleAccordion('list-metais')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
         </div>
 
         <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
-            <table style="width:100%; font-size:13px; border-collapse: collapse;">
-                <tbody id="corpo-tabela-alunos">
-                    </tbody>
-            </table>
+            <div id="list-todos" class="acc-content" style="display: block;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor (T1)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas (T1)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro (T1)</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Evandro Bemoki (T2)</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto (T3)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                </table>
+            </div>
+
+            <div id="list-t1" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
+                </table>
+            </div>
+
+            <div id="list-t2" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Evandro Bemoki</td><td style="text-align:right; padding:10px; color:#888;">Saxofone Alto</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Guilherme Sancelo</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
+                </table>
+            </div>
+
+            <div id="list-t3" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Robson Des</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
+                </table>
+            </div>
+
+            <div id="list-cordas" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
+                </table>
+            </div>
+
+            <div id="list-madeiras" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Rasado</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Breno Soutos</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
+                </table>
+            </div>
+
+            <div id="list-metais" class="acc-content" style="display: none;">
+                <table style="width:100%; font-size:13px; border-collapse: collapse;">
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Davi Rodralves</td><td style="text-align:right; padding:10px; color:#888;">Eufônio</td></tr>
+                </table>
+            </div>
         </div>
     </div>
 
     <script>
-        window.listas = {
-            todos: \`
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor (T1)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas (T1)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro (T1)</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Rasado (T1)</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Breno Soutos (T1)</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Davi Rodralves (T1)</td><td style="text-align:right; padding:10px; color:#888;">Eufônio</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Evandro Bemoki (T2)</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Vítor Dedeiros (T2)</td><td style="text-align:right; padding:10px; color:#888;">Clarinete</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto (T3)</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-            \`,
-            t1: \`
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Pedro Carreitas</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
-            \`,
-            cordas: \`
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
-            \`,
-            madeiras: \`
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Rasado</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Breno Soutos</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">João Vítor Dedeiros</td><td style="text-align:right; padding:10px; color:#888;">Clarinete</td></tr>
-            \`,
-            metais: \`
-                <tr><td style="padding:10px; border-bottom:1px solid #eee;">Davi Rodralves</td><td style="text-align:right; padding:10px; color:#888;">Eufônio</td></tr>
-            \`
+        window.toggleAccordion = function(id) {
+            const contents = document.querySelectorAll('.acc-content');
+            contents.forEach(content => {
+                content.style.display = (content.id === id) ? 'block' : 'none';
+            });
         };
-
-        window.trocarLista = function(id) {
-            const container = document.getElementById('corpo-tabela-alunos');
-            if (container && window.listas[id]) {
-                container.innerHTML = window.listas[id];
-            }
-        };
-
-        // Inicia com a lista completa
-        setTimeout(() => window.trocarLista('todos'), 100);
     </script>
 `,
-        pagina: "Agenda"
-    }
-});
