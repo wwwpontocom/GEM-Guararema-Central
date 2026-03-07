@@ -30,13 +30,13 @@ html_content: `
     <div style="margin-top: 20px; border-top: 2px dashed #ccc; padding-top: 20px;">
         <p style="margin-bottom: 10px; font-weight: bold;">📂 Selecionar Turma/Instrumento:</p>
         <div style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-            <button onclick="window.toggleAccordion('list-todos')" style="padding: 8px 10px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
-            <button onclick="window.toggleAccordion('list-t1')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
-            <button onclick="window.toggleAccordion('list-t2')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
-            <button onclick="window.toggleAccordion('list-t3')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
-            <button onclick="window.toggleAccordion('list-cordas')" style="padding: 8px 10px; background: #fff; border: 1px solid #4a90e2; color: #4a90e2; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
-            <button onclick="window.toggleAccordion('list-madeiras')" style="padding: 8px 10px; background: #fff; border: 1px solid #2ecc71; color: #2ecc71; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
-            <button onclick="window.toggleAccordion('list-metais')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
+            <button onclick="toggleAcc('list-todos')" style="padding: 8px 10px; background: #444; color: white; border: none; border-radius: 4px; font-size: 11px; cursor: pointer;">Todos</button>
+            <button onclick="toggleAcc('list-t1')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T1</button>
+            <button onclick="toggleAcc('list-t2')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T2</button>
+            <button onclick="toggleAcc('list-t3')" style="padding: 8px 10px; background: #eee; border: 1px solid #ccc; border-radius: 4px; font-size: 11px; cursor: pointer;">T3</button>
+            <button onclick="toggleAcc('list-cordas')" style="padding: 8px 10px; background: #fff; border: 1px solid #4a90e2; color: #4a90e2; border-radius: 4px; font-size: 11px; cursor: pointer;">🎻 Cordas</button>
+            <button onclick="toggleAcc('list-madeiras')" style="padding: 8px 10px; background: #fff; border: 1px solid #2ecc71; color: #2ecc71; border-radius: 4px; font-size: 11px; cursor: pointer;">🎷 Madeiras</button>
+            <button onclick="toggleAcc('list-metais')" style="padding: 8px 10px; background: #fff; border: 1px solid #e67e22; color: #e67e22; border-radius: 4px; font-size: 11px; cursor: pointer;">🎺 Metais</button>
         </div>
 
         <div style="background: white; border: 1px solid #eee; border-radius: 5px; max-height: 400px; overflow-y: auto;">
@@ -76,6 +76,8 @@ html_content: `
                 <table style="width:100%; font-size:13px; border-collapse: collapse;">
                     <tr><td style="padding:10px; border-bottom:1px solid #eee;">Heitor</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
                     <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Guimeiro</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Jefferson Diarreto</td><td style="text-align:right; padding:10px; color:#888;">Violino</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Robson Des</td><td style="text-align:right; padding:10px; color:#888;">Viola</td></tr>
                 </table>
             </div>
 
@@ -83,6 +85,7 @@ html_content: `
                 <table style="width:100%; font-size:13px; border-collapse: collapse;">
                     <tr><td style="padding:10px; border-bottom:1px solid #eee;">Arthur Rasado</td><td style="text-align:right; padding:10px; color:#888;">Saxofone</td></tr>
                     <tr><td style="padding:10px; border-bottom:1px solid #eee;">Breno Soutos</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
+                    <tr><td style="padding:10px; border-bottom:1px solid #eee;">Guilherme Sancelo</td><td style="text-align:right; padding:10px; color:#888;">Flauta</td></tr>
                 </table>
             </div>
 
@@ -95,15 +98,16 @@ html_content: `
     </div>
 
     <script>
-        window.toggleAccordion = function(id) {
-            const contents = document.querySelectorAll('.acc-content');
-            contents.forEach(content => {
-                content.style.display = (content.id === id) ? 'block' : 'none';
-            });
-        };
+        function toggleAcc(id) {
+            const contents = document.getElementsByClassName('acc-content');
+            for (let i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
+            }
+            const target = document.getElementById(id);
+            if (target) target.style.display = 'block';
+        }
     </script>
 `,
-
         pagina: "Agenda"
     }
 });
