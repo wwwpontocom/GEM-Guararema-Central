@@ -48,22 +48,26 @@
         <span>Menu Principal</span>
         <button onclick="toggleMenu()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">×</button>
     </div>
-    <div class="menu-items">
-        <div class="menu-item" onclick="voltarAoInicio()">🏠 Início</div>
-        <div class="menu-item active" onclick="selectTab('assistente')">🤖 Assistente</div>
-        <div class="menu-item" onclick="selectTab('licoes')">✏️ Lições</div>
-       <div class="menu-item" onclick="selectTab('agenda'); renderizarLivro('dia');">👥 Turmas</div>
-        <div class="menu-item" onclick="selectTab('turmas')">📅 Teoria</div>
-        <div class="menu-item" onclick="selectTab('plano')">⏳ Plano de Aula</div>
-        <div class="menu-item" onclick="selectTab('msa')">🎼 MSA</div>
-        <div class="menu-item" onclick="selectTab('moo')">🎼 MOO</div>
-          <div class="menu-item" onclick="selectTab('mor')">🎼 MOR</div>
-        <div class="menu-item" onclick="selectTab('audios')">🎵 Hinos</div>
-        <div class="menu-item" onclick="selectTab('instrumentos')">🎷 Instrumentos</div>
-        <div class="menu-item" onclick="selectTab('exercicios')">✏️ Exercícios</div>
-        <div class="menu-item" onclick="selectTab('programa')">📋 Programa Mínimo</div>
-        <div class="menu-item" onclick="selectTab('alou')">📢 ALOU!GEM</div>
-    </div>
+    
+   <div class="menu-items">
+
+<div class="menu-item" onclick="voltarAoInicio()">🏠 Início</div>
+    <div class="menu-item active" onclick="selectTab('assistente')">🤖 Assistente</div>
+    <div class="menu-item" onclick="selectTab('licoes'); renderizarLivro('modulo_licoes');">✏️ Lições</div>
+    <div class="menu-item" onclick="selectTab('agenda'); renderizarLivro('dia');">👥 Turmas</div>
+    <div class="menu-item" onclick="selectTab('turmas'); renderizarLivro('grupo_a');">📅 Teoria</div>
+    <div class="menu-item" onclick="selectTab('plano'); renderizarLivro('plano_aulas');">⏳ Plano de Aula</div>
+    <div class="menu-item" onclick="selectTab('msa'); renderizarLivro('indice');">🎼 MSA</div>
+    <div class="menu-item" onclick="selectTab('moo'); renderizarLivro('moo_p1');">🎼 MOO</div>
+    <div class="menu-item" onclick="selectTab('mor'); renderizarLivro('mor_p1');">🎼 MOR</div>
+    <div class="menu-item" onclick="selectTab('audios'); renderizarLivro('biblioteca_audios');">🎵 Hinos</div>
+    <div class="menu-item" onclick="selectTab('instrumentos'); renderizarLivro('vamos_aprender');">🎷 Instrumentos</div>
+    <div class="menu-item" onclick="selectTab('exercicios'); renderizarLivro('exercicios_geral');">✏️ Exercícios</div>
+    <div class="menu-item" onclick="selectTab('programa'); renderizarLivro('programa_minimo');">📋 Programa Mínimo</div>
+    <div class="menu-item" onclick="selectTab('alou'); renderizarLivro('alou_gem');">📢 ALOU!GEM</div>
+       
+</div>
+    
 </div>
 
 <div id="menu-overlay" onclick="toggleMenu()"></div>
