@@ -759,8 +759,7 @@ function selectTab(tabId) {
     // -------------------------------------
     else if (tabId === 'turmas') {
         if (typeof switchTab === "function") switchTab('assistente');
-        if (typeof renderTurmas === "function") {
-            renderTurmas(); 
+     mostrarConteudo('dia');
         }
     } 
      else if (tabId === 'licoes') {
