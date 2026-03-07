@@ -825,9 +825,9 @@ function mostrarConteudo(chave) {
         ${cabecalhoFinal}
         <div class="content-text">${dados.html_content}</div>
         <div class="footer" style="margin-top:20px; padding:10px; border-top:1px solid #eee; display:flex; justify-content:space-between; font-size:10px; color:#888;">
-            <span>MÉTODO SIMPLIFICADO (MSAM)</span>
+            <span>GEM GUARAREMA CENTRAL</span>
             <span>Pág. ${dados.pagina || '---'}</span>
-            <span>CCB Guararema</span>
+            <span>Guararema</span>
         </div>
     `;
 
