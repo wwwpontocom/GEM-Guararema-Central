@@ -764,7 +764,7 @@ function selectTab(tabId) {
 
         else if (tabId === 'teoria') {
         // Para a aba 📅 Teoria (Logs do Grupo A)
-        mostrarConteudo('grupo_a');
+        mostrarConteudo('historico_teoria');
     }
         
      else if (tabId === 'licoes') {
