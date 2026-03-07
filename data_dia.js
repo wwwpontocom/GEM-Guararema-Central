@@ -49,10 +49,31 @@ html_content: `
         <button class="acc-btn" onclick="toggleAccordion(this)">👥 Todos os Alunos</button>
         <div class="panel">
             <table>
-                <tr><td>Heitor (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
-                <tr><td>João Pedro (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
-                <tr><td>Evandro Bemoki (T2)</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
-            </table>
+              <tr><td>Arthur Guimeiro (T1)</td><td style="text-align:right; color:#888;">Viola</td></tr>
+            <tr><td>Arthur Rasado (T1)</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
+            <tr><td>Breno Soutos (T1)</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+            <tr><td>Caíque (M)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Davi Rodralves (T1)</td><td style="text-align:right; color:#888;">Eufônio</td></tr>
+            <tr><td>Elton (M)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Evandro Bemoki (T2)</td><td style="text-align:right; color:#888;">Saxofone Alto</td></tr>
+            <tr><td>Guilherme Sancelo (T2)</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+            <tr><td>Heitor (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Hendril Wallodoro (T2)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Jefferson Diarreto (T3)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>João Pedro Carreitas (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>João Vítor Dedeiros (T2)</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+            <tr><td>Lorenzo Melo Beoki (T2)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Lucas Gabriel dos Aatos (T1)</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+            <tr><td>Luiz Antônio Ináilva (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Luiz Gustavo de Olievedo (T2)</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+            <tr><td>Maurício Eira (T1)</td><td style="text-align:right; color:#888;">TBD</td></tr>
+            <tr><td>Pedro (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Rafael Josantos (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Robson Des (T3)</td><td style="text-align:right; color:#888;">Viola</td></tr>
+            <tr><td>Samuel Carlos de Eira (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Thiago Alves Vieiilva (T2)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Vanderlei (M)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        </table>
         </div>
 
         <button class="acc-btn" onclick="toggleAccordion(this)">📘 Turma T1</button>
