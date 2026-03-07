@@ -964,3 +964,16 @@ function filtrarListaRapida(filtro) {
         </table>
     `;
 }
+
+
+
+window.toggleAccordion = function(btn) {
+    btn.classList.toggle("active");
+    var panel = btn.nextElementSibling;
+    if (panel.style.maxHeight) {
+        panel.style.maxHeight = null;
+    } else {
+        // Force scrollHeight calculation for smooth expansion
+        panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+};
