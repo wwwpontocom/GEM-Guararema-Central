@@ -153,20 +153,20 @@ html_content: `
        <button class="acc-btn" onclick="toggleAccordion(this)">🎻 Cordas</button>
 <div class="panel">
     <table style="width: 100%; border-collapse: collapse;">
-        <tr><td>Arthur Guimeiro</td><td style="text-align:right; color:#888;">Viola</td></tr>
+        <tr><td>Arthur Guimarães Ribeiro</td><td style="text-align:right; color:#888;">Viola</td></tr>
         <tr><td>Caíque</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Elton</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Hendril Wallodoro</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Jefferson Diarreto</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>João Pedro Carreitas</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Lorenzo Melo Beoki</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Luiz Antônio Ináilva</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Hendril Wallace Teodoro</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Jefferson Dias Barreto</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>João Pedro Carrara de Freitas</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Lorenzo Melo Bendochi</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Luiz Antônio Inácio da Silva</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Pedro (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Rafael Josantos</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Robson Des</td><td style="text-align:right; color:#888;">Viola</td></tr>
-        <tr><td>Samuel Carlos de Eira</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Thiago Alves Vieiilva</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Rafael José dos Santos</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Robson Mendes</td><td style="text-align:right; color:#888;">Viola</td></tr>
+        <tr><td>Samuel Carlos de Oliveira</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Thiago Alves Vieira da Silva</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Vanderlei</td><td style="text-align:right; color:#888;">Violino</td></tr>
     </table>
 </div>
@@ -174,20 +174,20 @@ html_content: `
         <button class="acc-btn" onclick="toggleAccordion(this)">🎷 Madeiras</button>
 <div class="panel">
     <table style="width: 100%; border-collapse: collapse;">
-        <tr><td>Arthur Rasado</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
-        <tr><td>Breno Soutos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
-        <tr><td>Evandro Bemoki</td><td style="text-align:right; color:#888;">Saxofone Alto</td></tr>
-        <tr><td>Guilherme Sancelo</td><td style="text-align:right; color:#888;">Flauta</td></tr>
-        <tr><td>João Vítor Dedeiros</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
-        <tr><td>Lucas Gabriel dos Aatos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
-        <tr><td>Luiz Gustavo de Olievedo</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+        <tr><td>Arthur Ramos Rosado</td><td style="text-align:right; color:#888;">Saxofone</td></tr>
+        <tr><td>Breno Sousa dos Santos Rosado</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>Evandro Bendochi</td><td style="text-align:right; color:#888;">Saxofone Alto</td></tr>
+        <tr><td>Guilherme Sanches Melo</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>João Vítor Dias Medeiros</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
+        <tr><td>Lucas Gabriel dos Anjos Matos</td><td style="text-align:right; color:#888;">Flauta</td></tr>
+        <tr><td>Luiz Gustavo de Oliveira Azevedo</td><td style="text-align:right; color:#888;">Clarinete</td></tr>
     </table>
 </div>
 
 <button class="acc-btn" onclick="toggleAccordion(this)">🎺 Metais</button>
 <div class="panel">
     <table style="width: 100%; border-collapse: collapse;">
-        <tr><td>Davi Rodralves</td><td style="text-align:right; color:#888;">Eufônio</td></tr>
+        <tr><td>Davi Rodrigues Gonçalves</td><td style="text-align:right; color:#888;">Eufônio</td></tr>
     </table>
 </div>
     </div>
