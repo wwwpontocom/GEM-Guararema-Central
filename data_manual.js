@@ -38,7 +38,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
         <div class="step-card">
             <span class="step-number">1</span> 
-            <strong>Localize a Faixa de Ativação:</strong> Na parte inferior da tela do Assistente, você verá uma faixa horizontal destacada.
+            <strong>Localize a Faixa de Ativação:</strong> Na parte inferior da tela do Portal, você verá uma faixa horizontal azul destacada.
         </div>
 
         <div class="step-card">
@@ -48,7 +48,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 🔹 CLIQUE OU TOQUE NA FAIXA AZUL INFERIOR
             </div>
             <p style="font-size: 12px; margin-top: 10px; color: #666;">
-                Isso expandirá a interface de chat e permitirá o envio de comandos de voz ou texto.
+                Isso expandirá a interface de chat e permitirá o envio de comandos texto.
             </p>
         </div>
 
