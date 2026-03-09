@@ -1,6 +1,7 @@
+/* --- FIX IS HERE: DETAILED MENU EXPLANATION ADDED --- */
 Object.assign(BIBLIOTECA_LIVRO, {
     "manual_uso": {
-        keywords: ["manual", "instruções", "ajuda", "como usar", "instrutor"],
+        keywords: ["manual", "instruções", "ajuda", "como usar", "instrutor", "menu"],
         fase: "Extras",
         titulo: "MANUAL DO INSTRUTOR",
         icone: "📖",
@@ -27,6 +28,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
             display: inline-block; text-align: center; border-radius: 50%; 
             margin-right: 10px; font-size: 14px;
         }
+        .menu-guide { background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd; margin-top: 20px; }
+        .menu-guide ul { list-style: none; padding: 0; }
+        .menu-guide li { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .menu-guide b { color: #2c3e50; }
     </style>
 
     <div class="manual-section">
@@ -34,8 +39,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
             Ativação do Assistente GEM (IA)
         </h3>
         
-        <p>Para garantir a melhor experiência pedagógica, siga as instruções abaixo para interagir com a nossa Inteligência Artificial:</p>
-
         <div class="step-card">
             <span class="step-number">1</span> 
             <strong>Localize a Faixa de Ativação:</strong> Na parte inferior da tela do Portal, você verá uma faixa horizontal azul destacada.
@@ -48,18 +51,38 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 🔹 CLIQUE OU TOQUE NA FAIXA AZUL INFERIOR
             </div>
             <p style="font-size: 12px; margin-top: 10px; color: #666;">
-                Isso expandirá a interface de chat e permitirá o envio de comandos texto.
+                Isso expandirá a interface de chat e permitirá o envio de comandos de texto.
             </p>
         </div>
 
         <div class="step-card">
             <span class="step-number">3</span> 
-            <strong>Interação por Item:</strong> O assistente responderá item por item. Certifique-se de aguardar o processamento da dúvida atual antes de enviar a próxima para evitar conflitos de resposta.
+            <strong>Interação por Item:</strong> O assistente responderá item por item. Aguarde o processamento antes de enviar a próxima dúvida.
         </div>
 
-        <div class="step-card">
-            <span class="step-number">4</span> 
-            <strong>Navegação Lateral:</strong> Use o menu (☰) para alternar entre as lições enquanto mantém o assistente aberto para consultas rápidas em tempo real.
+        <h3 style="color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 30px;">
+            Guia Detalhado do Menu Lateral (☰)
+        </h3>
+        <p>Abaixo, a explicação de cada funcionalidade disponível no Menu Principal:</p>
+
+        <div class="menu-guide">
+            <ul>
+                <li><b>🏠 Início:</b> Retorna à tela principal do painel (Dashboard).</li>
+                <li><b>🤖 Assistente:</b> Abre a interface de Inteligência Artificial para consultas teóricas.</li>
+                <li><b>📖 Manual de Uso:</b> Este guia de instruções para instrutores.</li>
+                <li><b>✏️ Lições:</b> Acesso ao Módulo de Lições e atividades práticas.</li>
+                <li><b>👥 Turmas:</b> Visualização da Agenda do Dia e controle de alunos presentes.</li>
+                <li><b>📅 Teoria:</b> Consulta ao Histórico de aulas teóricas ministradas.</li>
+                <li><b>⏳ Plano de Aula:</b> Cronograma e planejamento das fases de ensino.</li>
+                <li><b>🎼 MSA:</b> Conteúdo focado no Método de Solfejo e Percepção.</li>
+                <li><b>🎼 MOO:</b> Acesso ao Manual de Orientação Orquestral.</li>
+                <li><b>🎼 MOR:</b> Acesso ao Manual de Orientação de Regência.</li>
+                <li><b>🎵 Hinos:</b> Biblioteca de áudios e hinos para estudo auditivo.</li>
+                <li><b>🎷 Instrumentos:</b> Seção "Vamos Aprender" com foco em cada família instrumental.</li>
+                <li><b>✏️ Exercícios:</b> Repositório de exercícios gerais para os alunos.</li>
+                <li><b>📋 Programa Mínimo:</b> Tabela de requisitos para oficialização e testes.</li>
+                <li><b>📢 ALÔ GEM:</b> Área de chat comunitário, logs do dia e geração de PDF administrativo.</li>
+            </ul>
         </div>
 
         <div style="text-align: center; color: #888; font-size: 11px; margin-top: 30px;">
