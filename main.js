@@ -245,9 +245,9 @@ function atualizarBibliotecaComMensagens() {
         htmlHistorico += '</div>';
 
         BIBLIOTECA_LIVRO["historico_alou"] = {
-            keywords: ["conversas", "historico", "mensagens", "chat", "comunitario", "alou"],
+            keywords: ["conversas", "historico", "mensagens", "chat", "comunitario", "alo"],
             fase: "LOGS",
-            titulo: "HISTÓRICO DO ALOU!MSA",
+            titulo: "HISTÓRICO DO ALÔ GEM",
             icone: "💬",
             resumo: "Estas são as últimas conversas registradas no chat comunitário via Firebase.",
             html_content: htmlHistorico,
@@ -696,7 +696,7 @@ function selectTab(tabId) {
     
     // 2. Atualiza nome na Nav (ADICIONADO 'plano')
     const labels = {
-        'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
+        'assistente': 'Assistente', 'alou': 'ALO GEM', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
