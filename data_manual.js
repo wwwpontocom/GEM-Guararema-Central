@@ -69,24 +69,24 @@ Object.assign(BIBLIOTECA_LIVRO, {
             <ul>
                 <li><b>🏠 Início:</b> Retorna à tela principal do painel (Dashboard).</li>
                 <li><b>🤖 Assistente:</b> Abre a interface de Inteligência Artificial para consultas teóricas.</li>
-                <li><b>📖 Manual de Uso:</b> Este guia de instruções para instrutores.</li>
-                <li><b>✏️ Lições:</b> Acesso ao Módulo de Lições e atividades práticas.</li>
-                <li><b>👥 Turmas:</b> Visualização da Agenda do Dia e controle de alunos presentes.</li>
+                <li><b>📖 Manual de Uso:</b> Este guia de instruções de uso.</li>
+                <li><b>✏️ Lições:</b> Acesso ás Lições e Atividades práticas das Aulas Anteriores.</li>
+                <li><b>👥 Turmas:</b> Visualização das Turmas do Dia, Calendário e controle de Turmas (quantidades).</li>
                 <li><b>📅 Teoria:</b> Consulta ao Histórico de aulas teóricas ministradas.</li>
                 <li><b>⏳ Plano de Aula:</b> Cronograma e planejamento das fases de ensino.</li>
-                <li><b>🎼 MSA:</b> Conteúdo focado no Método de Solfejo e Percepção.</li>
+                <li><b>🎼 MSA:</b> Conteúdo focado no Método Simplificado de Aprendizagem.</li>
                 <li><b>🎼 MOO:</b> Acesso ao Manual de Orientação Orquestral.</li>
-                <li><b>🎼 MOR:</b> Acesso ao Manual de Orientação de Regência.</li>
-                <li><b>🎵 Hinos:</b> Biblioteca de áudios e hinos para estudo auditivo.</li>
-                <li><b>🎷 Instrumentos:</b> Seção "Vamos Aprender" com foco em cada família instrumental.</li>
+                <li><b>🎼 MOR:</b> Acesso ao Manual de Orgão.</li>
+                <li><b>🎵 Hinos:</b> Àudios dos hinos com possibilidade de mudança de andamento, com Média, mínima e máxima, para estudos.</li>
+                <li><b>🎷 Instrumentos:</b> Seção "Vamos Aprender" com foco em cada instrumento.</li>
                 <li><b>✏️ Exercícios:</b> Repositório de exercícios gerais para os alunos.</li>
-                <li><b>📋 Programa Mínimo:</b> Tabela de requisitos para oficialização e testes.</li>
-                <li><b>📢 ALÔ GEM:</b> Área de chat comunitário, logs do dia e geração de PDF administrativo.</li>
+                <li><b>📋 Programa Mínimo:</b> Tabela de requisitos para ingressar nos Ensaios, RJM; Cultos Locais e Oficialização (testes).</li>
+                <li><b>📢 ALÔ GEM:</b> Área de chat comunitário, logs.</li>
             </ul>
         </div>
 
         <div style="text-align: center; color: #888; font-size: 11px; margin-top: 30px;">
-            Manual GEM GM Central - Versão Instrutor 2026
+            Manual GEM GM Central - 2026
         </div>
     </div>
 `,
