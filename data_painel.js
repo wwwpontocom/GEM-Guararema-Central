@@ -18,17 +18,17 @@ function exibirPainel() {
 
         <div class="dashboard-grid" style="display: grid; gap: 20px; margin-top: 15px;">
             
-            <div class="notice-card" style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background: #fff;">
-                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); margin-bottom: 10px;">
-                    <h3 style="margin: 0; font-size: 14px; color: var(--primary);">📢 AVISOS GERAIS</h3>
-                    <span style="font-size: 10px; background: #e3f2fd; padding: 2px 6px; border-radius: 4px;">Info</span>
+            <div class="notice-card" style="border: 2px solid var(--primary); padding: 20px; border-radius: 12px; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--primary); margin-bottom: 15px; padding-bottom: 5px;">
+                    <h3 style="margin: 0; font-size: 18px; color: var(--primary); font-weight: bold;">📢 AVISOS GERAIS</h3>
+                    <span style="font-size: 12px; background: #ffeb3b; color: #000; padding: 4px 8px; border-radius: 4px; font-weight: bold;">URGENTE</span>
                 </div>
-                <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
-                    <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
-                        📌 Bem-vindo à Plataforma GEM Guararema Central.<br>
-                        📌 Ensaio Regional - Guararema Central - 15/03/2026 - às 14h.<br>
-                        📌 Ensaio do GEM - Guararema Central - 20/03/2026 - às 19h.<br>
-                        📌 Ensaio Local - Guararema Central - 29/03/2026 - às 16h.
+                <div style="min-height: 100px; background: #fffbe6; padding: 20px; border-radius: 8px; font-size: 16px; line-height: 1.6; color: #333; border: 1px dashed #ffe58f;">
+                    <div style="margin-bottom: 8px;">
+                        📌 <b>Bem-vindo</b> à Plataforma GEM Guararema Central.<br>
+                        📌 <b>Ensaio Regional</b> - Guararema Central - 15/03/2026 - às 14h.<br>
+                        📌 <b>Ensaio do GEM</b> - Guararema Central - 20/03/2026 - às 19h.<br>
+                        📌 <b>Ensaio Local</b> - Guararema Central - 29/03/2026 - às 16h.
                     </div>
                 </div>
             </div>
