@@ -211,7 +211,7 @@ async function gerarPDFDoDia() {
         let y = 30;
         
         doc.setFontSize(16);
-        doc.text("RELATÓRIO DIÁRIO - ALOU!MSA", 10, 10);
+        doc.text("RELATÓRIO DIÁRIO - ALO GEM", 10, 10);
         doc.setFontSize(10);
         doc.text(`Data do Arquivo: ${dataAtual}`, 10, 20);
         doc.line(10, 22, 200, 22);
