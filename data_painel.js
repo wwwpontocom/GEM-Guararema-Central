@@ -26,9 +26,9 @@ function exibirPainel() {
                 <div style="max-height: 150px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 5px; font-size: 12px; line-height: 1.4;">
                     <div style="margin-bottom: 8px; border-bottom: 1px dotted #eee; padding-bottom: 5px;">
                         • Bem-vindo à Plataforma GEM Guararema Central.<br>
-                        • Ensaio Regional - Guararema Central - 15/03/2026 - às 14h.
-                        • Ensaio do GEM - Guararema Central - 20/03/2026 - às 19h.
-                        • Ensaio Local - Guararema Central - 29/03/2026 - àas 16h.
+                        • Ensaio Regional - Guararema Central - 15/03/2026 - às 14h.<br>
+                        • Ensaio do GEM - Guararema Central - 20/03/2026 - às 19h.<br>
+                        • Ensaio Local - Guararema Central - 29/03/2026 - às 16h.
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@ function exibirPainel() {
                         Você já tentou cantar ou tocar a Escala de Dó Maior e parar, encerrar a escala na nota Si (sétima nota, sensível)?  <br>
                         Se já fez deve ter percebido, ou se fizer provavelmente perceberá que isso causa uma sensação estranha.  <br>
                         Desenvolvida no início do século XX, a Música Atonal tem uma harmonia marcada por sons dissonantes, que causam essa sensação estranha que falamos.<br>
-                        Apesar de Carl Maria Friedrich Ernest von Weber ser do período Romântico, ele utilizou cromatismo e dissonâncias para criar tensão dramática.
+                        Apesar de Carl Maria Friedrich Ernest von Weber ser do período Romântico, que é anterior ao Atonalismo, ele utilizou cromatismo e dissonâncias para criar tensão dramática.
                     </div>
                 </div>
             </div>
