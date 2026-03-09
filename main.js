@@ -125,7 +125,7 @@ function switchTab(tab) {
     // 1. Mapeamento de todas as abas do sistema
     const allTabs = [
         'assistente', 'alou', 'agenda', 'cronograma', 
-        'turmas', 'moo', 'instrumentos', 'exercicios', 'audios', 'programa'
+        'turmas', 'moo', 'manual', 'instrumentos', 'exercicios', 'audios', 'programa'
     ];
     
     // 2. Reset Geral: Esconde todas e limpa estilos
@@ -698,7 +698,7 @@ function selectTab(tabId) {
     const labels = {
         'assistente': 'Assistente', 'alou': 'ALOU!', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
-        'moo': 'MOO',  'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
+        'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
         'msa': 'MSA' , 'teoria': 'Teoria'
     };
@@ -770,6 +770,11 @@ function selectTab(tabId) {
      else if (tabId === 'licoes') {
     if (typeof switchTab === "function") switchTab('assistente');
     mostrarConteudo('modulo_licoes');
+}
+
+          else if (tabId === 'manual') {
+    if (typeof switchTab === "function") switchTab('assistente');
+    mostrarConteudo('manual_uso');
 }
          
     else {
