@@ -75,7 +75,7 @@ let BIBLIOTECA_LIVRO = {
                 </div>
                
 <button onclick="abrirPopup([
-    'Música é a arte de expressar sentimentos por sons coordenados. O som é a propagação de ondas no ar.'
+    'Música é a arte do som. O som é a propagação de ondas no ar.'
 ], '📝')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
     Ver Resumo
 </button>
@@ -133,8 +133,7 @@ let BIBLIOTECA_LIVRO = {
     </div>
 </div>
 
-<a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
-<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: right;">
+
             <button onclick="mostrarConteudo('fase_1_elementos_musica')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Próximo Tópico: 1.2 ➜</button>
         </div>
             `,
