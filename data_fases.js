@@ -150,16 +150,7 @@ let BIBLIOTECA_LIVRO = {
                 <p><strong>Melodia</strong> é a produção ordenada de sons sucessivos. Nos hinos, cada uma das vozes é uma melodia individual.</p>
                 <p><strong>Harmonia</strong> é a produção ordenada de vários sons diferentes emitidos de modo simultâneo.</p>
                 <p><strong>Ritmo</strong> é a disposição ordenada de sons no tempo, combinando sons curtos, longos e silêncios.</p>
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #eee;">
-                    <iframe 
-                        src="https://docs.google.com/presentation/d/1eU6qLpl1oTiYMLIaAha-QxjvzDnUPdkGdWHo-DGYM58/embed?start=false&loop=false&delayms=3000" 
-                        frameborder="0" 
-                        width="100%" 
-                        height="100%" 
-                        style="position: absolute; top: 0; left: 0;"
-                        allowfullscreen="true">
-                    </iframe>
-                </div> 
+
                               
 <button onclick="abrirPopup([
     '.'
@@ -168,44 +159,44 @@ let BIBLIOTECA_LIVRO = {
 </button>
 
 <button onclick="abrirPopup([
-    '<b>.</b> explica como o Som é produzido, e a <b>Matemática</b>, como esse Som acontece e é dividido dentro do tempo.',
+    '<b>.</b> </b>, .',
 
-    '<b>DEFINIÇÃO FÍSICA DO SOM</b><br><br><span class=&quot;highlight-blue&quot; style=&quot;color:#4a90e2; font-weight:bold;&quot;>&quot;Som é tudo o que ouvimos. O Som é formado pela propagação de ondas no ar, ao serem captadas por nossos ouvidos.&quot;</span><br><br>Os sons produzidos em nossas orquestras são realizados pelos instrumentos musicais listados no MOO (Manual de Orientação Orquestral).'
+    '<b>DEFINIÇÃO </b><br><br><span class=&quot;highlight-blue&quot; style=&quot;color:#4a90e2; font-weight:bold;&quot;>&quot;Som é tudo o que ouvimos. O Som é formado pela propagação de ondas no ar, ao serem captadas por nossos ouvidos.&quot;</span><br><br>Os sons produzidos em nossas orquestras são realizados pelos instrumentos musicais listados no MOO (Manual de Orientação Orquestral).'
 ], '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
     💡 Saiba Mais
 </button>
 
 <div style="margin-top: 20px; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; font-family: Arial, sans-serif;">
-    <b style="font-size: 16px;">DESCOBRINDO OS EXEMPLOS</b><br><br>
-    <p style="font-size: 14px; color: #555;">Clique nos alto-falantes para identificar o instrumento:</p>
+    <b style="font-size: 16px;"> EXEMPLOS</b><br><br>
+    <p style="font-size: 14px; color: #555;">Clique nos icones para escutar:</p>
     
     <div style="display: flex; justify-content: space-around; align-items: flex-end; gap: 10px; margin-top: 20px;">
         
         <div style="text-align: center; width: 80px;">
-            <img src="assets/img/cello1.png" style="width: 50px; display: block; margin: 10px auto;">
-            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">Violoncelo</span><br>
-            <button onclick="let a = new Audio('assets/audio/cello_exemplo1.mp3'); a.play(); a.onended = () => { document.getElementById('name-cello').style.visibility = 'visible'; document.getElementById('btn-cello').innerText = 'Violoncelo'; }" 
-                    id="btn-cello"
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
                     style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
                 <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
             </button>
         </div>
 
-        <div style="text-align: center; width: 80px;">
-            <img src="assets/img/violin1.png" style="width: 40px; display: block; margin: 10px auto;">
-            <span id="name-violin" style="font-size: 12px; font-weight: bold; visibility: hidden;">Violino</span><br>
-            <button onclick="let a = new Audio('assets/audio/violin_exemplo1.wav'); a.play(); a.onended = () => { document.getElementById('name-violin').style.visibility = 'visible'; document.getElementById('btn-violin').innerText = 'Violino'; }" 
-                    id="btn-violin"
+         <div style="text-align: center; width: 80px;">
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
                     style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
                 <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
             </button>
         </div>
 
-        <div style="text-align: center; width: 80px;">
-            <img src="assets/img/horn1.png" style="width: 55px; display: block; margin: 10px auto;">
-            <span id="name-trompa" style="font-size: 12px; font-weight: bold; visibility: hidden;">Trompa</span><br>
-            <button onclick="let a = new Audio('assets/audio/trompa_exemplo1.wav'); a.play(); a.onended = () => { document.getElementById('name-trompa').style.visibility = 'visible'; document.getElementById('btn-trompa').innerText = 'Trompa'; }" 
-                    id="btn-trompa"
+         <div style="text-align: center; width: 80px;">
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
                     style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
                 <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
             </button>
@@ -248,31 +239,58 @@ let BIBLIOTECA_LIVRO = {
                 <div style="margin-top:15px; padding:10px; background:#f0f7ff; border-radius:5px; font-size:12px;">
                     <em>Exemplos de Altura:</em> Violoncelo (Grave - 110Hz), Cornet (Médio - 440Hz), Flauta (Agudo - 880Hz).
                 </div>
-                 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #eee;">
-                    <iframe 
-                        src="https://docs.google.com/presentation/d/1E-NIAAUkCRoOSglN2kBYrU0ZUQSqd18Dst0SM4HNcnA/embed?start=false&loop=false&delayms=3000"  
-                        frameborder="0" 
-                        width="100%" 
-                        height="100%" 
-                        style="position: absolute; top: 0; left: 0;"
-                        allowfullscreen="true">
-                    </iframe>
-                </div> 
-                <div style="margin-top: 15px; padding: 15px; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px;">
-    <p style="margin:0 0 10px 0; font-weight:bold; color:#212529;">🔈 Exemplos Sonoros (Fase 1.2):</p>
-    <audio controls style="width:100%;">
-        <source src="https://drive.google.com/uc?export=download&id=1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6" type="audio/mpeg">
-        Seu navegador não suporta o elemento de áudio.
-    </audio>
-    <p style="font-size:11px; color:#6c757d; margin-top:8px;">
-        ⚠️ Se o áudio não tocar, <a href="https://drive.google.com/file/d/1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6/view" target="_blank" style="color:#4a90e2;">clique aqui para abrir o som direto no Drive</a>.
-    </p>
-</div> 
-        <source src="https://docs.google.com/uc?export=download&id=1jpNC5KWBGMPempKqDBaGvSBB8oxENTq6" type="audio/mpeg">
-        Seu navegador não suporta o áudio.
-    </audio>
+                <button onclick="abrirPopup([
+    '.'
+], '📝')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
+    Ver Resumo
+</button>
+
+<button onclick="abrirPopup([
+    '<b>.</b> </b>, .',
+
+    '<b>DEFINIÇÃO </b><br><br><span class=&quot;highlight-blue&quot; style=&quot;color:#4a90e2; font-weight:bold;&quot;>&quot;Som é tudo o que ouvimos. O Som é formado pela propagação de ondas no ar, ao serem captadas por nossos ouvidos.&quot;</span><br><br>Os sons produzidos em nossas orquestras são realizados pelos instrumentos musicais listados no MOO (Manual de Orientação Orquestral).'
+], '📚')" style="display:inline-block; padding:10px; background:#f0f2f5; color:#333; border:1px solid #ddd; border-radius:5px; cursor:pointer; margin-left: 10px; font-size: 12px; font-weight: bold;">
+    💡 Saiba Mais
+</button>
+
+<div style="margin-top: 20px; padding: 20px; background: #f9f9f9; border: 1px solid #ddd; border-radius: 8px; font-family: Arial, sans-serif;">
+    <b style="font-size: 16px;"> EXEMPLOS</b><br><br>
+    <p style="font-size: 14px; color: #555;">Clique nos icones para escutar:</p>
+    
+    <div style="display: flex; justify-content: space-around; align-items: flex-end; gap: 10px; margin-top: 20px;">
+        
+        <div style="text-align: center; width: 80px;">
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
+            </button>
+        </div>
+
+         <div style="text-align: center; width: 80px;">
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
+            </button>
+        </div>
+
+         <div style="text-align: center; width: 80px;">
+            <img src="assets/img/.png" style="width: 50px; display: block; margin: 10px auto;">
+            <span id="name-cello" style="font-size: 12px; font-weight: bold; visibility: hidden;">texto</span><br>
+            <button onclick="let a = new Audio('assets/audio/.mp3'); a.play(); a.onended = () => { document.getElementById('name-texto').style.visibility = 'visible'; document.getElementById('btn-texto').innerText = 'texto'; }" 
+                    id="btn-texto"
+                    style="margin-top:8px; background: none; border: none; cursor: pointer; font-size: 11px; color: #333;">
+                <img src="assets/img/speaker_icon.png" style="width: 25px; vertical-align: middle;"> Ouvir
+            </button>
+        </div>
+
+    </div>
 </div>
-<a href="https://drive.google.com/file/d/1xERl6ixDiEq9wurE6CB7Q6i0GQdCx0aH/view?usp=sharing" target="_blank" style="display:inline-block; padding:10px; background:#4a90e2; color:white; text-decoration:none; border-radius:5px;">📂 Abrir Apresentação</a>
 <div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; display: flex; justify-content: space-between;">
                 <button onclick="mostrarConteudo('fase_1_elementos_musica')" style="padding: 10px 15px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">⇠ Voltar</button>
                 <button onclick="mostrarConteudo('indice')" style="padding: 12px 20px; background: #4a90e2; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Menu Inicial ☰</button>
