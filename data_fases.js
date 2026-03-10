@@ -133,7 +133,7 @@ let BIBLIOTECA_LIVRO = {
     </div>
 </div>
 
-
+<div style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px; text-align: right;">
             <button onclick="mostrarConteudo('fase_1_elementos_musica')" style="padding: 12px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">Próximo Tópico: 1.2 ➜</button>
         </div>
             `,
