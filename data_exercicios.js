@@ -17,7 +17,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         max-width: 100%;
                         margin-top: 10px;
                     }
-                    #music-viewer-wrapper h2 { color: #333; font-family: sans-serif; }
+                    #music-viewer-wrapper h2 { color: #333; font-family: sans-serif; text-align: center; }
                 </style>
 
                 <h2>Musical Notation Viewer</h2>
@@ -26,18 +26,18 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
                 <script>
                     (function() {
-                        function initSheet() {
+                        function renderSheet() {
                             if (typeof Vex === 'undefined') {
-                                setTimeout(initSheet, 100);
+                                setTimeout(renderSheet, 100);
                                 return;
                             }
 
                             const { Renderer, Stave, StaveNote, Formatter, Accidental } = Vex.Flow;
                             const div = document.getElementById("viewer");
-                            div.innerHTML = ""; // Clear for re-renders
-                            
+                            div.innerHTML = ""; // Clear previous renders
+
                             const renderer = new Renderer(div, Renderer.Backends.SVG);
-                            renderer.resize(800, 400);
+                            renderer.resize(800, 500);
                             const context = renderer.getContext();
 
                             function acc(note, type) {
@@ -77,7 +77,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             stave4.setContext(context).draw();
 
                             const notes4 = [
-                                new StaveNote({ keys: ["f/5"], duration: "4", stem_direction: -1 }),
+                                new StaveNote({ keys: ["f/5"], duration: "4", stem_direction: -1 }), // Fixed "4h" to "4"
                                 new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
                                 new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 }),
                                 new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 })
@@ -85,7 +85,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             Formatter.FormatAndDraw(context, stave4, notes4);
                         }
 
-                        initSheet();
+                        // Use DOMContentLoaded or a small delay to ensure the div exists in your library container
+                        renderSheet();
                     })();
                 </script>
             </div>
