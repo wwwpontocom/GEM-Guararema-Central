@@ -1,81 +1,91 @@
 Object.assign(BIBLIOTECA_LIVRO, {
-    "exercicios": {
-        keywords: ["exercicios", "prática", "atividades", "treinar", "fixar"],
+    "exercicio_partitura": {
+        keywords: ["partitura", "prática", "leitura", "vexflow"],
         fase: "Extras", 
-        titulo: "EXERCÍCIOS", 
-        icone: "✍️",
-        resumo: "Lista de exercícios para fixação dos conhecimentos teóricos e práticos.",
+        titulo: "NOTAÇÃO MUSICAL - EXERCÍCIO", 
+        icone: "🎼",
+        resumo: "Visualização de notação musical avançada com VexFlow.",
         html_content: `
-            <div id="music-app-wrapper" style="all: initial; font-family: sans-serif;">
+            <div id="music-viewer-wrapper" style="all: initial; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; padding: 20px; background-color: #f4f4f9;">
                 <style>
-                    /* Hide the controls so only the sheet music shows */
-                    #music-app-wrapper .controls { display: none; }
-                    #music-app-wrapper .sheet-container { background: white; padding: 20px; border-radius: 8px; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; }
-                    .render-title { font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center; font-family: sans-serif; }
+                    #music-viewer-wrapper #viewer {
+                        background: white;
+                        padding: 40px;
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                        border-radius: 8px;
+                        overflow-x: auto;
+                        max-width: 100%;
+                        margin-top: 10px;
+                    }
+                    #music-viewer-wrapper h2 { color: #333; font-family: sans-serif; }
                 </style>
-                
-                <div class="controls">
-                    <input type="text" id="musicTitleInput" value="Exercício de Fixação">
-                    <select id="clef"><option value="treble">treble</option></select>
-                    <select id="keySig"><option value="C">C</option></select>
-                    <input type="text" id="timeSig" value="4/4">
-                    <textarea id="notation">1 C4 h, 1 E4 q, 1 G4 q, 4 C4 16, 4 E4 16, 4 G4 16, 4 C5 16, 3 G4 8</textarea>
-                </div>
 
-                <div id="final-container" class="sheet-container"></div>
+                <h2>Musical Notation Viewer</h2>
+                <div id="viewer"></div>
 
                 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
                 <script>
                     (function() {
-                        const VF = Vex.Flow;
-                        const A4_WIDTH = 750;
+                        function initSheet() {
+                            if (typeof Vex === 'undefined') {
+                                setTimeout(initSheet, 100);
+                                return;
+                            }
 
-                        function render() {
-                            const container = document.getElementById('final-container');
-                            container.innerHTML = '';
+                            const { Renderer, Stave, StaveNote, Formatter, Accidental } = Vex.Flow;
+                            const div = document.getElementById("viewer");
+                            div.innerHTML = ""; // Clear for re-renders
                             
-                            const titleVal = document.getElementById('musicTitleInput').value;
-                            if(titleVal) {
-                                const t = document.createElement('div');
-                                t.className = 'render-title';
-                                t.innerText = titleVal;
-                                container.appendChild(t);
-                            }
-
-                            const renderer = new VF.Renderer(container, VF.Renderer.Backends.SVG);
-                            renderer.resize(A4_WIDTH, 250);
+                            const renderer = new Renderer(div, Renderer.Backends.SVG);
+                            renderer.resize(800, 400);
                             const context = renderer.getContext();
-                            const notationText = document.getElementById('notation').value;
-                            const clef = document.getElementById('clef').value;
 
-                            const stave = new VF.Stave(10, 40, A4_WIDTH - 20);
-                            stave.addClef(clef).addTimeSignature(document.getElementById('timeSig').value);
-                            stave.setContext(context).draw();
-
-                            const notes = [];
-                            const sections = notationText.split(',').filter(s => s.trim() !== "");
-                            sections.forEach(item => {
-                                const match = item.trim().match(/(\\d+)\\s+([A-Ga-g#b]+\\d+)\\s+([whq816]+)/);
-                                if (match) {
-                                    const count = parseInt(match[1]);
-                                    const keys = [match[2].replace(/([A-G][#b]?)/i, '$1/')];
-                                    for (let i = 0; i < count; i++) {
-                                        notes.push(new VF.StaveNote({ keys: keys, duration: match[3] }));
-                                    }
-                                }
-                            });
-
-                            if (notes.length > 0) {
-                                const voice = new VF.Voice({ num_beats: 4, beat_value: 4 }).setStrict(false);
-                                voice.addTickables(notes);
-                                new VF.Formatter().joinVoices([voice]).formatToStave([voice], stave);
-                                voice.draw(context, stave);
+                            function acc(note, type) {
+                                return note.addModifier(new Accidental(type));
                             }
+
+                            // --- LINE 1: Measures 1-2 ---
+                            const stave1 = new Stave(10, 40, 300);
+                            stave1.addClef("treble").addTimeSignature("4/4").addKeySignature("Bb");
+                            stave1.setContext(context).draw();
+
+                            const notes1 = [
+                                new StaveNote({ keys: ["f/4"], duration: "8", stem_direction: 1 }),
+                                new StaveNote({ keys: ["g/4"], duration: "8", stem_direction: 1 }),
+                                new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 }),
+                                new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 })
+                            ];
+
+                            const stave2 = new Stave(stave1.width + stave1.x, 40, 400);
+                            stave2.setContext(context).draw();
+                            const notes2 = [
+                                new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+                                new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
+                                acc(new StaveNote({ keys: ["b/4"], duration: "8", stem_direction: -1 }), "n"),
+                                new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
+                                new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+                                new StaveNote({ keys: ["f/5"], duration: "8", stem_direction: -1 }),
+                                new StaveNote({ keys: ["e/5"], duration: "4", stem_direction: -1 })
+                            ];
+
+                            Formatter.FormatAndDraw(context, stave1, notes1);
+                            Formatter.FormatAndDraw(context, stave2, notes2);
+
+                            // --- LINE 2: Measure 4 ---
+                            const stave4 = new Stave(10, 200, 300);
+                            stave4.addClef("treble").addKeySignature("Bb");
+                            stave4.setContext(context).draw();
+
+                            const notes4 = [
+                                new StaveNote({ keys: ["f/5"], duration: "4", stem_direction: -1 }),
+                                new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+                                new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 }),
+                                new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 })
+                            ];
+                            Formatter.FormatAndDraw(context, stave4, notes4);
                         }
 
-                        // Run after VexFlow loads
-                        if (typeof Vex !== 'undefined') { render(); } 
-                        else { setTimeout(render, 800); }
+                        initSheet();
                     })();
                 </script>
             </div>
