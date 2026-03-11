@@ -89,3 +89,42 @@ window.onresize = function() {
         }
     }, 200); // Aguarda 200ms após o usuário parar de arrastar a janela
 };
+
+// --- Adicione ao final do vex_logic.js ---
+
+/**
+ * Converte o SVG do VexFlow em uma imagem PNG para download
+ */
+function exportarPartituraPNG() {
+    const svgElement = document.querySelector("#viewer-exercicio svg");
+    if (!svgElement) return;
+
+    const svgData = new XMLSerializer().serializeToString(svgElement);
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+    const img = new Image();
+
+    // Define dimensões baseadas no SVG
+    const svgSize = svgElement.getBoundingClientRect();
+    canvas.width = svgSize.width * 2; // Dobro da resolução
+    canvas.height = svgSize.height * 2;
+
+    const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+    const url = URL.createObjectURL(svgBlob);
+
+    img.onload = function() {
+        ctx.fillStyle = "white"; // Fundo branco
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(2, 2); // Escala para manter nitidez
+        ctx.drawImage(img, 0, 0);
+        
+        const pngUrl = canvas.toDataURL("image/png");
+        const downloadLink = document.createElement("a");
+        downloadLink.href = pngUrl;
+        downloadLink.download = "partitura_exercicio.png";
+        downloadLink.click();
+        URL.revokeObjectURL(url);
+    };
+
+    img.src = url;
+}
