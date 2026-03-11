@@ -29,7 +29,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
     </style>
 
 
-    <h2>Musical Notation Viewer</h2>
+    <h2>Musical Notation ViewerA</h2>
     <div id="viewer"></div>
 
     <script>
