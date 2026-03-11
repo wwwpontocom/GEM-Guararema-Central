@@ -27,8 +27,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         }
         h2 { color: #333; }
     </style>
-</head>
-<body>
+
 
     <h2>Musical Notation Viewer</h2>
     <div id="viewer"></div>
