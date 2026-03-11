@@ -1,49 +1,46 @@
 // --- INSERT INTO data_exercicios.js ---
 Object.assign(BIBLIOTECA_LIVRO, {
     "exercicio_partitura": {
-        keywords: ["partitura", "prática", "leitura", "vexflow"],
+        keywords: ["partitura", "prática", "leitura", "vexflow", "canvas"],
         fase: "Extras", 
         titulo: "NOTAÇÃO MUSICAL - EXERCÍCIO", 
         icone: "🎼",
-        resumo: "Visualização de notação musical avançada com VexFlow.",
+        resumo: "Visualização de notação musical utilizando o backend Canvas do VexFlow.",
         html_content: `
             <div id="music-container-root" style="font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; background-color: #f4f4f9; padding: 20px;">
                 <style>
-                    #music-container-root #viewer {
+                    #music-container-root canvas {
                         background: white;
-                        padding: 40px;
                         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                         border-radius: 8px;
-                        overflow-x: auto;
-                        min-width: 820px;
-                        min-height: 620px;
+                        margin-top: 10px;
                     }
-                    #music-container-root h2 { color: #333; margin-bottom: 20px; }
+                    #music-container-root h2 { color: #333; margin-bottom: 10px; }
                 </style>
 
-                <h2>Musical Notation ViewerB</h2>
-                <div id="viewer"></div>
+                <h2>Musical Notation ViewerA</h2>
+                <canvas id="viewer-canvas"></canvas>
 
                 <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
                 
                 <script>
                     (function() {
                         function startVexFlow() {
-                            const div = document.getElementById("viewer");
+                            const canvas = document.getElementById("viewer-canvas");
                             
-                            // Check if Vex is loaded AND the div exists in the DOM
-                            if (typeof Vex === 'undefined' || !div) {
+                            if (typeof Vex === 'undefined' || !canvas) {
                                 setTimeout(startVexFlow, 200);
                                 return;
                             }
 
                             try {
                                 const { Renderer, Stave, StaveNote, Formatter, Accidental } = Vex.Flow;
-                                div.innerHTML = ""; // Clear for re-renders
-
-                                const renderer = new Renderer(div, Renderer.Backends.SVG);
-                                renderer.resize(800, 600);
+                                
+                                // Initialize Renderer with CANVAS backend
+                                const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
+                                renderer.resize(800, 500);
                                 const context = renderer.getContext();
+                                context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
 
                                 function acc(note, type) {
                                     return note.addModifier(new Accidental(type));
@@ -77,7 +74,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 Formatter.FormatAndDraw(context, stave2, notes2);
 
                                 // --- LINE 2: Measure 4 ---
-                                const stave4 = new Stave(10, 200, 300);
+                                const stave4 = new Stave(10, 220, 300);
                                 stave4.addClef("treble").addKeySignature("Bb");
                                 stave4.setContext(context).draw();
 
@@ -89,13 +86,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 ];
                                 Formatter.FormatAndDraw(context, stave4, notes4);
                                 
-                                console.log("VexFlow Rendered Successfully");
+                                console.log("Canvas VexFlow Rendered Successfully");
                             } catch (err) {
-                                console.error("VexFlow Error:", err);
+                                console.error("VexFlow Canvas Error:", err);
                             }
                         }
 
-                        // Start polling for readiness
                         startVexFlow();
                     })();
                 </script>
