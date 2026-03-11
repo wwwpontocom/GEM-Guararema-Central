@@ -7,12 +7,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         icone: "🎼",
         resumo: "Visualização de notação musical utilizando o backend Canvas do VexFlow.",
         html_content: `
-           <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sheet Music Renderer</title>
+          
     <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
     <style>
         body {
@@ -33,10 +28,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
         }
         h2 { color: #333; }
     </style>
-</head>
-<body>
 
-    <h2>Musical Notation Viewer</h2>
+
+    <h2>Musical Notation ViewerA</h2>
     <canvas id="viewer"></canvas>
 
     <script>
@@ -94,8 +88,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
         Formatter.FormatAndDraw(context, stave4, notes4);
 
     </script>
-</body>
-</html>
+
         `,
         pagina: "Extra"
     }
