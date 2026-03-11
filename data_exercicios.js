@@ -1,5 +1,4 @@
-<script src="data_exercicios.js">
-        Object.assign(BIBLIOTECA_LIVRO, {
+ Object.assign(BIBLIOTECA_LIVRO, {
         "exercicios": {
             keywords: ["exercicios", "prática", "atividades", "treinar", "fixar"],
             fase: "Extras", 
