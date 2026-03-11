@@ -7,95 +7,95 @@ Object.assign(BIBLIOTECA_LIVRO, {
         icone: "🎼",
         resumo: "Visualização de notação musical utilizando o backend Canvas do VexFlow.",
         html_content: `
-            <div id="music-container-root" style="font-family: 'Segoe UI', sans-serif; display: flex; flex-direction: column; align-items: center; background-color: #f4f4f9; padding: 20px;">
-                <style>
-                    #music-container-root canvas {
-                        background: white;
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                        border-radius: 8px;
-                        margin-top: 10px;
-                    }
-                    #music-container-root h2 { color: #333; margin-bottom: 10px; }
-                </style>
+           <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Music Renderer</title>
+    <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        #viewer {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            max-width: 100%;
+        }
+        h2 { color: #333; }
+    </style>
+</head>
+<body>
 
-                <h2>Musical Notation ViewerA</h2>
-                <canvas id="viewer-canvas"></canvas>
+    <h2>Musical Notation Viewer</h2>
+    <canvas id="viewer"></canvas>
 
-                <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
-                
-                <script>
-                    (function() {
-                        function startVexFlow() {
-                            const canvas = document.getElementById("viewer-canvas");
-                            
-                            if (typeof Vex === 'undefined' || !canvas) {
-                                setTimeout(startVexFlow, 200);
-                                return;
-                            }
+    <script>
+        const { Renderer, Stave, StaveNote, Formatter, Accidental } = Vex.Flow;
 
-                            try {
-                                const { Renderer, Stave, StaveNote, Formatter, Accidental } = Vex.Flow;
-                                
-                                // Initialize Renderer with CANVAS backend
-                                const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
-                                renderer.resize(800, 500);
-                                const context = renderer.getContext();
-                                context.setFont("Arial", 10, "").setBackgroundFillStyle("#eed");
+        // Locate inside script: Updated for Canvas backend
+        const canvas = document.getElementById("viewer");
+        const renderer = new Renderer(canvas, Renderer.Backends.CANVAS);
 
-                                function acc(note, type) {
-                                    return note.addModifier(new Accidental(type));
-                                }
+        renderer.resize(800, 600);
+        const context = renderer.getContext();
 
-                                // --- LINE 1: Measures 1-2 ---
-                                const stave1 = new Stave(10, 40, 300);
-                                stave1.addClef("treble").addTimeSignature("4/4").addKeySignature("Bb");
-                                stave1.setContext(context).draw();
+        function acc(note, type) {
+            return note.addModifier(new Accidental(type));
+        }
 
-                                const notes1 = [
-                                    new StaveNote({ keys: ["f/4"], duration: "8", stem_direction: 1 }),
-                                    new StaveNote({ keys: ["g/4"], duration: "8", stem_direction: 1 }),
-                                    new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 })
-                                ];
+        // --- LINE 1: Measures 1-2 ---
+        const stave1 = new Stave(10, 40, 300);
+        stave1.addClef("treble").addTimeSignature("4/4").addKeySignature("Bb");
+        stave1.setContext(context).draw();
 
-                                const stave2 = new Stave(stave1.width + stave1.x, 40, 400);
-                                stave2.setContext(context).draw();
-                                const notes2 = [
-                                    new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
-                                    acc(new StaveNote({ keys: ["b/4"], duration: "8", stem_direction: -1 }), "n"),
-                                    new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["f/5"], duration: "8", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["e/5"], duration: "4", stem_direction: -1 })
-                                ];
+        const notes1 = [
+            new StaveNote({ keys: ["f/4"], duration: "8", stem_direction: 1 }),
+            new StaveNote({ keys: ["g/4"], duration: "8", stem_direction: 1 }),
+            new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 }),
+            new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 })
+        ];
 
-                                Formatter.FormatAndDraw(context, stave1, notes1);
-                                Formatter.FormatAndDraw(context, stave2, notes2);
+        const stave2 = new Stave(stave1.width + stave1.x, 40, 400);
+        stave2.setContext(context).draw();
+        const notes2 = [
+            new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+            new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
+            acc(new StaveNote({ keys: ["b/4"], duration: "8", stem_direction: -1 }), "n"),
+            new StaveNote({ keys: ["c/5"], duration: "8", stem_direction: -1 }),
+            new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+            new StaveNote({ keys: ["f/5"], duration: "8", stem_direction: -1 }),
+            new StaveNote({ keys: ["e/5"], duration: "4", stem_direction: -1 })
+        ];
 
-                                // --- LINE 2: Measure 4 ---
-                                const stave4 = new Stave(10, 220, 300);
-                                stave4.addClef("treble").addKeySignature("Bb");
-                                stave4.setContext(context).draw();
+        Formatter.FormatAndDraw(context, stave1, notes1);
+        Formatter.FormatAndDraw(context, stave2, notes2);
 
-                                const notes4 = [
-                                    new StaveNote({ keys: ["f/5"], duration: "4", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 }),
-                                    new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 })
-                                ];
-                                Formatter.FormatAndDraw(context, stave4, notes4);
-                                
-                                console.log("Canvas VexFlow Rendered Successfully");
-                            } catch (err) {
-                                console.error("VexFlow Canvas Error:", err);
-                            }
-                        }
+        // --- LINE 2: Measure 4 ---
+        const stave4 = new Stave(10, 200, 300);
+        stave4.addClef("treble").addKeySignature("Bb");
+        stave4.setContext(context).draw();
 
-                        startVexFlow();
-                    })();
-                </script>
-            </div>
+        const notes4 = [
+            new StaveNote({ keys: ["f/5"], duration: "4h", stem_direction: -1 }),
+            new StaveNote({ keys: ["d/5"], duration: "8", stem_direction: -1 }),
+            new StaveNote({ keys: ["c/5"], duration: "4", stem_direction: -1 }),
+            new StaveNote({ keys: ["bb/4"], duration: "4", stem_direction: -1 })
+        ];
+        Formatter.FormatAndDraw(context, stave4, notes4);
+
+    </script>
+</body>
+</html>
         `,
         pagina: "Extra"
     }
