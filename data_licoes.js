@@ -1,5 +1,3 @@
-// --- FIX IS HERE: AUTOMATIC STUDENT LINKING, FIREBASE UPDATE AND SEARCH FILTER ---
-
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
         keywords: ["licoes", "alunos", "professor", "gravar", "registro", "presença"],
@@ -23,7 +21,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
                 .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
                 
-                /* New Modal Styles */
                 #modal-licao { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); overflow-y: auto; }
                 .modal-content { background:white; margin: 5% auto; padding:20px; border-radius:10px; width:90%; max-width:450px; }
                 .modal-section { border: 1px solid #ddd; padding: 10px; border-radius: 5px; margin-bottom: 10px; background: #fff; }
@@ -89,9 +86,16 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                         </div>
 
-                        <div class="form-group" style="margin-bottom:10px">
-                            <label>Hino:</label>
-                            <input type="text" id="m-hino">
+                        <div class="modal-section">
+                            <span class="modal-section-title">HINO</span>
+                            <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
+                            </div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="st-hino" value="A" checked> Aprovado</label>
+                                <label><input type="radio" name="st-hino" value="E"> Estudar</label>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -101,16 +105,16 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <option value="Alecson">Alecson</option>
                                 <option value="Alessandro">Alessandro</option>
                                 <option value="Breno">Breno</option>
-                                 <option value="Davi">Davi</option>
+                                <option value="Davi">Davi</option>
                                 <option value="Dudu">Dudu</option>
                                 <option value="Jonny">Jonny</option>
-                                 <option value="João">João</option>
+                                <option value="João">João</option>
                                 <option value="Leo">Leo</option>
                                 <option value="Marcos">Marcos</option>
-                                 <option value="Osvaldo">Osvaldo</option>
+                                <option value="Osvaldo">Osvaldo</option>
                                 <option value="Rodrigo">Rodrigo</option>
                                 <option value="Ronaldo">Ronaldo</option>
-                                 <option value="Rudi">Rudi</option>
+                                <option value="Rudi">Rudi</option>
                                 <option value="Vitor">Vitor</option>
                             </select>
                         </div>
@@ -149,10 +153,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <th style="width: 10%;">DATA</th>
                                 <th style="width: 15%;">BONA</th>
                                 <th style="width: 15%;">MSA</th>
-                                <th style="width: 20%;">MÉTODO</th>
-                                <th style="width: 12%;">HINO</th>
+                                <th style="width: 15%;">MÉTODO</th>
+                                <th style="width: 15%;">HINO</th>
                                 <th style="width: 18%;">INSTRUTOR</th>
-                                <th class="col-acoes no-print" style="width: 10%;">AÇÕES</th>
+                                <th class="col-acoes no-print" style="width: 12%;">AÇÕES</th>
                             </tr>
                         </thead>
                         <tbody id="body-licoes"></tbody>
@@ -213,8 +217,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <td>\${l.data}</td>
                                 <td>\${l.bona || "-"}</td>
                                 <td>\${l.msa || "-"}</td>
-                                <td>\${l.metodo}</td>
-                                <td>\${l.hino}</td>
+                                <td>\${l.metodo || "-"}</td>
+                                <td>\${l.hino || "-"}</td>
                                 <td>\${l.instrutor}</td>
                                 <td class="col-acoes no-print">
                                     <button class="btn-edit" onclick="window.editarLicao('\${l.key}')">✏️</button>
@@ -248,16 +252,16 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
                         const l = snapshot.val();
                         const extrair = (str) => {
-                            if(!str || str === "-") return { val: "", status: "A" };
-                            const limpo = str.split('<br>')[0];
+                            if(!str || str === "-") return { l: "", p: "", status: "A" };
                             const status = str.includes('status-estudar') ? "E" : "A";
-                            const partes = limpo.split(' p.');
-                            return { l: partes[0] || "", p: partes[1] || "", status: status };
+                            const match = str.match(/lição: (.*?) - pág: (.*?) -/);
+                            return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
                         };
                         
                         const b = extrair(l.bona);
                         const m = extrair(l.msa);
                         const met = extrair(l.metodo);
+                        const hin = extrair(l.hino);
 
                         document.getElementById('modal-licao').style.display = 'block';
                         document.getElementById('modal-key').value = key;
@@ -271,7 +275,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
                         document.querySelector(\`input[name="st-metodo"][value="\${met.status}"]\`).checked = true;
 
-                        document.getElementById('m-hino').value = l.hino ? l.hino.split('<br>')[0] : "";
+                        document.getElementById('m-hino-l').value = hin.l; document.getElementById('m-hino-p').value = hin.p;
+                        document.querySelector(\`input[name="st-hino"][value="\${hin.status}"]\`).checked = true;
+
                         document.getElementById('m-instrutor').value = l.instrutor;
                     });
                 };
@@ -284,27 +290,28 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
                     document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
                     document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
-                    document.getElementById('m-hino').value = "";
+                    document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
                     document.getElementById('m-instrutor').value = "";
                 };
 
                 window.salvarModal = function() {
                     const key = document.getElementById('modal-key').value;
-                    const format = (idL, idP, name) => {
+                    const format = (idL, idP, name, label) => {
                         const l = document.getElementById(idL).value;
                         const p = document.getElementById(idP).value;
                         const st = document.querySelector(\`input[name="\${name}"]:checked\`).value;
                         if(!l && !p) return "-";
-                        let txt = l + (p ? ' p.' + p : '');
-                        return txt + (st === 'A' ? '<br><span class="status-aprovado">Aprovado</span>' : '<br><span class="status-estudar">Estudar</span>');
+                        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
+                        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+                        return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
                     };
 
                     const licao = {
                         data: document.getElementById('m-data').value,
-                        bona: format('m-bona-l', 'm-bona-p', 'st-bona'),
-                        msa: format('m-msa-l', 'm-msa-p', 'st-msa'),
-                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo'),
-                        hino: document.getElementById('m-hino').value,
+                        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
+                        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
+                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
+                        hino: format('m-hino-l', 'm-hino-p', 'st-hino', 'HINO'),
                         instrutor: document.getElementById('m-instrutor').value
                     };
 
