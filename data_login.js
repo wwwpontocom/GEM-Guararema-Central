@@ -1,62 +1,81 @@
-// Function to handle login using the scripts already in your index.html
-function loginInstructor(email, password) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((userCredential) => {
-            console.log("Login successful!");
-            checkAuthorization(userCredential.user.email);
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-        });
-}
+// --- CONFIGURATION & INITIALIZATION ---
+// Ensure your firebase-config is already loaded before this script
 
-// Function to check if the email is in our Whitelist
-function checkAuthorization(email) {
-    const emailKey = email.replace(/\./g, '_');
-    firebase.database().ref('usuarios_autorizados/' + emailKey).once('value')
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log("Welcome, Instructor!");
-                // Here you call the function to show your hidden menu items
-                document.getElementById('side-menu').classList.add('authorized');
-            } else {
-                alert("Unauthorized email. Logging out.");
-                firebase.auth().signOut();
-            }
-        });
-}
-
-// Este código deve rodar assim que o index.html abrir
+// 1. MONITOR AUTH STATE (The "Automatic Brain")
 firebase.auth().onAuthStateChanged((user) => {
+    const loginScreen = document.getElementById('login-screen');
+    const mainContainer = document.getElementById('main-container');
+
     if (user) {
-        // --- JÁ ESTÁ LOGADO ---
-        console.log("Login automático detectado:", user.email);
+        // --- USER IS LOGGED IN ---
+        console.log("Session detected:", user.email);
         
-        // Esconde o formulário de login e mostra o conteúdo
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('main-container').style.display = 'flex';
-        
-        // Opcional: Validar se o e-mail está na Whitelist (usuarios_autorizados)
-        checkAuthorization(user.email);
+        // Silently check if the user is authorized in the database
+        checkAuthorization(user.email, loginScreen, mainContainer);
     } else {
-        // --- NÃO ESTÁ LOGADO ---
-        console.log("Nenhum usuário salvo. Mostrando tela de login...");
-        document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('main-container').style.display = 'none';
+        // --- NO USER LOGGED IN ---
+        console.log("No session. Showing login screen.");
+        if(loginScreen) loginScreen.style.display = 'flex';
+        if(mainContainer) mainContainer.style.display = 'none';
     }
 });
 
+// 2. CHECK AUTHORIZATION (The "Whitelist" Filter)
+function checkAuthorization(email, loginScreen, mainContainer) {
+    // Sanitize email: replace ALL dots with underscores
+    const emailKey = email.replace(/\./g, '_');
+    
+    firebase.database().ref('usuarios_autorizados/' + emailKey).once('value')
+        .then((snapshot) => {
+            if (snapshot.exists()) {
+                console.log("Access Granted: Instructor authorized.");
+                
+                // Switch visibility
+                if(loginScreen) loginScreen.style.display = 'none';
+                if(mainContainer) mainContainer.style.display = 'flex';
+                
+                // Add class to side-menu if it exists
+                const sideMenu = document.getElementById('side-menu');
+                if(sideMenu) sideMenu.classList.add('authorized');
+            } else {
+                console.error("Access Denied: Email not in whitelist.");
+                alert("This account is not authorized as an instructor.");
+                sairDoSistema(); // Force logout
+            }
+        })
+        .catch((error) => {
+            console.error("Database error:", error);
+            sairDoSistema();
+        });
+}
+
+// 3. LOGIN ACTION (Called by the "ENTRAR" Button)
 function realizarLogin() {
     const email = document.getElementById('login-email').value;
     const senha = document.getElementById('login-senha').value;
-    
+
+    if (!email || !senha) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
     firebase.auth().signInWithEmailAndPassword(email, senha)
-        .catch(error => alert("Erro ao entrar: " + error.message));
+        .then((userCredential) => {
+            console.log("Login successful!");
+            // The onAuthStateChanged observer above will handle the rest
+        })
+        .catch((error) => {
+            let message = "Error logging in.";
+            if (error.code === 'auth/wrong-password') message = "Wrong password.";
+            if (error.code === 'auth/user-not-found') message = "User not found.";
+            alert(message + " (" + error.message + ")");
+        });
 }
 
+// 4. LOGOUT ACTION
 function sairDoSistema() {
     firebase.auth().signOut().then(() => {
-        alert("Sessão encerrada.");
-        location.reload();
+        console.log("User signed out.");
+        location.reload(); // Refresh to clear all sensitive data from memory
     });
 }
