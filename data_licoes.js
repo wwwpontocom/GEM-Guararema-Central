@@ -283,10 +283,25 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
                         const l = snapshot.val();
                         const extrair = (str) => {
-                            if(!str || str === "-") return { l: "", p: "", status: "A" };
-                            const status = str.includes('status-estudar') ? "E" : "A";
-                            const match = str.match(/lição: (.*?) - pág: (.*?) -/);
-                            return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
+                            const res = { l: "", p: "", le: "", pe: "" };
+                            if (!str || str === "-") return res;
+                            
+                            const parts = str.split('<br>');
+                            parts.forEach(p => {
+                                // Match for Hinos (no "lição:" prefix) or regular (with "lição:")
+                                const isHino = !p.includes('lição:');
+                                const regex = isHino ? / - (.*?) - (.*?) - / : /lição: (.*?) - pág: (.*?) - /;
+                                const match = p.match(regex);
+                                
+                                if (match) {
+                                    if (p.includes('status-aprovado')) {
+                                        res.l = match[1]; res.p = match[2];
+                                    } else if (p.includes('status-estudar')) {
+                                        res.le = match[1]; res.pe = match[2];
+                                    }
+                                }
+                            });
+                            return res;
                         };
                         
                         const b = extrair(l.bona);
@@ -297,17 +312,22 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         document.getElementById('modal-licao').style.display = 'block';
                         document.getElementById('modal-key').value = key;
                         document.getElementById('m-data').value = l.data;
-                        document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
-                        document.querySelector(\`input[name="st-bona"][value="\${b.status}"]\`).checked = true;
                         
+                        // Populate BONA
+                        document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
+                        document.getElementById('m-bona-le').value = b.le; document.getElementById('m-bona-pe').value = b.pe;
+                        
+                        // Populate MSA
                         document.getElementById('m-msa-l').value = m.l; document.getElementById('m-msa-p').value = m.p;
-                        document.querySelector(\`input[name="st-msa"][value="\${m.status}"]\`).checked = true;
+                        document.getElementById('m-msa-le').value = m.le; document.getElementById('m-msa-pe').value = m.pe;
 
+                        // Populate MÉTODO
                         document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
-                        document.querySelector(\`input[name="st-metodo"][value="\${met.status}"]\`).checked = true;
+                        document.getElementById('m-metodo-le').value = met.le; document.getElementById('m-metodo-pe').value = met.pe;
 
+                        // Populate HINO
                         document.getElementById('m-hino-l').value = hin.l; document.getElementById('m-hino-p').value = hin.p;
-                        document.querySelector(\`input[name="st-hino"][value="\${hin.status}"]\`).checked = true;
+                        document.getElementById('m-hino-le').value = hin.le; document.getElementById('m-hino-pe').value = hin.pe;
 
                         document.getElementById('m-instrutor').value = l.instrutor;
                     });
@@ -318,22 +338,32 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
                     document.getElementById('modal-key').value = key || "";
                     document.getElementById('m-data').value = defaults.data;
+                    // Reset BONA
                     document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
+                    document.getElementById('m-bona-le').value = ""; document.getElementById('m-bona-pe').value = "";
+                    
+                    // Reset MSA
                     document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
+                    document.getElementById('m-msa-le').value = ""; document.getElementById('m-msa-pe').value = "";
+                    
+                    // Reset MÉTODO
                     document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
+                    document.getElementById('m-metodo-le').value = ""; document.getElementById('m-metodo-pe').value = "";
+                    
+                    // Reset HINO
                     document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
+                    document.getElementById('m-hino-le').value = ""; document.getElementById('m-hino-pe').value = "";
                     document.getElementById('m-instrutor').value = "";
                 };
 
                 window.salvarModal = function() {
                     const key = document.getElementById('modal-key').value;
-                    const format = (idL, idP, name, label) => {
+                    const format = (idL, idP, idLE, idPE, label) => {
                         const l = document.getElementById(idL).value;
                         const p = document.getElementById(idP).value;
-                        const st = document.querySelector(\`input[name="\${name}"]:checked\`).value;
-                        if(!l && !p) return "-";
-                        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
-                        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+                        const le = document.getElementById(idLE).value;
+                        const pe = document.getElementById(idPE).value;
+                       
                         // Lógica especial para Hinos: remove palavras "lição" e "pág"
                         if(label === 'HINO') {
                             return \`\${label} - \${l} - \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
@@ -341,12 +371,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
                     };
 
-                    const licao = {
+                   const licao = {
                         data: document.getElementById('m-data').value,
-                        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
-                        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
-                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
-                        hino: format('m-hino-l', 'm-hino-p', 'st-hino', 'HINO'),
+                        bona: formatDual('m-bona-l', 'm-bona-p', 'm-bona-le', 'm-bona-pe', 'BONA'),
+                        msa: formatDual('m-msa-l', 'm-msa-p', 'm-msa-le', 'm-msa-pe', 'MSA'),
+                        metodo: formatDual('m-metodo-l', 'm-metodo-p', 'm-metodo-le', 'm-metodo-pe', 'MÉTODO'),
+                        hino: formatDual('m-hino-l', 'm-hino-p', 'm-hino-le', 'm-hino-pe', 'HINO'),
                         instrutor: document.getElementById('m-instrutor').value
                     };
 
