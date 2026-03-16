@@ -26,7 +26,7 @@ function exibirPainel() {
                 <div style="min-height: 100px; background: #fffbe6; padding: 20px; border-radius: 8px; font-size: 16px; line-height: 1.6; color: #333; border: 1px dashed #ffe58f;">
                     <div style="margin-bottom: 8px;">
                         📌 <b>Bem-vindo</b> à Plataforma GEM Guararema Central.<br>
-                        📌 <b>Ensaio Regional</b> - Guararema Central - 15/03/2026 - às 14h.<br>
+                        
                         📌 <b>Ensaio do GEM</b> - Guararema Central - 20/03/2026 - às 19h.<br>
                         📌 <b>Ensaio Local</b> - Guararema Central - 29/03/2026 - às 16h.
                     </div>
