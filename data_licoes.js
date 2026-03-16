@@ -330,15 +330,14 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const format = (idL, idP, name, label) => {
                         const l = document.getElementById(idL).value;
                         const p = document.getElementById(idP).value;
-                        const st = document.querySelector(\`input[name="\${name}"]:checked\`).value;
+                        const st = document.querySelector(`input[name="${name}"]:checked`).value;
                         if(!l && !p) return "-";
                         const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
                         const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
-                        // Lógica especial para Hinos: remove palavras "lição" e "pág"
                         if(label === 'HINO') {
-                            return \`\${label} - \${l} - \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
+                            return `${label} - ${l} - ${p} - <span class="${statusClass}">${statusLabel}</span>`;
                         }
-                        return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
+                        return `${label} - lição: ${l} - pág: ${p} - <span class="${statusClass}">${statusLabel}</span>`;
                     };
 
                     const licao = {
@@ -355,36 +354,34 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('modal-licao').style.display = 'none';
                 };
 
-                // --- FIX IS HERE: NEW CLONED LOGIC FOR LE AND PE ---
-window.salvarModalEstudar = function() {
-    const key = document.getElementById('modal-key').value;
-    const formatEstudar = (idLE, idPE, label) => {
-        const le = document.getElementById(idLE).value;
-        const pe = document.getElementById(idPE).value;
-        if(!le && !pe) return "-";
-        const statusLabel = 'Estudar';
-        const statusClass = 'status-estudar';
-        
-        if(label === 'HINO') {
-            return `${label} - ${le} - ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
-        }
-        return `${label} - lição: ${le} - pág: ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
-    };
+                window.salvarModalEstudar = function() {
+                    const key = document.getElementById('modal-key').value;
+                    const formatEstudar = (idLE, idPE, label) => {
+                        const le = document.getElementById(idLE).value;
+                        const pe = document.getElementById(idPE).value;
+                        if(!le && !pe) return "-";
+                        const statusLabel = 'Estudar';
+                        const statusClass = 'status-estudar';
+                        
+                        if(label === 'HINO') {
+                            return `${label} - ${le} - ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
+                        }
+                        return `${label} - lição: ${le} - pág: ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
+                    };
 
-    const licao = {
-        data: document.getElementById('m-data').value,
-        bona: formatEstudar('m-bona-le', 'm-bona-pe', 'BONA'),
-        msa: formatEstudar('m-msa-le', 'm-msa-pe', 'MSA'),
-        metodo: formatEstudar('m-metodo-le', 'm-metodo-pe', 'MÉTODO'),
-        hino: formatEstudar('m-hino-le', 'm-hino-pe', 'HINO'),
-        instrutor: document.getElementById('m-instrutor').value
-    };
+                    const licao = {
+                        data: document.getElementById('m-data').value,
+                        bona: formatEstudar('m-bona-le', 'm-bona-pe', 'BONA'),
+                        msa: formatEstudar('m-msa-le', 'm-msa-pe', 'MSA'),
+                        metodo: formatEstudar('m-metodo-le', 'm-metodo-pe', 'MÉTODO'),
+                        hino: formatEstudar('m-hino-le', 'm-hino-pe', 'HINO'),
+                        instrutor: document.getElementById('m-instrutor').value
+                    };
 
-    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-    if(key) ref.child(key).update(licao); else ref.push(licao);
-    document.getElementById('modal-licao').style.display = 'none';
-};
-// --- END OF NEW LOGIC ---
+                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
+                    if(key) ref.child(key).update(licao); else ref.push(licao);
+                    document.getElementById('modal-licao').style.display = 'none';
+                };
 
                 window.excluirLicao = function(key) {
                     if(confirm("Deseja excluir permanentemente este registro?")) {
