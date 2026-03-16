@@ -21,6 +21,6 @@
     { "nome": "Jefferson Dias Barreto", "instrumento": "Violino", "categoria": "teoria3" },
     { "nome": "Robson Mendes", "instrumento": "Viola", "categoria": "teoria3" },
     { "nome": "Caíque", "instrumento": "Violino", "categoria": "manha" },
-    { "nome": "Elton", "instrumento": "Violino", "categoria": "manha" },
-    { "nome": "Vanderlei", "instrumento": "Violino", "categoria": "manha" }
+    { "nome": "Elton", "instrumento": "Violoncelo", "categoria": "manha" },
+    { "nome": "Vanderlei Souza Ferreira", "instrumento": "Violino", "categoria": "manha" }
 ]
