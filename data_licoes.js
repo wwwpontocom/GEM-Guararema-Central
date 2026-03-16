@@ -13,7 +13,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .student-table th { background: #333; color: white; padding: 8px; border: 1px solid #000; text-transform: uppercase; }
                 .student-table td { border: 1px solid #000; padding: 6px; text-align: center; color: #333; }
                 .btn-action { border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; color: white; }
-                .btn-add { background: #8e44ad; }
+                .btn-add { background: #0284c7; } /* Changed from purple to blue */
                 .btn-save-licao { background: #27ae60; width: 100%; margin: 10px 0; color: white; padding: 12px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; }
                 .btn-edit { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; }
                 .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff; }
@@ -160,7 +160,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 <div class="selector-box no-print">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <label><b>Selecione o Aluno:</b></label>
-                        <button type="button" class="btn-action btn-add" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>
+                       <button type="button" class="btn-action btn-add" style="margin:0; padding: 5px 12px; font-size: 12px;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>
                     </div>
                     <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="window.initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
