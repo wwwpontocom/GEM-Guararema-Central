@@ -981,3 +981,62 @@ window.toggleAccordion = function(btn) {
         panel.style.maxHeight = panel.scrollHeight + "px";
     }
 };
+
+
+// Localize o final do seu arquivo ou dentro do DOMContentLoaded e use este bloco:
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("Firebase Autenticado: " + user.uid);
+        
+        // 1. Carrega a biblioteca agora que temos permissão
+        atualizarBibliotecaComMensagens();
+
+        // 2. Inicia o Chat Comunitário com proteção contra duplicatas
+        const chatWin = document.getElementById('alou-chat-window');
+        db.ref('chat_comunitario').off(); // Limpa listeners anteriores
+        db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
+            const data = snapshot.val();
+            const chatWinCurrent = document.getElementById('alou-chat-window');
+            if (chatWinCurrent) {
+                renderizarMensagemNaTela(data, chatWinCurrent);
+            }
+        });
+
+        // 3. Popula a lista de participantes (Respeitando a Rule)
+        db.ref('participantes').on('value', (snapshot) => {
+            const lista = snapshot.val();
+            const select = document.getElementById('aluno-lista');
+            if (lista && select) {
+                select.innerHTML = '<option value="">Quem está enviando?</option>';
+                for (let nome in lista) {
+                    let option = document.createElement('option');
+                    option.value = nome; 
+                    option.textContent = `${nome} (${lista[nome]})`; 
+                    select.appendChild(option);
+                }
+            }
+        });
+
+        // 4. Inicia os logs dos grupos
+        escutarLogs();
+
+    } else {
+        console.warn("Acesso negado: Firebase não autenticado.");
+        // Opcional: Redirecionar para login ou mostrar tela de bloqueio
+    }
+});
+
+// Função auxiliar para organizar o código
+function renderizarMensagemNaTela(data, container) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg bot'; 
+    msgDiv.style.cssText = "background:#fff; color:#333; align-self:flex-start; margin-bottom:8px; padding:10px; border-radius:10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);";
+    
+    const d = new Date(data.timestamp);
+    const hora = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
+
+    msgDiv.innerHTML = `<small style="color:var(--primary); font-weight:bold;">${data.usuario} [${hora}]</small><br>${data.mensagem}`;
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
+}
