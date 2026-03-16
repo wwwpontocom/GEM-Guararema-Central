@@ -56,18 +56,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-p"></div>
                             </div>
-                            <div class="radio-group">
-                                <label><input type="radio" name="st-bona" value="A" checked> Aprovado</label>
-                              
-                            </div>
+                           
                               <div class="form-row">
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-p"></div>
                             </div>
-                            <div class="radio-group">
-                              
-                                <label><input type="radio" name="st-bona" value="E"> Estudar</label>
-                            </div>
+                          
                         </div>
 
                         <div class="modal-section">
@@ -76,18 +70,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-p"></div>
                             </div>
-                            <div class="radio-group">
-                                <label><input type="radio" name="st-msa" value="A" checked> Aprovado</label>
-                          
-                            </div>
+                           
                              <div class="form-row">
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-p"></div>
                             </div>
-                            <div class="radio-group">
-                                
-                                <label><input type="radio" name="st-msa" value="E"> Estudar</label>
-                            </div>
+                          
                         </div>
 
                         <div class="modal-section">
@@ -96,17 +84,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-p"></div>
                             </div>
-                            <div class="radio-group">
-                                <label><input type="radio" name="st-metodo" value="A" checked> Aprovado</label>
-                              
-                            </div>
+                         
                               <div class="form-row">
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-p"></div>
                             </div>
-                            <div class="radio-group">
-                                <label><input type="radio" name="st-metodo" value="E"> Estudar</label>
-                            </div>
+                            
                         </div>
 
                         <div class="modal-section">
@@ -115,18 +98,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
                             </div>
-                            <div class="radio-group">
-                                <label><input type="radio" name="st-hino" value="A" checked> Aprovado</label>
-
-                            </div>
+                       
                               <div class="form-row">
                                 <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
                             </div>
-                            <div class="radio-group">
-
-                                <label><input type="radio" name="st-hino" value="E"> Estudar</label>
-                            </div>
+                           
                         </div>
 
                         <div class="form-group">
