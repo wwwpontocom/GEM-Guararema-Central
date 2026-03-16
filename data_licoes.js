@@ -322,61 +322,44 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
                     document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
                     document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
+                     document.getElementById('m-bona-le').value = ""; document.getElementById('m-bona-pe').value = "";
+                    document.getElementById('m-msa-le').value = ""; document.getElementById('m-msa-pe').value = "";
+                    document.getElementById('m-metodo-le').value = ""; document.getElementById('m-metodo-pe').value = "";
+                    document.getElementById('m-hino-le').value = ""; document.getElementById('m-hino-pe').value = "";
                     document.getElementById('m-instrutor').value = "";
                 };
 
                 window.salvarModal = function() {
-                    const key = document.getElementById('modal-key').value;
-                    const format = (idL, idP, name, label) => {
-                        const l = document.getElementById(idL).value;
-                        const p = document.getElementById(idP).value;
-                        const st = document.querySelector(`input[name="${name}"]:checked`).value;
-                        if(!l && !p) return "-";
-                        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
-                        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
-                        if(label === 'HINO') {
-                            return `${label} - ${l} - ${p} - <span class="${statusClass}">${statusLabel}</span>`;
-                        }
-                        return `${label} - lição: ${l} - pág: ${p} - <span class="${statusClass}">${statusLabel}</span>`;
-                    };
+    const key = document.getElementById('modal-key').value;
+    const format = (idL, idP, idLE, idPE, name, label) => {
+        const l = document.getElementById(idL).value;
+        const p = document.getElementById(idP).value;
+        const le = document.getElementById(idLE).value;
+        const pe = document.getElementById(idPE).value;
+        const st = document.querySelector(`input[name="${name}"]:checked`).value;
+        
+        // Combine values: use 'le/pe' if 'l/p' are empty, or join them
+        const finalL = l || le;
+        const finalP = p || pe;
 
-                    const licao = {
-                        data: document.getElementById('m-data').value,
-                        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
-                        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
-                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
-                        hino: format('m-hino-l', 'm-hino-p', 'st-hino', 'HINO'),
-                        instrutor: document.getElementById('m-instrutor').value
-                    };
+        if(!finalL && !finalP) return "-";
+        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
+        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+        
+        if(label === 'HINO') {
+            return `${label} - ${finalL} - ${finalP} - <span class="${statusClass}">${statusLabel}</span>`;
+        }
+        return `${label} - lição: ${finalL} - pág: ${finalP} - <span class="${statusClass}">${statusLabel}</span>`;
+    };
 
-                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-                    if(key) ref.child(key).update(licao); else ref.push(licao);
-                    document.getElementById('modal-licao').style.display = 'none';
-                };
-
-                window.salvarModalEstudar = function() {
-                    const key = document.getElementById('modal-key').value;
-                    const formatEstudar = (idLE, idPE, label) => {
-                        const le = document.getElementById(idLE).value;
-                        const pe = document.getElementById(idPE).value;
-                        if(!le && !pe) return "-";
-                        const statusLabel = 'Estudar';
-                        const statusClass = 'status-estudar';
-                        
-                        if(label === 'HINO') {
-                            return `${label} - ${le} - ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
-                        }
-                        return `${label} - lição: ${le} - pág: ${pe} - <span class="${statusClass}">${statusLabel}</span>`;
-                    };
-
-                    const licao = {
-                        data: document.getElementById('m-data').value,
-                        bona: formatEstudar('m-bona-le', 'm-bona-pe', 'BONA'),
-                        msa: formatEstudar('m-msa-le', 'm-msa-pe', 'MSA'),
-                        metodo: formatEstudar('m-metodo-le', 'm-metodo-pe', 'MÉTODO'),
-                        hino: formatEstudar('m-hino-le', 'm-hino-pe', 'HINO'),
-                        instrutor: document.getElementById('m-instrutor').value
-                    };
+    const licao = {
+        data: document.getElementById('m-data').value,
+        bona: format('m-bona-l', 'm-bona-p', 'm-bona-le', 'm-bona-pe', 'st-bona', 'BONA'),
+        msa: format('m-msa-l', 'm-msa-p', 'm-msa-le', 'm-msa-pe', 'st-msa', 'MSA'),
+        metodo: format('m-metodo-l', 'm-metodo-p', 'm-metodo-le', 'm-metodo-pe', 'st-metodo', 'MÉTODO'),
+        hino: format('m-hino-l', 'm-hino-p', 'm-hino-le', 'm-hino-pe', 'st-hino', 'HINO'),
+        instrutor: document.getElementById('m-instrutor').value
+    };
 
                     const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
                     if(key) ref.child(key).update(licao); else ref.push(licao);
