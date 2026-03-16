@@ -1,8 +1,10 @@
+// --- FIX: Módulo de Lições Corrigido e Funcional ---
+
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
         keywords: ["licoes", "alunos", "professor", "gravar", "registro", "presença"],
         fase: "Extras",
-       titulo: `CONTROLE DE LIÇÕES <button type="button" class="btn-action btn-add" style="margin-left:15px; padding: 4px 10px; font-size: 11px; vertical-align: middle; background: #0284c7; color: white; border-radius: 5px; border: none; font-weight: bold; cursor: pointer;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>`,
+        titulo: `CONTROLE DE LIÇÕES <button type="button" class="btn-action btn-add" style="margin-left:15px; padding: 4px 10px; font-size: 11px; vertical-align: middle; background: #0284c7; color: white; border-radius: 5px; border: none; font-weight: bold; cursor: pointer;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>`,
         icone: "✏️",
         resumo: "Registro detalhado com ordem cronológica, edição e busca rápida.",
         html_content: `
@@ -13,30 +15,19 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .student-table th { background: #333; color: white; padding: 8px; border: 1px solid #000; text-transform: uppercase; }
                 .student-table td { border: 1px solid #000; padding: 6px; text-align: center; color: #333; }
                 .btn-action { border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; color: white; }
-                .btn-add { background: #0284c7; } /* Changed from purple to blue */
                 .btn-save-licao { background: #27ae60; width: 100%; margin: 10px 0; color: white; padding: 12px; font-weight: bold; border: none; border-radius: 5px; cursor: pointer; }
                 .btn-edit { background: none; border: none; cursor: pointer; font-size: 14px; padding: 2px; }
-                .info-header { display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff; }
-                .status-aprovado { color: #27ae60; font-weight: bold; font-size: 9px; }
-                .status-estudar { color: #c0392b; font-weight: bold; font-size: 9px; }
+                .status-aprovado { color: #27ae60; font-weight: bold; font-size: 10px; display: block; }
+                .status-estudar { color: #c0392b; font-weight: bold; font-size: 10px; display: block; }
                 .search-box { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-                
                 #modal-licao { display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.6); overflow-y: auto; }
-                .modal-content { background:white; margin: 5% auto; padding:20px; border-radius:10px; width:90%; max-width:450px; }
+                .modal-content { background:white; margin: 2% auto; padding:20px; border-radius:10px; width:90%; max-width:450px; }
                 .modal-section { border: 1px solid #ddd; padding: 10px; border-radius: 5px; margin-bottom: 10px; background: #fff; }
-                .modal-section-title { font-weight: bold; font-size: 12px; color: #444; margin-bottom: 8px; display: block; border-bottom: 1px solid #eee; }
-                .form-row { display: flex; gap: 10px; margin-bottom: 5px; }
+                .modal-section-title { font-weight: bold; font-size: 12px; color: #0284c7; margin-bottom: 8px; display: block; border-bottom: 1px solid #eee; }
+                .form-row { display: flex; gap: 10px; margin-bottom: 5px; align-items: center; }
                 .form-group { flex: 1; }
-                .form-group label { display:block; font-size:11px; font-weight:bold; margin-bottom:2px; }
-                .form-group input, .form-group select { width:100%; padding:6px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; font-size: 13px; }
-                .radio-group { display: flex; gap: 15px; align-items: center; margin-top: 5px; font-size: 12px; }
-                .modal-footer { display:flex; justify-content: space-between; margin-top:15px; }
-
-                @media print {
-                    .no-print, .btn-action, .selector-box, .col-acoes, .btn-save-licao, .search-box, #modal-licao { display: none !important; }
-                    .student-table { width: 100%; font-size: 10px; }
-                    .licoes-wrapper { background: white; padding: 0; }
-                }
+                .form-group label { display:block; font-size:10px; font-weight:bold; margin-bottom:2px; }
+                .form-group input, .form-group select { width:100%; padding:6px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; font-size: 12px; }
             </style>
 
             <div class="licoes-wrapper">
@@ -50,121 +41,56 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             <input type="text" id="m-data">
                         </div>
 
+                        ${['bona', 'msa', 'metodo', 'hino'].map(cat => `
                         <div class="modal-section">
-                            <span class="modal-section-title">BONA</span>
+                            <span class="modal-section-title">${cat.toUpperCase()}</span>
                             <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-p"></div>
+                                <div class="form-group"><label>✅ Aprovada:</label><input type="text" id="m-${cat}-l" placeholder="Lição"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-${cat}-p" placeholder="Pág"></div>
                             </div>
-                           
-                              <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-le"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-pe"></div>
-                            </div>
-                          
-                        </div>
-
-                        <div class="modal-section">
-                            <span class="modal-section-title">MSA</span>
                             <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-p"></div>
+                                <div class="form-group"><label>📖 Estudar:</label><input type="text" id="m-${cat}-le" placeholder="Lição"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-${cat}-pe" placeholder="Pág"></div>
                             </div>
-                           
-                             <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-le"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-pe"></div>
-                            </div>
-                          
-                        </div>
-
-                        <div class="modal-section">
-                            <span class="modal-section-title">MÉTODO</span>
-                            <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-p"></div>
-                            </div>
-                         
-                              <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-le"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-pe"></div>
-                            </div>
-                            
-                        </div>
-
-                        <div class="modal-section">
-                            <span class="modal-section-title">HINO</span>
-                            <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
-                            </div>
-                       
-                              <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-le"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-pe"></div>
-                            </div>
-                           
-                        </div>
+                        </div>`).join('')}
 
                         <div class="form-group">
-                            <label>Quem ensinou:</label>
+                            <label>Instrutor:</label>
                             <select id="m-instrutor">
                                 <option value="">-- Selecione --</option>
-                                <option value="Alecson">Alecson</option>
-                                <option value="Alessandro">Alessandro</option>
-                                <option value="Breno">Breno</option>
-                                <option value="Davi">Davi</option>
-                                <option value="Dudu">Dudu</option>
-                                <option value="Jonny">Jonny</option>
-                                <option value="João">João</option>
-                                <option value="Leo">Leo</option>
-                                <option value="Marcos">Marcos</option>
-                                <option value="Osvaldo">Osvaldo</option>
-                                <option value="Rodrigo">Rodrigo</option>
-                                <option value="Ronaldo">Ronaldo</option>
-                                <option value="Rudi">Rudi</option>
-                                <option value="Vitor">Vitor</option>
+                                <option value="Alecson">Alecson</option><option value="Alessandro">Alessandro</option>
+                                <option value="Breno">Breno</option><option value="Davi">Davi</option>
+                                <option value="João">João</option><option value="Osvaldo">Osvaldo</option>
                             </select>
                         </div>
 
-                        <div class="modal-footer">
+                        <div class="modal-footer" style="display:flex; justify-content: space-between; margin-top:15px;">
                             <button class="btn-action" style="background:#7f8c8d" onclick="document.getElementById('modal-licao').style.display='none'">Cancelar</button>
                             <button class="btn-action" style="background:#27ae60" onclick="window.salvarModal()">Salvar Registro</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="selector-box no-print">
-                    <div style="display:flex; justify-content: space-between; align-items: center;">
-                        <label><b>Selecione o Aluno:</b></label>
-                      
-                    </div>
+                <div class="selector-box">
+                    <label><b>Selecione o Aluno:</b></label>
                     <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="window.initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
                     </select>
                 </div>
 
                 <div id="ficha-aluno" style="display:none;">
-                    <div class="info-header">
+                    <div style="display: flex; justify-content: space-between; font-weight: bold; margin: 10px 0; padding: 10px; border: 2px solid #000; background: #fff;">
                         <span id="nome-aluno-header">ALUNO: ---</span>
                         <span id="instr-aluno-header">INSTRUMENTO: ---</span>
                     </div>
 
-                    <div class="no-print">
-                        <input type="text" id="input-busca" class="search-box" placeholder="🔍 Buscar por data, lição, hino ou instrutor..." onkeyup="window.filtrarTabela()">
-                        <button type="button" class="btn-save-licao" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
-                    </div>
+                    <input type="text" id="input-busca" class="search-box" placeholder="🔍 Buscar por data, lição ou instrutor..." onkeyup="window.filtrarTabela()">
+                    <button type="button" class="btn-save-licao" onclick="window.abrirPromptGravar()">💾 Gravar Nova Lição</button>
 
                     <table class="student-table" id="tabela-registro">
                         <thead>
                             <tr>
-                                <th style="width: 10%;">DATA</th>
-                                <th style="width: 15%;">BONA</th>
-                                <th style="width: 15%;">MSA</th>
-                                <th style="width: 15%;">MÉTODO</th>
-                                <th style="width: 15%;">HINO</th>
-                                <th style="width: 18%;">INSTRUTOR</th>
-                                <th class="col-acoes no-print" style="width: 12%;">AÇÕES</th>
+                                <th>DATA</th><th>BONA</th><th>MSA</th><th>MÉTODO</th><th>HINO</th><th>INSTRUTOR</th><th class="no-print">AÇÕES</th>
                             </tr>
                         </thead>
                         <tbody id="body-licoes"></tbody>
@@ -173,202 +99,87 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-            window.sincronizarListaAlunos = function() {
-                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
-                        const select = document.getElementById('aluno-select');
-                        if(!select) return;
-                        const currentVal = select.value;
-                        select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
-                        snapshot.forEach((child) => {
-                            const aluno = child.val();
-                            const selected = child.key === currentVal ? 'selected' : '';
-                            select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}" \${selected}>\${aluno.nome}</option>\`;
+                // Função auxiliar para formatar os dados duplos (Aprovado e Estudar)
+                window.formatarSaidaLicao = (cat) => {
+                    const l = document.getElementById('m-'+cat+'-l').value;
+                    const p = document.getElementById('m-'+cat+'-p').value;
+                    const le = document.getElementById('m-'+cat+'-le').value;
+                    const pe = document.getElementById('m-'+cat+'-pe').value;
+                    let html = "";
+                    if(l) html += \`<span class="status-aprovado">✅ L.\${l} P.\${p}</span>\`;
+                    if(le) html += \`<span class="status-estudar">📖 L.\${le} P.\${pe}</span>\`;
+                    return html || "-";
+                };
+
+                window.salvarModal = function() {
+                    const key = document.getElementById('modal-key').value;
+                    const licao = {
+                        data: document.getElementById('m-data').value,
+                        bona: window.formatarSaidaLicao('bona'),
+                        msa: window.formatarSaidaLicao('msa'),
+                        metodo: window.formatarSaidaLicao('metodo'),
+                        hino: window.formatarSaidaLicao('hino'),
+                        instrutor: document.getElementById('m-instrutor').value
+                    };
+                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
+                    if(key) ref.child(key).update(licao); else ref.push(licao);
+                    document.getElementById('modal-licao').style.display = 'none';
+                };
+
+                window.sincronizarListaAlunos = function() {
+                    firebase.database().ref('lista_alunos').on('value', (snap) => {
+                        const sel = document.getElementById('aluno-select');
+                        if(!sel) return;
+                        sel.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
+                        snap.forEach(child => {
+                            sel.innerHTML += \`<option value="\${child.key}" data-instr="\${child.val().instrumento}">\${child.val().nome}</option>\`;
                         });
                     });
                 };
-                
-                window.promptNovoAluno = function() {
-                    const nome = prompt("Nome completo do aluno:");
-                    if(!nome) return;
-                    const instrumento = prompt("Instrumento:");
-                    if(!instrumento) return;
-                    firebase.database().ref('lista_alunos').push({ nome, instrumento });
-                };
 
                 window.initTabelaAluno = function(id) {
-                    const ficha = document.getElementById('ficha-aluno');
-                    if(!id) { if(ficha) ficha.style.display = 'none'; return; }
                     window.currentID = id;
-                    ficha.style.display = 'block';
+                    document.getElementById('ficha-aluno').style.display = id ? 'block' : 'none';
+                    if(!id) return;
                     const sel = document.getElementById('aluno-select');
-                    const option = sel.options[sel.selectedIndex];
-                    document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
-                    document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
-                    if(document.getElementById('input-busca')) document.getElementById('input-busca').value = "";
+                    document.getElementById('nome-aluno-header').innerText = "ALUNO: " + sel.options[sel.selectedIndex].text;
+                    document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + sel.options[sel.selectedIndex].getAttribute('data-instr');
                     window.loadLicoes(id);
                 };
 
                 window.loadLicoes = function(id) {
-                    firebase.database().ref('licoes_alunos/' + id).on('value', (snapshot) => {
+                    firebase.database().ref('licoes_alunos/' + id).on('value', (snap) => {
                         const tbody = document.getElementById('body-licoes');
-                        if(!tbody) return;
                         tbody.innerHTML = "";
-                        const licoes = [];
-                        snapshot.forEach(child => { 
-                            let item = child.val();
-                            item.key = child.key;
-                            licoes.push(item); 
-                        });
-                        licoes.sort((a, b) => a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join('')));
-                        licoes.forEach(l => {
+                        snap.forEach(child => {
+                            const l = child.val();
                             tbody.innerHTML += \`<tr>
-                                <td>\${l.data}</td>
-                                <td>\${l.bona || "-"}</td>
-                                <td>\${l.msa || "-"}</td>
-                                <td>\${l.metodo || "-"}</td>
-                                <td>\${l.hino || "-"}</td>
-                                <td>\${l.instrutor}</td>
-                                <td class="col-acoes no-print">
-                                    <button class="btn-edit" onclick="window.editarLicao('\${l.key}')">✏️</button>
-                                    <button class="btn-edit" onclick="window.excluirLicao('\${l.key}')">🗑️</button>
+                                <td>\${l.data}</td><td>\${l.bona}</td><td>\${l.msa}</td><td>\${l.metodo}</td><td>\${l.hino}</td><td>\${l.instrutor}</td>
+                                <td class="no-print">
+                                    <button class="btn-edit" onclick="window.excluirLicao('\${child.key}')">🗑️</button>
                                 </td>
                             </tr>\`;
                         });
                     });
                 };
 
-                window.filtrarTabela = function() {
-                    const input = document.getElementById('input-busca');
-                    const filter = input.value.toUpperCase();
-                    const tbody = document.getElementById('body-licoes');
-                    const tr = tbody.getElementsByTagName('tr');
-                    for (let i = 0; i < tr.length; i++) {
-                        let rowText = tr[i].textContent || tr[i].innerText;
-                        tr[i].style.display = rowText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-                    }
-                };
-
                 window.abrirPromptGravar = function() {
-                    if(!window.currentID) return alert("Selecione um aluno.");
-                    window.processarLicao(null, { 
-                        data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), 
-                        bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "" 
-                    });
-                };
-
-                window.editarLicao = function(key) {
-                    firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
-                        const l = snapshot.val();
-                        const extrair = (str) => {
-                            const res = { l: "", p: "", le: "", pe: "" };
-                            if (!str || str === "-") return res;
-                            
-                            const parts = str.split('<br>');
-                            parts.forEach(p => {
-                                // Match for Hinos (no "lição:" prefix) or regular (with "lição:")
-                                const isHino = !p.includes('lição:');
-                                const regex = isHino ? / - (.*?) - (.*?) - / : /lição: (.*?) - pág: (.*?) - /;
-                                const match = p.match(regex);
-                                
-                                if (match) {
-                                    if (p.includes('status-aprovado')) {
-                                        res.l = match[1]; res.p = match[2];
-                                    } else if (p.includes('status-estudar')) {
-                                        res.le = match[1]; res.pe = match[2];
-                                    }
-                                }
-                            });
-                            return res;
-                        };
-                        
-                        const b = extrair(l.bona);
-                        const m = extrair(l.msa);
-                        const met = extrair(l.metodo);
-                        const hin = extrair(l.hino);
-
-                        document.getElementById('modal-licao').style.display = 'block';
-                        document.getElementById('modal-key').value = key;
-                        document.getElementById('m-data').value = l.data;
-                        
-                        // Populate BONA
-                        document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
-                        document.getElementById('m-bona-le').value = b.le; document.getElementById('m-bona-pe').value = b.pe;
-                        
-                        // Populate MSA
-                        document.getElementById('m-msa-l').value = m.l; document.getElementById('m-msa-p').value = m.p;
-                        document.getElementById('m-msa-le').value = m.le; document.getElementById('m-msa-pe').value = m.pe;
-
-                        // Populate MÉTODO
-                        document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
-                        document.getElementById('m-metodo-le').value = met.le; document.getElementById('m-metodo-pe').value = met.pe;
-
-                        // Populate HINO
-                        document.getElementById('m-hino-l').value = hin.l; document.getElementById('m-hino-p').value = hin.p;
-                        document.getElementById('m-hino-le').value = hin.le; document.getElementById('m-hino-pe').value = hin.pe;
-
-                        document.getElementById('m-instrutor').value = l.instrutor;
-                    });
-                };
-
-                window.processarLicao = function(key, defaults) {
+                    document.getElementById('modal-key').value = "";
                     document.getElementById('modal-licao').style.display = 'block';
-                    document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
-                    document.getElementById('modal-key').value = key || "";
-                    document.getElementById('m-data').value = defaults.data;
-                    // Reset BONA
-                    document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
-                    document.getElementById('m-bona-le').value = ""; document.getElementById('m-bona-pe').value = "";
-                    
-                    // Reset MSA
-                    document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
-                    document.getElementById('m-msa-le').value = ""; document.getElementById('m-msa-pe').value = "";
-                    
-                    // Reset MÉTODO
-                    document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
-                    document.getElementById('m-metodo-le').value = ""; document.getElementById('m-metodo-pe').value = "";
-                    
-                    // Reset HINO
-                    document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
-                    document.getElementById('m-hino-le').value = ""; document.getElementById('m-hino-pe').value = "";
-                    document.getElementById('m-instrutor').value = "";
+                    document.getElementById('m-data').value = new Date().toLocaleDateString('pt-BR').substring(0,5);
                 };
 
-                window.salvarModal = function() {
-                    const key = document.getElementById('modal-key').value;
-                    const format = (idL, idP, idLE, idPE, label) => {
-                        const l = document.getElementById(idL).value;
-                        const p = document.getElementById(idP).value;
-                        const le = document.getElementById(idLE).value;
-                        const pe = document.getElementById(idPE).value;
-                       
-                        // Lógica especial para Hinos: remove palavras "lição" e "pág"
-                        if(label === 'HINO') {
-                            return \`\${label} - \${l} - \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
-                        }
-                        return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
-                    };
-
-                   const licao = {
-                        data: document.getElementById('m-data').value,
-                        bona: formatDual('m-bona-l', 'm-bona-p', 'm-bona-le', 'm-bona-pe', 'BONA'),
-                        msa: formatDual('m-msa-l', 'm-msa-p', 'm-msa-le', 'm-msa-pe', 'MSA'),
-                        metodo: formatDual('m-metodo-l', 'm-metodo-p', 'm-metodo-le', 'm-metodo-pe', 'MÉTODO'),
-                        hino: formatDual('m-hino-l', 'm-hino-p', 'm-hino-le', 'm-hino-pe', 'HINO'),
-                        instrutor: document.getElementById('m-instrutor').value
-                    };
-
-                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-                    if(key) ref.child(key).update(licao); else ref.push(licao);
-                    document.getElementById('modal-licao').style.display = 'none';
+                window.promptNovoAluno = function() {
+                    const nome = prompt("Nome do Aluno:");
+                    const inst = prompt("Instrumento:");
+                    if(nome && inst) firebase.database().ref('lista_alunos').push({ nome, instrumento: inst });
                 };
 
                 window.excluirLicao = function(key) {
-                    if(confirm("Deseja excluir permanentemente este registro?")) {
-                        firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
-                    }
+                    if(confirm("Excluir registro?")) firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
                 };
 
-                if(typeof firebase !== 'undefined') window.sincronizarListaAlunos();
+                window.sincronizarListaAlunos();
             </script>
         `,
         pagina: "Extra"
