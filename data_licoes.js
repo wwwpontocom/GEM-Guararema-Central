@@ -190,181 +190,197 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-            window.sincronizarListaAlunos = function() {
-                    firebase.database().ref('lista_alunos').on('value', (snapshot) => {
-                        const select = document.getElementById('aluno-select');
-                        if(!select) return;
-                        const currentVal = select.value;
-                        select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
-                        snapshot.forEach((child) => {
-                            const aluno = child.val();
-                            const selected = child.key === currentVal ? 'selected' : '';
-                            select.innerHTML += \`<option value="\${child.key}" data-instr="\${aluno.instrumento}" \${selected}>\${aluno.nome}</option>\`;
-                        });
-                    });
-                };
-                
-                window.promptNovoAluno = function() {
-                    const nome = prompt("Nome completo do aluno:");
-                    if(!nome) return;
-                    const instrumento = prompt("Instrumento:");
-                    if(!instrumento) return;
-                    firebase.database().ref('lista_alunos').push({ nome, instrumento });
-                };
+    window.sincronizarListaAlunos = function() {
+        firebase.database().ref('lista_alunos').on('value', (snapshot) => {
+            const select = document.getElementById('aluno-select');
+            if(!select) return;
+            const currentVal = select.value;
+            select.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
+            snapshot.forEach((child) => {
+                const aluno = child.val();
+                const selected = child.key === currentVal ? 'selected' : '';
+                select.innerHTML += `<option value="${child.key}" data-instr="${aluno.instrumento}" ${selected}>${aluno.nome}</option>`;
+            });
+        });
+    };
 
-                window.initTabelaAluno = function(id) {
-                    const ficha = document.getElementById('ficha-aluno');
-                    if(!id) { if(ficha) ficha.style.display = 'none'; return; }
-                    window.currentID = id;
-                    ficha.style.display = 'block';
-                    const sel = document.getElementById('aluno-select');
-                    const option = sel.options[sel.selectedIndex];
-                    document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
-                    document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
-                    if(document.getElementById('input-busca')) document.getElementById('input-busca').value = "";
-                    window.loadLicoes(id);
-                };
+    window.promptNovoAluno = function() {
+        const nome = prompt("Nome completo do aluno:");
+        if(!nome) return;
+        const instrumento = prompt("Instrumento:");
+        if(!instrumento) return;
+        firebase.database().ref('lista_alunos').push({ nome, instrumento });
+    };
 
-                window.loadLicoes = function(id) {
-                    firebase.database().ref('licoes_alunos/' + id).on('value', (snapshot) => {
-                        const tbody = document.getElementById('body-licoes');
-                        if(!tbody) return;
-                        tbody.innerHTML = "";
-                        const licoes = [];
-                        snapshot.forEach(child => { 
-                            let item = child.val();
-                            item.key = child.key;
-                            licoes.push(item); 
-                        });
-                        licoes.sort((a, b) => a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join('')));
-                        licoes.forEach(l => {
-                            tbody.innerHTML += \`<tr>
-                                <td>\${l.data}</td>
-                                <td>\${l.bona || "-"}</td>
-                                <td>\${l.msa || "-"}</td>
-                                <td>\${l.metodo || "-"}</td>
-                                <td>\${l.hino || "-"}</td>
-                                <td>\${l.instrutor}</td>
-                                <td class="col-acoes no-print">
-                                    <button class="btn-edit" onclick="window.editarLicao('\${l.key}')">✏️</button>
-                                    <button class="btn-edit" onclick="window.excluirLicao('\${l.key}')">🗑️</button>
-                                </td>
-                            </tr>\`;
-                        });
-                    });
-                };
+    window.initTabelaAluno = function(id) {
+        const ficha = document.getElementById('ficha-aluno');
+        if(!id) { if(ficha) ficha.style.display = 'none'; return; }
+        window.currentID = id;
+        ficha.style.display = 'block';
+        const sel = document.getElementById('aluno-select');
+        const option = sel.options[sel.selectedIndex];
+        document.getElementById('nome-aluno-header').innerText = "ALUNO: " + option.text;
+        document.getElementById('instr-aluno-header').innerText = "INSTRUMENTO: " + option.getAttribute('data-instr');
+        if(document.getElementById('input-busca')) document.getElementById('input-busca').value = "";
+        window.loadLicoes(id);
+    };
 
-                window.filtrarTabela = function() {
-                    const input = document.getElementById('input-busca');
-                    const filter = input.value.toUpperCase();
-                    const tbody = document.getElementById('body-licoes');
-                    const tr = tbody.getElementsByTagName('tr');
-                    for (let i = 0; i < tr.length; i++) {
-                        let rowText = tr[i].textContent || tr[i].innerText;
-                        tr[i].style.display = rowText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+    window.loadLicoes = function(id) {
+        firebase.database().ref('licoes_alunos/' + id).on('value', (snapshot) => {
+            const tbody = document.getElementById('body-licoes');
+            if(!tbody) return;
+            tbody.innerHTML = "";
+            const licoes = [];
+            snapshot.forEach(child => { 
+                let item = child.val();
+                item.key = child.key;
+                licoes.push(item); 
+            });
+            licoes.sort((a, b) => a.data.split('/').reverse().join('').localeCompare(b.data.split('/').reverse().join('')));
+            licoes.forEach(l => {
+                tbody.innerHTML += `<tr>
+                    <td>${l.data}</td>
+                    <td>${l.bona || "-"}</td>
+                    <td>${l.msa || "-"}</td>
+                    <td>${l.metodo || "-"}</td>
+                    <td>${l.hino || "-"}</td>
+                    <td>${l.instrutor}</td>
+                    <td class="col-acoes no-print">
+                        <button class="btn-edit" onclick="window.editarLicao('${l.key}')">✏️</button>
+                        <button class="btn-edit" onclick="window.excluirLicao('${l.key}')">🗑️</button>
+                    </td>
+                </tr>`;
+            });
+        });
+    };
+
+    window.filtrarTabela = function() {
+        const input = document.getElementById('input-busca');
+        const filter = input.value.toUpperCase();
+        const tbody = document.getElementById('body-licoes');
+        const tr = tbody.getElementsByTagName('tr');
+        for (let i = 0; i < tr.length; i++) {
+            let rowText = tr[i].textContent || tr[i].innerText;
+            tr[i].style.display = rowText.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }
+    };
+
+    window.abrirPromptGravar = function() {
+        if(!window.currentID) return alert("Selecione um aluno.");
+        window.processarLicao(null, { 
+            data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), 
+            bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "" 
+        });
+    };
+
+    window.editarLicao = function(key) {
+        firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
+            const l = snapshot.val();
+            
+            const extrair = (str) => {
+                if(!str || str === "-") return { l: "", p: "", status: "A" };
+                const status = str.includes('status-estudar') ? "E" : "A";
+                const match = str.match(/lição: (.*?) - pág: (.*?) -/);
+                return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
+            };
+
+            const extrairHinos = (str) => {
+                const res = { a: "", e: "" };
+                if (!str || str === "-") return res;
+                const partes = str.split('<br>');
+                partes.forEach(p => {
+                    const match = p.match(/HINO: (.*?) -/);
+                    if (match) {
+                        if (p.includes('status-aprovado')) res.a = match[1];
+                        else if (p.includes('status-estudar')) res.e = match[1];
                     }
-                };
+                });
+                return res;
+            };
+            
+            const b = extrair(l.bona);
+            const m = extrair(l.msa);
+            const met = extrair(l.metodo);
+            const hin = extrairHinos(l.hino);
 
-                window.abrirPromptGravar = function() {
-                    if(!window.currentID) return alert("Selecione um aluno.");
-                    window.processarLicao(null, { 
-                        data: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'}), 
-                        bona: "-", msa: "-", metodo: "-", hino: "-", instrutor: "" 
-                    });
-                };
+            document.getElementById('modal-licao').style.display = 'block';
+            document.getElementById('modal-key').value = key;
+            document.getElementById('m-data').value = l.data;
+            
+            document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
+            document.querySelector(`input[name="st-bona"][value="${b.status}"]`).checked = true;
+            
+            document.getElementById('m-msa-l').value = m.l; document.getElementById('m-msa-p').value = m.p;
+            document.querySelector(`input[name="st-msa"][value="${m.status}"]`).checked = true;
 
-                window.editarLicao = function(key) {
-                    firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
-                        const l = snapshot.val();
-                        const extrair = (str) => {
-                            if(!str || str === "-") return { l: "", p: "", status: "A" };
-                            const status = str.includes('status-estudar') ? "E" : "A";
-                            const match = str.match(/lição: (.*?) - pág: (.*?) -/);
-                            return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
-                        };
-                        
-                        const b = extrair(l.bona);
-                        const m = extrair(l.msa);
-                        const met = extrair(l.metodo);
-                        const hin = extrair(l.hino);
+            document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
+            document.querySelector(`input[name="st-metodo"][value="${met.status}"]`).checked = true;
 
-                        document.getElementById('modal-licao').style.display = 'block';
-                        document.getElementById('modal-key').value = key;
-                        document.getElementById('m-data').value = l.data;
-                        document.getElementById('m-bona-l').value = b.l; document.getElementById('m-bona-p').value = b.p;
-                        document.querySelector(\`input[name="st-bona"][value="\${b.status}"]\`).checked = true;
-                        
-                        document.getElementById('m-msa-l').value = m.l; document.getElementById('m-msa-p').value = m.p;
-                        document.querySelector(\`input[name="st-msa"][value="\${m.status}"]\`).checked = true;
+            document.getElementById('m-hino-a').value = hin.a;
+            document.getElementById('m-hino-e').value = hin.e;
 
-                        document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
-                        document.querySelector(\`input[name="st-metodo"][value="\${met.status}"]\`).checked = true;
-
-                        document.getElementById('m-hino-l').value = hin.l; document.getElementById('m-hino-p').value = hin.p;
-                        document.querySelector(\`input[name="st-hino"][value="\${hin.status}"]\`).checked = true;
-
-                        document.getElementById('m-instrutor').value = l.instrutor;
-                    });
-                };
-
-                window.processarLicao = function(key, defaults) {
-                    document.getElementById('modal-licao').style.display = 'block';
-                    document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
-                    document.getElementById('modal-key').value = key || "";
-                    document.getElementById('m-data').value = defaults.data;
-                    document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
-                    document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
-                    document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
-                    document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
-                    document.getElementById('m-instrutor').value = "";
-                };
-
-                window.salvarModal = function() {
-    const key = document.getElementById('modal-key').value;
-    
-    // Função auxiliar para Bona, MSA e Método
-    const format = (idL, idP, name, label) => {
-        const l = document.getElementById(idL).value;
-        const p = document.getElementById(idP).value;
-        const st = document.querySelector(`input[name="${name}"]:checked`).value;
-        if(!l && !p) return "-";
-        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
-        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
-        return `${label} - lição: ${l} - pág: ${p} - <span class="${statusClass}">${statusLabel}</span>`;
+            document.getElementById('m-instrutor').value = l.instrutor;
+        });
     };
 
-    // Lógica específica para Hinos (dois campos)
-    const formatHino = () => {
-        const hA = document.getElementById('m-hino-a').value;
-        const hE = document.getElementById('m-hino-e').value;
-        let html = "";
-        if(hA) html += `HINO: ${hA} - <span class="status-aprovado">Aprovado</span><br>`;
-        if(hE) html += `HINO: ${hE} - <span class="status-estudar">Estudar</span>`;
-        return html || "-";
+    window.processarLicao = function(key, defaults) {
+        document.getElementById('modal-licao').style.display = 'block';
+        document.getElementById('modal-titulo').innerText = key ? "Editar Registro" : "Gravar Nova Lição";
+        document.getElementById('modal-key').value = key || "";
+        document.getElementById('m-data').value = defaults.data;
+        
+        document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
+        document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
+        document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
+        document.getElementById('m-hino-a').value = ""; 
+        document.getElementById('m-hino-e').value = "";
+        document.getElementById('m-instrutor').value = "";
     };
 
-    const licao = {
-        data: document.getElementById('m-data').value,
-        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
-        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
-        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
-        hino: formatHino(),
-        instrutor: document.getElementById('m-instrutor').value
+    window.salvarModal = function() {
+        const key = document.getElementById('modal-key').value;
+        
+        const format = (idL, idP, name, label) => {
+            const l = document.getElementById(idL).value;
+            const p = document.getElementById(idP).value;
+            const st = document.querySelector(`input[name="${name}"]:checked`).value;
+            if(!l && !p) return "-";
+            const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
+            const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+            return `${label} - lição: ${l} - pág: ${p} - <span class="${statusClass}">${statusLabel}</span>`;
+        };
+
+        const formatHino = () => {
+            const hA = document.getElementById('m-hino-a').value;
+            const hE = document.getElementById('m-hino-e').value;
+            let html = "";
+            if(hA) html += `HINO: ${hA} - <span class="status-aprovado">Aprovado</span><br>`;
+            if(hE) html += `HINO: ${hE} - <span class="status-estudar">Estudar</span>`;
+            return html || "-";
+        };
+
+        const licao = {
+            data: document.getElementById('m-data').value,
+            bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
+            msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
+            metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
+            hino: formatHino(),
+            instrutor: document.getElementById('m-instrutor').value
+        };
+
+        const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
+        if(key) ref.child(key).update(licao); else ref.push(licao);
+        document.getElementById('modal-licao').style.display = 'none';
     };
 
-    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-    if(key) ref.child(key).update(licao); else ref.push(licao);
-    document.getElementById('modal-licao').style.display = 'none';
-};
+    window.excluirLicao = function(key) {
+        if(confirm("Deseja excluir permanentemente este registro?")) {
+            firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
+        }
+    };
 
-                window.excluirLicao = function(key) {
-                    if(confirm("Deseja excluir permanentemente este registro?")) {
-                        firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
-                    }
-                };
-
-                if(typeof firebase !== 'undefined') window.sincronizarListaAlunos();
-            </script>
+    if(typeof firebase !== 'undefined') window.sincronizarListaAlunos();
+</script>
         `,
         pagina: "Extra"
     }
