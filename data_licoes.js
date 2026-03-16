@@ -112,20 +112,11 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <div class="modal-section">
                             <span class="modal-section-title">HINO</span>
                             <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
-                            </div>
+                               <input type="text" id="m-hino" placeholder="Ex: 123 ou Hino 456">
+                               </div>
                             <div class="radio-group">
-                                <label><input type="radio" name="st-hino" value="A" checked> Aprovado</label>
-
-                            </div>
-                              <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
-                            </div>
-                            <div class="radio-group">
-
-                                <label><input type="radio" name="st-hino" value="E"> Estudar</label>
+                              <label><input type="radio" name="st-hino" value="A" checked> Aprovado</label>
+                              <label><input type="radio" name="st-hino" value="E"> Estudar</label>
                             </div>
                         </div>
 
