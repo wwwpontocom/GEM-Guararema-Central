@@ -1,4 +1,4 @@
-// --- FIX: Módulo de Lições Corrigido e Funcional ---
+// --- FIX: Módulo de Lições com Função de Edição ---
 
 Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
@@ -54,7 +54,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                         </div>`).join('')}
 
-                          <div class="form-group">
+                        <div class="form-group">
                             <label>Quem ensinou:</label>
                             <select id="m-instrutor">
                                 <option value="">-- Selecione --</option>
@@ -62,7 +62,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                                 <option value="Alessandro">Alessandro</option>
                                 <option value="Breno">Breno</option>
                                 <option value="Davi">Davi</option>
-                                <option value="Dudu">Eduardo</option>
+                                <option value="Eduardo">Eduardo</option>
                                 <option value="Jefferson">Jefferson</option>
                                 <option value="Jonny">Jonny</option>
                                 <option value="João">João</option>
@@ -113,7 +113,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
             </div>
 
             <script>
-                // Função auxiliar para formatar os dados duplos (Aprovado e Estudar)
                 window.formatarSaidaLicao = (cat) => {
                     const l = document.getElementById('m-'+cat+'-l').value;
                     const p = document.getElementById('m-'+cat+'-p').value;
@@ -123,6 +122,30 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     if(l) html += \`<span class="status-aprovado">✅ L.\${l} P.\${p}</span>\`;
                     if(le) html += \`<span class="status-estudar">📖 L.\${le} P.\${pe}</span>\`;
                     return html || "-";
+                };
+
+                window.editarLicao = function(key) {
+                    firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snap) => {
+                        const l = snap.val();
+                        document.getElementById('modal-key').value = key;
+                        document.getElementById('modal-titulo').innerText = "Editar Registro";
+                        document.getElementById('m-data').value = l.data;
+                        document.getElementById('m-instrutor').value = l.instrutor;
+
+                        const categorias = ['bona', 'msa', 'metodo', 'hino'];
+                        categorias.forEach(cat => {
+                            const raw = l[cat] || "";
+                            // Regex para extrair L. e P. de aprovados e estudar
+                            const matchAp = raw.match(/status-aprovado">.*?L\\.(.*?) P\\.(.*?)<\\/span>/);
+                            const matchEs = raw.match(/status-estudar">.*?L\\.(.*?) P\\.(.*?)<\\/span>/);
+                            
+                            document.getElementById('m-'+cat+'-l').value = matchAp ? matchAp[1] : "";
+                            document.getElementById('m-'+cat+'-p').value = matchAp ? matchAp[2] : "";
+                            document.getElementById('m-'+cat+'-le').value = matchEs ? matchEs[1] : "";
+                            document.getElementById('m-'+cat+'-pe').value = matchEs ? matchEs[2] : "";
+                        });
+                        document.getElementById('modal-licao').style.display = 'block';
+                    });
                 };
 
                 window.salvarModal = function() {
@@ -140,13 +163,44 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('modal-licao').style.display = 'none';
                 };
 
+                window.loadLicoes = function(id) {
+                    firebase.database().ref('licoes_alunos/' + id).on('value', (snap) => {
+                        const tbody = document.getElementById('body-licoes');
+                        tbody.innerHTML = "";
+                        snap.forEach(child => {
+                            const l = child.val();
+                            tbody.innerHTML += \`<tr>
+                                <td>\${l.data}</td><td>\${l.bona}</td><td>\${l.msa}</td><td>\${l.metodo}</td><td>\${l.hino}</td><td>\${l.instrutor}</td>
+                                <td class="no-print">
+                                    <button class="btn-edit" onclick="window.editarLicao('\${child.key}')">✏️</button>
+                                    <button class="btn-edit" onclick="window.excluirLicao('\${child.key}')">🗑️</button>
+                                </td>
+                            </tr>\`;
+                        });
+                    });
+                };
+
+                window.abrirPromptGravar = function() {
+                    document.getElementById('modal-key').value = "";
+                    document.getElementById('modal-titulo').innerText = "Gravar Nova Lição";
+                    ['bona', 'msa', 'metodo', 'hino'].forEach(cat => {
+                        document.getElementById('m-'+cat+'-l').value = ""; document.getElementById('m-'+cat+'-p').value = "";
+                        document.getElementById('m-'+cat+'-le').value = ""; document.getElementById('m-'+cat+'-pe').value = "";
+                    });
+                    document.getElementById('m-instrutor').value = "";
+                    document.getElementById('m-data').value = new Date().toLocaleDateString('pt-BR').substring(0,5);
+                    document.getElementById('modal-licao').style.display = 'block';
+                };
+
                 window.sincronizarListaAlunos = function() {
                     firebase.database().ref('lista_alunos').on('value', (snap) => {
                         const sel = document.getElementById('aluno-select');
                         if(!sel) return;
+                        const current = sel.value;
                         sel.innerHTML = '<option value="">-- Escolha um Aluno --</option>';
                         snap.forEach(child => {
-                            sel.innerHTML += \`<option value="\${child.key}" data-instr="\${child.val().instrumento}">\${child.val().nome}</option>\`;
+                            const s = child.key === current ? 'selected' : '';
+                            sel.innerHTML += \`<option value="\${child.key}" data-instr="\${child.val().instrumento}" \${s}>\${child.val().nome}</option>\`;
                         });
                     });
                 };
@@ -161,28 +215,6 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     window.loadLicoes(id);
                 };
 
-                window.loadLicoes = function(id) {
-                    firebase.database().ref('licoes_alunos/' + id).on('value', (snap) => {
-                        const tbody = document.getElementById('body-licoes');
-                        tbody.innerHTML = "";
-                        snap.forEach(child => {
-                            const l = child.val();
-                            tbody.innerHTML += \`<tr>
-                                <td>\${l.data}</td><td>\${l.bona}</td><td>\${l.msa}</td><td>\${l.metodo}</td><td>\${l.hino}</td><td>\${l.instrutor}</td>
-                                <td class="no-print">
-                                    <button class="btn-edit" onclick="window.excluirLicao('\${child.key}')">🗑️</button>
-                                </td>
-                            </tr>\`;
-                        });
-                    });
-                };
-
-                window.abrirPromptGravar = function() {
-                    document.getElementById('modal-key').value = "";
-                    document.getElementById('modal-licao').style.display = 'block';
-                    document.getElementById('m-data').value = new Date().toLocaleDateString('pt-BR').substring(0,5);
-                };
-
                 window.promptNovoAluno = function() {
                     const nome = prompt("Nome do Aluno:");
                     const inst = prompt("Instrumento:");
@@ -191,6 +223,14 @@ Object.assign(BIBLIOTECA_LIVRO, {
 
                 window.excluirLicao = function(key) {
                     if(confirm("Excluir registro?")) firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
+                };
+
+                window.filtrarTabela = function() {
+                    const filter = document.getElementById('input-busca').value.toUpperCase();
+                    const trs = document.getElementById('body-licoes').getElementsByTagName('tr');
+                    for (let tr of trs) {
+                        tr.style.display = tr.innerText.toUpperCase().includes(filter) ? "" : "none";
+                    }
                 };
 
                 window.sincronizarListaAlunos();
