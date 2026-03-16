@@ -110,18 +110,24 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         </div>
 
                         <div class="modal-section">
-    <span class="modal-section-title">HINO</span>
-    <div class="form-group">
-        <label>Aprovado(s):</label>
-        <input type="text" id="m-hino-a" placeholder="Ex: 123, 456">
-        <input type="hidden" name="st-hino-a" value="A">
-    </div>
-    <div class="form-group" style="margin-top:8px">
-        <label>Estudar:</label>
-        <input type="text" id="m-hino-e" placeholder="Ex: 10, 22">
-        <input type="hidden" name="st-hino-e" value="E">
-    </div>
-</div>
+                            <span class="modal-section-title">HINO</span>
+                            <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
+                            </div>
+                            <div class="radio-group">
+                                <label><input type="radio" name="st-hino" value="A" checked> Aprovado</label>
+
+                            </div>
+                              <div class="form-row">
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
+                            </div>
+                            <div class="radio-group">
+
+                                <label><input type="radio" name="st-hino" value="E"> Estudar</label>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <label>Quem ensinou:</label>
@@ -320,42 +326,30 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 };
 
                 window.salvarModal = function() {
-    const key = document.getElementById('modal-key').value;
-    
-    // Função auxiliar para Bona, MSA e Método
-    const format = (idL, idP, name, label) => {
-        const l = document.getElementById(idL).value;
-        const p = document.getElementById(idP).value;
-        const st = document.querySelector(`input[name="${name}"]:checked`).value;
-        if(!l && !p) return "-";
-        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
-        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
-        return `${label} - lição: ${l} - pág: ${p} - <span class="${statusClass}">${statusLabel}</span>`;
-    };
+                    const key = document.getElementById('modal-key').value;
+                    const format = (idL, idP, name, label) => {
+                        const l = document.getElementById(idL).value;
+                        const p = document.getElementById(idP).value;
+                        const st = document.querySelector(\`input[name="\${name}"]:checked\`).value;
+                        if(!l && !p) return "-";
+                        const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
+                        const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+                        return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
+                    };
 
-    // Lógica específica para Hinos (dois campos)
-    const formatHino = () => {
-        const hA = document.getElementById('m-hino-a').value;
-        const hE = document.getElementById('m-hino-e').value;
-        let html = "";
-        if(hA) html += `HINO: ${hA} - <span class="status-aprovado">Aprovado</span><br>`;
-        if(hE) html += `HINO: ${hE} - <span class="status-estudar">Estudar</span>`;
-        return html || "-";
-    };
+                    const licao = {
+                        data: document.getElementById('m-data').value,
+                        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
+                        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
+                        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
+                        hino: format('m-hino-l', 'm-hino-p', 'st-hino', 'HINO'),
+                        instrutor: document.getElementById('m-instrutor').value
+                    };
 
-    const licao = {
-        data: document.getElementById('m-data').value,
-        bona: format('m-bona-l', 'm-bona-p', 'st-bona', 'BONA'),
-        msa: format('m-msa-l', 'm-msa-p', 'st-msa', 'MSA'),
-        metodo: format('m-metodo-l', 'm-metodo-p', 'st-metodo', 'MÉTODO'),
-        hino: formatHino(),
-        instrutor: document.getElementById('m-instrutor').value
-    };
-
-    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-    if(key) ref.child(key).update(licao); else ref.push(licao);
-    document.getElementById('modal-licao').style.display = 'none';
-};
+                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
+                    if(key) ref.child(key).update(licao); else ref.push(licao);
+                    document.getElementById('modal-licao').style.display = 'none';
+                };
 
                 window.excluirLicao = function(key) {
                     if(confirm("Deseja excluir permanentemente este registro?")) {
