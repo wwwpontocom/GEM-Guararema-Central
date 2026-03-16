@@ -2,7 +2,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
         keywords: ["licoes", "alunos", "professor", "gravar", "registro", "presença"],
         fase: "Extras",
-        titulo: "CONTROLE DE LIÇÕES",
+       titulo: `CONTROLE DE LIÇÕES <button type="button" class="btn-action btn-add" style="margin-left:15px; padding: 4px 10px; font-size: 11px; vertical-align: middle; background: #0284c7; color: white; border-radius: 5px; border: none; font-weight: bold; cursor: pointer;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>`,
         icone: "✏️",
         resumo: "Registro detalhado com ordem cronológica, edição e busca rápida.",
         html_content: `
@@ -160,7 +160,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 <div class="selector-box no-print">
                     <div style="display:flex; justify-content: space-between; align-items: center;">
                         <label><b>Selecione o Aluno:</b></label>
-                       <button type="button" class="btn-action btn-add" style="margin:0; padding: 5px 12px; font-size: 12px;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>
+                      
                     </div>
                     <select id="aluno-select" style="width:100%; padding:10px; margin-top:5px;" onchange="window.initTabelaAluno(this.value)">
                         <option value="">-- Carregando Alunos... --</option>
