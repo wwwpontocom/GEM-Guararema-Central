@@ -119,9 +119,9 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     const le = document.getElementById('m-'+cat+'-le').value;
                     const pe = document.getElementById('m-'+cat+'-pe').value;
                     let html = "";
-                    if(l) html += \`<span class="status-aprovado">✅ L.\${l} P.\${p}</span>\`;
-                    if(le) html += \`<span class="status-estudar">📖 L.\${le} P.\${pe}</span>\`;
-                    return html || "-";
+                    if(l) html += \`<span class="status-aprovado">✅ Aprovado: L.\${l} P.\${p}</span>\`;
+                    if(le) html += \`<span class="status-estudar">📖 Estudar: L.\${le} P.\${pe}</span>\`;
+    return html || "-";
                 };
 
                 window.editarLicao = function(key) {
