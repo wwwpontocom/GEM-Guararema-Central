@@ -148,6 +148,11 @@ function switchTab(tab) {
         // Lógica de exibição específica
         if (tab === 'alou' || tab === 'assistente') {
             activeContent.style.display = 'flex';
+            // Garante scroll no chat ao entrar
+        if (tab === 'alou') {
+            const win = document.getElementById('alou-chat-window');
+            if (win) setTimeout(() => { win.scrollTop = win.scrollHeight; }, 100);
+        }
         } else {
             activeContent.style.display = 'block';
         }
