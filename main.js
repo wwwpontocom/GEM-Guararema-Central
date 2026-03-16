@@ -702,8 +702,8 @@ function selectTab(tabId) {
     // 2. Atualiza nome na Nav (ADICIONADO 'plano')
     const labels = {
         'assistente': 'Assistente', 'alou': 'ALO GEM', 'chamada': 'Chamada',
-        'agenda': 'Agenda', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
-        'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos', 'exercicios': 'Exercícios',
+        'agenda': 'Agenda', 'partitura': 'Exercícios', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
+        'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
         'msa': 'MSA' , 'teoria': 'Teoria'
     };
@@ -775,6 +775,10 @@ function selectTab(tabId) {
      else if (tabId === 'licoes') {
     if (typeof switchTab === "function") switchTab('assistente');
     mostrarConteudo('modulo_licoes');
+}
+         else if (tabId === 'partitura') {
+    if (typeof switchTab === "function") switchTab('assistente');
+    mostrarConteudo('exercicio_partitura');
 }
 
           else if (tabId === 'manual') {
