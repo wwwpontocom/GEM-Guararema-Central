@@ -334,6 +334,10 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         if(!l && !p) return "-";
                         const statusLabel = st === 'A' ? 'Aprovado' : 'Estudar';
                         const statusClass = st === 'A' ? 'status-aprovado' : 'status-estudar';
+                        // Lógica especial para Hinos: remove palavras "lição" e "pág"
+                        if(label === 'HINO') {
+                            return \`\${label} - \${l} - \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
+                        }
                         return \`\${label} - lição: \${l} - pág: \${p} - <span class="\${statusClass}">\${statusLabel}</span>\`;
                     };
 
