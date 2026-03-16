@@ -79,7 +79,7 @@ html_content: `
             <tr><td>Breno Sousa dos Santos Rosado (T1)</td><td style="text-align:right; color:#888;">Flauta</td></tr>
             <tr><td>Caíque (M)</td><td style="text-align:right; color:#888;">Violino</td></tr>
             <tr><td>Davi Rodrigues Gonçalves (T1)</td><td style="text-align:right; color:#888;">Eufônio</td></tr>
-            <tr><td>Elton (M)</td><td style="text-align:right; color:#888;">Violino</td></tr>
+            <tr><td>Elton (M)</td><td style="text-align:right; color:#888;">Violoncelo</td></tr>
             <tr><td>Evandro Bendochi (T2)</td><td style="text-align:right; color:#888;">Saxofone Alto</td></tr>
             <tr><td>Guilherme Sanches Melo (T2)</td><td style="text-align:right; color:#888;">Flauta</td></tr>
             <tr><td>Heitor (T1)</td><td style="text-align:right; color:#888;">Violino</td></tr>
@@ -145,7 +145,7 @@ html_content: `
 <div class="panel">
     <table style="width: 100%; border-collapse: collapse;">
         <tr><td>Caíque</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Elton</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Elton</td><td style="text-align:right; color:#888;">Violoncelo</td></tr>
         <tr><td>Vanderlei</td><td style="text-align:right; color:#888;">Violino</td></tr>
     </table>
 </div>
@@ -155,7 +155,7 @@ html_content: `
     <table style="width: 100%; border-collapse: collapse;">
         <tr><td>Arthur Guimarães Ribeiro</td><td style="text-align:right; color:#888;">Viola</td></tr>
         <tr><td>Caíque</td><td style="text-align:right; color:#888;">Violino</td></tr>
-        <tr><td>Elton</td><td style="text-align:right; color:#888;">Violino</td></tr>
+        <tr><td>Elton</td><td style="text-align:right; color:#888;">Violoncelo</td></tr>
         <tr><td>Heitor</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Hendril Wallace Teodoro</td><td style="text-align:right; color:#888;">Violino</td></tr>
         <tr><td>Jefferson Dias Barreto</td><td style="text-align:right; color:#888;">Violino</td></tr>
