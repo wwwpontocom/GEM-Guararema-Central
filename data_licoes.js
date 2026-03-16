@@ -273,30 +273,15 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     });
                 };
 
-               window.editarLicao = function(key) {
-        firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
-            const l = snapshot.val();
-            
-            const extrair = (str) => {
-                if(!str || str === "-") return { l: "", p: "", status: "A" };
-                const status = str.includes('status-estudar') ? "E" : "A";
-                const match = str.match(/lição: (.*?) - pág: (.*?) -/);
-                return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
-            };
-
-            const extrairHinos = (str) => {
-                const res = { a: "", e: "" };
-                if (!str || str === "-") return res;
-                const partes = str.split('<br>');
-                partes.forEach(p => {
-                    const match = p.match(/HINO: (.*?) -/);
-                    if (match) {
-                        if (p.includes('status-aprovado')) res.a = match[1];
-                        else if (p.includes('status-estudar')) res.e = match[1];
-                    }
-                });
-                return res;
-            };
+                window.editarLicao = function(key) {
+                    firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).once('value', (snapshot) => {
+                        const l = snapshot.val();
+                        const extrair = (str) => {
+                            if(!str || str === "-") return { l: "", p: "", status: "A" };
+                            const status = str.includes('status-estudar') ? "E" : "A";
+                            const match = str.match(/lição: (.*?) - pág: (.*?) -/);
+                            return { l: match ? match[1] : "", p: match ? match[2] : "", status: status };
+                        };
                         
                         const b = extrair(l.bona);
                         const m = extrair(l.msa);
@@ -315,8 +300,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         document.getElementById('m-metodo-l').value = met.l; document.getElementById('m-metodo-p').value = met.p;
                         document.querySelector(\`input[name="st-metodo"][value="\${met.status}"]\`).checked = true;
 
-                        document.getElementById('m-hino-a').value = hin.a;
-                        document.getElementById('m-hino-e').value = hin.e;
+                        document.getElementById('m-hino-l').value = hin.l; document.getElementById('m-hino-p').value = hin.p;
+                        document.querySelector(\`input[name="st-hino"][value="\${hin.status}"]\`).checked = true;
 
                         document.getElementById('m-instrutor').value = l.instrutor;
                     });
@@ -330,8 +315,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     document.getElementById('m-bona-l').value = ""; document.getElementById('m-bona-p').value = "";
                     document.getElementById('m-msa-l').value = ""; document.getElementById('m-msa-p').value = "";
                     document.getElementById('m-metodo-l').value = ""; document.getElementById('m-metodo-p').value = "";
-                    document.getElementById('m-hino-a').value = ""; 
-                    document.getElementById('m-hino-e').value = "";
+                    document.getElementById('m-hino-l').value = ""; document.getElementById('m-hino-p').value = "";
                     document.getElementById('m-instrutor').value = "";
                 };
 
