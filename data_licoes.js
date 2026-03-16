@@ -58,8 +58,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                            
                               <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-p"></div>
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-bona-le"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-bona-pe"></div>
                             </div>
                           
                         </div>
@@ -72,8 +72,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                            
                              <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-p"></div>
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-msa-le"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-msa-pe"></div>
                             </div>
                           
                         </div>
@@ -86,8 +86,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                          
                               <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-p"></div>
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-metodo-le"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-metodo-pe"></div>
                             </div>
                             
                         </div>
@@ -100,8 +100,8 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                        
                               <div class="form-row">
-                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-l"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-p"></div>
+                                <div class="form-group"><label>Lição:</label><input type="text" id="m-hino-le"></div>
+                                <div class="form-group"><label>Pág:</label><input type="text" id="m-hino-pe"></div>
                             </div>
                            
                         </div>
