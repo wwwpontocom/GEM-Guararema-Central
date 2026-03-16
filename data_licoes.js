@@ -45,7 +45,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <div class="modal-section">
                             <span class="modal-section-title">${cat.toUpperCase()}</span>
                             <div class="form-row">
-                                <div class="form-group"><label>✅ Aprovada:</label><input type="text" id="m-${cat}-l" placeholder="Lição"></div>
+                                <div class="form-group"><label>✅ Aprovado:</label><input type="text" id="m-${cat}-l" placeholder="Lição"></div>
                                 <div class="form-group"><label>Pág:</label><input type="text" id="m-${cat}-p" placeholder="Pág"></div>
                             </div>
                             <div class="form-row">
@@ -54,13 +54,27 @@ Object.assign(BIBLIOTECA_LIVRO, {
                             </div>
                         </div>`).join('')}
 
-                        <div class="form-group">
-                            <label>Instrutor:</label>
+                          <div class="form-group">
+                            <label>Quem ensinou:</label>
                             <select id="m-instrutor">
                                 <option value="">-- Selecione --</option>
-                                <option value="Alecson">Alecson</option><option value="Alessandro">Alessandro</option>
-                                <option value="Breno">Breno</option><option value="Davi">Davi</option>
-                                <option value="João">João</option><option value="Osvaldo">Osvaldo</option>
+                                <option value="Alecson">Alecson</option>
+                                <option value="Alessandro">Alessandro</option>
+                                <option value="Breno">Breno</option>
+                                <option value="Davi">Davi</option>
+                                <option value="Dudu">Eduardo</option>
+                                <option value="Jefferson">Jefferson</option>
+                                <option value="Jonny">Jonny</option>
+                                <option value="João">João</option>
+                                <option value="Leo">Leo</option>
+                                <option value="Marcos">Marcos</option>
+                                <option value="Osvaldo">Osvaldo</option>
+                                <option value="Pedro">Pedro</option>
+                                <option value="Rodrigo">Rodrigo</option>
+                                <option value="Robson">Robson</option>
+                                <option value="Ronaldo">Ronaldo</option>
+                                <option value="Rudi">Rudi</option>
+                                <option value="Vitor">Vitor</option>
                             </select>
                         </div>
 
