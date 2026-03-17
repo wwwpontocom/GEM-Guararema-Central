@@ -728,7 +728,7 @@ function selectTab(tabId) {
     
     // 2. Atualiza nome na Nav (ADICIONADO 'plano')
     const labels = {
-        'assistente': 'Assistente', 'alou': 'ALO GEM', 'chamada': 'Chamada',
+        'assistente': 'Assistente', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'partitura': 'Exercícios', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
