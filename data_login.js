@@ -9,17 +9,12 @@ function verificarAcesso() {
     const userSalvo = localStorage.getItem("gem_user_email");
 
     if (userSalvo) {
-        console.log("Acesso via LocalStorage detectado. Sincronizando com Firebase...");
-        
         if(loginScreen) loginScreen.style.display = 'none';
         if(mainContainer) mainContainer.style.display = 'flex';
 
         firebase.auth().onAuthStateChanged((user) => {
             if (!user) {
-                console.log("Firebase Auth em standby. Re-autenticando silenciosamente...");
                 firebase.auth().signInAnonymously().catch(err => console.error("Erro no silent auth:", err));
-            } else {
-                console.log("Firebase Auth Ativo: ", user.uid);
             }
         });
     } else {
@@ -28,12 +23,12 @@ function verificarAcesso() {
                 checkAuthorization(user.email, loginScreen, mainContainer);
             } else {
                 if(loginScreen) {
-                    // FIX IS HERE: Ensuring flex-direction for mobile visibility
+                    // Ajuste para garantir visibilidade no mobile
                     loginScreen.style.display = 'flex';
                     loginScreen.style.flexDirection = 'column';
                     loginScreen.style.justifyContent = 'center';
                     loginScreen.style.alignItems = 'center';
-                    loginScreen.style.minHeight = 'vh'; 
+                    loginScreen.style.minHeight = '60vh'; 
                 }
                 if(mainContainer) mainContainer.style.display = 'none';
             }
@@ -41,30 +36,39 @@ function verificarAcesso() {
     }
 }
 
-// --- 2. VERIFICAÇÃO NO BANCO DE DADOS (WHITELIST) ---
+// --- 2. VERIFICAÇÃO E REGISTRO DE LOG ---
 function checkAuthorization(email, loginScreen, mainContainer) {
     const emailKey = email.replace(/\./g, '_');
     
     firebase.database().ref('usuarios_autorizados/' + emailKey).once('value')
         .then((snapshot) => {
             if (snapshot.exists()) {
-                console.log("Autorização confirmada.");
                 localStorage.setItem("gem_user_email", email);
                 if(loginScreen) loginScreen.style.display = 'none';
                 if(mainContainer) mainContainer.style.display = 'flex';
+                
+                // Grava log de quem entrou (Auditoria)
+                registrarLogAcesso(email);
             } else {
-                alert("Este e-mail não está autorizado.");
+                alert("Acesso negado: E-mail não autorizado na whitelist.");
                 sairDoSistema(false);
             }
         })
-        .catch((error) => {
-            console.error("Erro nas Rules:", error);
-            alert("Erro de autenticação. Por favor, faça login novamente.");
+        .catch(() => {
             sairDoSistema(false);
         });
 }
 
-// --- 3. AÇÃO DE LOGIN MANUAL (INSTRUTORES) ---
+function registrarLogAcesso(email) {
+    const logRef = firebase.database().ref('logs_acesso').push();
+    logRef.set({
+        email: email,
+        data_hora: new Date().toLocaleString("pt-BR"),
+        dispositivo: navigator.userAgent
+    });
+}
+
+// --- 3. AÇÃO DE LOGIN MANUAL ---
 function realizarLogin() {
     const email = document.getElementById('login-email').value.trim();
     const senha = document.getElementById('login-senha').value;
@@ -76,14 +80,14 @@ function realizarLogin() {
             return firebase.auth().signInWithEmailAndPassword(email, senha);
         })
         .then(() => {
-            console.log("Login manual ok.");
+            console.log("Login realizado com sucesso.");
         })
-        .catch(error => alert("Erro: " + error.message));
+        .catch(error => alert("Erro ao entrar: " + error.message));
 }
 
-// --- 4. LOGOUT (LIMPEZA TOTAL) ---
+// --- 4. LOGOUT ---
 function sairDoSistema(confirmar = true) {
-    if (confirmar && !confirm("Deseja desautorizar este navegador?")) return;
+    if (confirmar && !confirm("Deseja sair do sistema?")) return;
 
     localStorage.removeItem("gem_user_email");
     firebase.auth().signOut().then(() => {
