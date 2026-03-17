@@ -544,8 +544,8 @@ nav {
     border-radius: 8px !important; 
     border: 1px solid #ccc !important; 
     width: 280px !important; 
-    height: 45px !important; /* Altura fixa para evitar o erro da foto */
-    min-height: 45px !important;
+    height: 25px !important; /* Altura fixa para evitar o erro da foto */
+    min-height: 25px !important;
     font-size: 16px !important;
     color: #333 !important;
     background: white !important;
