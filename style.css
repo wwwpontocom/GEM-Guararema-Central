@@ -518,38 +518,39 @@ nav {
     text-align: center;
 }
 
-/* --- FIX IS HERE: CSS LOGIN --- */
-/* --- FIX FINAL: LOGIN SCREEN --- */
+/* --- FIX FINAL E ABSOLUTO: LOGIN SCREEN --- */
 #login-screen {
     position: fixed; 
     top: 0; 
     left: 0; 
-    width: 100vw; /* Força largura total da janela */
-    height: 100vh; /* Força altura total da janela */
+    width: 100vw; 
+    height: 100vh;
     background: #2c3e50; 
     color: white; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-    justify-content: center; /* Centraliza tudo no meio da tela */
+    justify-content: center; 
     z-index: 9999; 
     font-family: sans-serif;
-    gap: 15px; /* Espaço exato entre e-mail, senha e botão */
+    gap: 15px;
 }
 
-/* Forçamos o height para ignorar qualquer herança que causou o erro da imagem */
+/* O segredo aqui é o 'flex: none' para impedir que o flexbox estique o input */
 .input-login { 
-    padding: 12px !important; 
+    padding: 10px 15px !important; 
     margin: 0 !important; 
     border-radius: 8px !important; 
     border: 1px solid #ccc !important; 
     width: 280px !important; 
-    height: 25px !important; /* Altura fixa para evitar o erro da foto */
-    min-height: 25px !important;
+    height: 45px !important; /* Altura ideal */
+    min-height: 45px !important;
+    max-height: 45px !important; /* Trava máxima */
+    flex: none !important; /* IMPEDE O EFEITO DA FOTO */
     font-size: 16px !important;
     color: #333 !important;
     background: white !important;
-    display: block !important; /* Garante que não tente virar flex item */
+    box-sizing: border-box !important; /* Garante que padding não aumente o tamanho */
 }
 
 .btn-login { 
@@ -560,15 +561,16 @@ nav {
     cursor: pointer !important; 
     border-radius: 8px !important; 
     width: 280px !important; 
-    height: 45px !important; /* Botão com a mesma altura dos inputs */
+    height: 45px !important; 
+    flex: none !important; /* Também impede o botão de esticar */
     font-weight: bold !important;
     font-size: 16px !important;
-    transition: background 0.3s ease !important;
-    margin-top: 10px !important; /* Espaço extra apenas acima do botão */
+    margin-top: 5px !important;
 }
 
 .btn-login:hover {
     background: #d35400 !important;
+}
 }
 
 /* Ajuste do Título */
