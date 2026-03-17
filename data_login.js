@@ -33,7 +33,7 @@ function verificarAcesso() {
                     loginScreen.style.flexDirection = 'column';
                     loginScreen.style.justifyContent = 'center';
                     loginScreen.style.alignItems = 'center';
-                    loginScreen.style.minHeight = '50vh'; 
+                    loginScreen.style.minHeight = 'vh'; 
                 }
                 if(mainContainer) mainContainer.style.display = 'none';
             }
