@@ -5,11 +5,17 @@ const ASSETS_TO_CACHE = [
     './style.css',
     './data_fases.js',
     './data_extras.js',
-    './data_licoes.js',
+    './data_plano.js',       // Adicionado
+    './data_dia.js',         // Adicionado
     './data_logs.js',
+    './data_audios.js',      // Adicionado
+    './data_moo.js',         // Adicionado
+    './data_manual.js',      // Adicionado
+    './data_login.js',       // Adicionado
     './main.js',
     'https://www.gstatic.com/firebasejs/9.1.3/firebase-app-compat.js',
     'https://www.gstatic.com/firebasejs/9.1.3/firebase-database-compat.js',
+    'https://www.gstatic.com/firebasejs/9.1.3/firebase-auth-compat.js', // Adicionado
     'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
 
