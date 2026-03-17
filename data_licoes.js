@@ -4,7 +4,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
     "modulo_licoes": {
         keywords: ["licoes", "alunos", "professor", "gravar", "registro", "presença"],
         fase: "Extras",
-        titulo: `CONTROLE DE LIÇÕES <button type="button" class="btn-action btn-add" style="margin-left:15px; padding: 4px 10px; font-size: 11px; vertical-align: middle; background: #0284c7; color: white; border-radius: 5px; border: none; font-weight: bold; cursor: pointer;" onclick="window.promptNovoAluno()">➕ Novo Aluno</button>`,
+       titulo: `CONTROLE DE LIÇÕES`,
         icone: "✏️",
         resumo: "Registro detalhado com ordem cronológica, edição e busca rápida.",
         html_content: `
@@ -45,12 +45,12 @@ Object.assign(BIBLIOTECA_LIVRO, {
                         <div class="modal-section">
                             <span class="modal-section-title">${cat.toUpperCase()}</span>
                             <div class="form-row">
-                                <div class="form-group"><label>✅ Aprovado:</label><input type="text" id="m-${cat}-l" placeholder="Lição"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-${cat}-p" placeholder="Pág"></div>
+                                <div class="form-group"><label>✅ Aprovado:</label><input type="number" id="m-${cat}-l" placeholder="Lição"></div>
+                                <div class="form-group"><label>Pág:</label><input type="number" id="m-${cat}-p" placeholder="Pág"></div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group"><label>📖 Estudar:</label><input type="text" id="m-${cat}-le" placeholder="Lição"></div>
-                                <div class="form-group"><label>Pág:</label><input type="text" id="m-${cat}-pe" placeholder="Pág"></div>
+                                <div class="form-group"><label>📖 Estudar:</label><input type="number" id="m-${cat}-le" placeholder="Lição"></div>
+                                <div class="form-group"><label>Pág:</label><input type="number" id="m-${cat}-pe" placeholder="Pág"></div>
                             </div>
                         </div>`).join('')}
 
@@ -215,11 +215,7 @@ Object.assign(BIBLIOTECA_LIVRO, {
                     window.loadLicoes(id);
                 };
 
-                window.promptNovoAluno = function() {
-                    const nome = prompt("Nome do Aluno:");
-                    const inst = prompt("Instrumento:");
-                    if(nome && inst) firebase.database().ref('lista_alunos').push({ nome, instrumento: inst });
-                };
+                
 
                 window.excluirLicao = function(key) {
                     if(confirm("Excluir registro?")) firebase.database().ref('licoes_alunos/' + window.currentID + '/' + key).remove();
