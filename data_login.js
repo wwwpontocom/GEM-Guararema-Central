@@ -11,15 +11,11 @@ function verificarAcesso() {
     if (userSalvo) {
         console.log("Acesso via LocalStorage detectado. Sincronizando com Firebase...");
         
-        // Mantemos a interface aberta para agilidade
         if(loginScreen) loginScreen.style.display = 'none';
         if(mainContainer) mainContainer.style.display = 'flex';
 
-        // SILENT LOGIN: Garante que o Firebase reconheça o usuário para as Rules
         firebase.auth().onAuthStateChanged((user) => {
             if (!user) {
-                // Se o LocalStorage existe mas o Firebase não está logado, 
-                // usamos login anônimo ou apenas aguardamos o re-auth automático do Firebase
                 console.log("Firebase Auth em standby. Re-autenticando silenciosamente...");
                 firebase.auth().signInAnonymously().catch(err => console.error("Erro no silent auth:", err));
             } else {
@@ -27,12 +23,18 @@ function verificarAcesso() {
             }
         });
     } else {
-        // Se NÃO tem LocalStorage, fluxo normal de login
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 checkAuthorization(user.email, loginScreen, mainContainer);
             } else {
-                if(loginScreen) loginScreen.style.display = 'flex';
+                if(loginScreen) {
+                    // FIX IS HERE: Ensuring flex-direction for mobile visibility
+                    loginScreen.style.display = 'flex';
+                    loginScreen.style.flexDirection = 'column';
+                    loginScreen.style.justifyContent = 'center';
+                    loginScreen.style.alignItems = 'center';
+                    loginScreen.style.minHeight = '100vh'; 
+                }
                 if(mainContainer) mainContainer.style.display = 'none';
             }
         });
@@ -57,7 +59,6 @@ function checkAuthorization(email, loginScreen, mainContainer) {
         })
         .catch((error) => {
             console.error("Erro nas Rules:", error);
-            // Se der erro de permissão aqui, é porque o usuário não está autenticado no Firebase
             alert("Erro de autenticação. Por favor, faça login novamente.");
             sairDoSistema(false);
         });
@@ -70,14 +71,12 @@ function realizarLogin() {
 
     if (!email || !senha) return alert("Preencha todos os campos.");
 
-    // Define a persistência como LOCAL antes do login
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
             return firebase.auth().signInWithEmailAndPassword(email, senha);
         })
         .then(() => {
             console.log("Login manual ok.");
-            // O onAuthStateChanged/checkAuthorization cuidará do resto
         })
         .catch(error => alert("Erro: " + error.message));
 }
