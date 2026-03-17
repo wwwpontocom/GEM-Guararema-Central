@@ -1,4 +1,4 @@
-function askAI() {
+  function askAI() {
     const input = document.getElementById('user-input');
     const text = input.value.trim().toLowerCase();
     if (!text) return;
@@ -124,7 +124,7 @@ document.getElementById('alou-content').style.display = 'flex';
 function switchTab(tab) {
     // 1. Mapeamento de todas as abas do sistema
     const allTabs = [
-        'assistente', 'agenda', 'cronograma', 
+        'assistente', 'alou', 'agenda', 'cronograma', 
         'turmas', 'moo', 'manual', 'instrumentos', 'exercicios', 'audios', 'programa'
     ];
     
@@ -146,16 +146,13 @@ function switchTab(tab) {
 
     if (activeContent) {
         // Lógica de exibição específica
-       if (tab === 'assistente') {
+        if (tab === 'alou' || tab === 'assistente') {
             activeContent.style.display = 'flex';
-            
-            // Auto-scroll for the Assistant chat window
-            const win = document.getElementById('chat-window');
-            if (win) {
-                setTimeout(() => { 
-                    win.scrollTop = win.scrollHeight; 
-                }, 100);
-            }
+            // Garante scroll no chat ao entrar
+        if (tab === 'alou') {
+            const win = document.getElementById('alou-chat-window');
+            if (win) setTimeout(() => { win.scrollTop = win.scrollHeight; }, 100);
+        }
         } else {
             activeContent.style.display = 'block';
         }
@@ -209,102 +206,63 @@ db.ref('participantes').on('value', (snapshot) => {
 
 
 
-async function gerarRelatorioGeralPDF() {
+async function gerarPDFDoDia() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     const dataAtual = new Date().toLocaleDateString();
-    const dataArquivo = dataAtual.replace(/\//g, '-');
-
-    // Cabeçalho Padrão
-    const configurarCabecalho = (titulo) => {
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(16);
-        doc.text(titulo, 10, 15);
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        doc.text(`Gerado em: ${dataAtual}`, 10, 22);
-        doc.line(10, 25, 200, 25);
-        return 35; // Retorna o próximo Y inicial
-    };
-
-    try {
-        // 1. CAPTURAR DADOS DAS LIÇÕES (Histórico de Alunos)
-        const snapshotLicoes = await db.ref('licoes_alunos').once('value');
-        const licoes = snapshotLicoes.val();
+    
+    db.ref('chat_comunitario').once('value').then((snapshot) => {
+        const dados = snapshot.val();
+        let y = 30;
         
-        let y = configurarCabecalho("RELATÓRIO DE LIÇÕES - GEM");
+        doc.setFontSize(16);
+        doc.text("RELATÓRIO DIÁRIO - ALO GEM", 10, 10);
+        doc.setFontSize(10);
+        doc.text(`Data do Arquivo: ${dataAtual}`, 10, 20);
+        doc.line(10, 22, 200, 22);
 
-        if (licoes) {
-            for (let alunoId in licoes) {
-                doc.setFont("helvetica", "bold");
-                doc.text(`ALUNO: ${alunoId.toUpperCase()}`, 10, y);
-                y += 7;
-                doc.setFont("helvetica", "normal");
-
-                const registros = Object.values(licoes[alunoId]);
-                registros.forEach(reg => {
-                    const linha = `• [${reg.data || ''}] ${reg.modulo || ''} - Lição: ${reg.licao || ''} (${reg.status || ''})`;
-                    const splitText = doc.splitTextToSize(linha, 180);
-                    
-                    if (y + (splitText.length * 7) > 280) {
-                        doc.addPage();
-                        y = 20;
-                    }
-                    
-                    doc.text(splitText, 15, y);
-                    y += (splitText.length * 7);
-                });
-                y += 5; // Espaço entre alunos
+        for (let id in dados) {
+            const linha = `${dados[id].usuario}: ${dados[id].mensagem}`;
+            const splitText = doc.splitTextToSize(linha, 180);
+            
+            if (y + (splitText.length * 7) > 280) {
+                doc.addPage();
+                y = 20;
             }
+            
+            doc.text(splitText, 10, y);
+            y += (splitText.length * 7);
         }
 
-        // 2. NOVA PÁGINA PARA "ONDE ESTAMOS" (Progresso das Turmas)
-        doc.addPage();
-        y = configurarCabecalho("PROGRESSO DAS TURMAS (ONDE ESTAMOS)");
-
-        const snapshotProgresso = await db.ref('onde_estamos').once('value');
-        const progresso = snapshotProgresso.val();
-
-        if (progresso) {
-            for (let grupo in progresso) {
-                doc.setFont("helvetica", "bold");
-                doc.setFillColor(240, 240, 240);
-                doc.rect(10, y - 5, 190, 7, 'F');
-                doc.text(`GRUPO: ${grupo.replace('_', ' ').toUpperCase()}`, 12, y);
-                y += 10;
-                doc.setFont("helvetica", "normal");
-
-                const logs = Object.values(progresso[grupo]).reverse().slice(0, 10); // Últimos 10 logs
-                logs.forEach(log => {
-                    const d = new Date(log.timestamp);
-                    const dataLog = d.toLocaleDateString() + " " + d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
-                    const linhaLog = `[${dataLog}] ${log.instrutor}: ${log.nota}`;
-                    const splitLog = doc.splitTextToSize(linhaLog, 180);
-
-                    if (y + (splitLog.length * 7) > 280) {
-                        doc.addPage();
-                        y = 20;
-                    }
-
-                    doc.text(splitLog, 15, y);
-                    y += (splitLog.length * 7);
-                });
-                y += 10;
-            }
-        }
-
-        // SALVAR O ARQUIVO
-        doc.save(`Relatorio_GEM_Completo_${dataArquivo}.pdf`);
-        console.log("PDF Gerado com sucesso!");
-
-    } catch (error) {
-        console.error("Erro ao gerar PDF:", error);
-        alert("Erro ao buscar dados do Firebase para o PDF.");
-    }
+        doc.save(`Backup_MSA_${dataAtual.replace(/\//g, '-')}.pdf`);
+    });
 }
 
+// Adicione esta função para buscar as mensagens e colocá-las no objeto do livro
+function atualizarBibliotecaComMensagens() {
+    db.ref('chat_comunitario').once('value').then((snapshot) => {
+        const dados = snapshot.val();
+        let htmlHistorico = '<div style="font-family: monospace; font-size: 12px; background: #f4f4f4; padding: 10px; border-radius: 5px;">';
+        
+        for (let id in dados) {
+            htmlHistorico += `<p><strong>${dados[id].usuario}:</strong> ${dados[id].mensagem}</p>`;
+        }
+        htmlHistorico += '</div>';
 
+        BIBLIOTECA_LIVRO["historico_alou"] = {
+            keywords: ["conversas", "historico", "mensagens", "chat", "comunitario", "alo"],
+            fase: "LOGS",
+            titulo: "HISTÓRICO DO ALÔ GEM",
+            icone: "💬",
+            resumo: "Estas são as últimas conversas registradas no chat comunitário via Firebase.",
+            html_content: htmlHistorico,
+            pagina: "Cloud"
+        };
+    });
+}
 
+// Chame a função uma vez ao carregar
+atualizarBibliotecaComMensagens();
 
 
 function enviarMensagemPublica() {
@@ -368,7 +326,27 @@ function salvarLog(grupo) {
     });
 }
 
+// ÚNICO Escutador para o Chat Comunitário
+db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
+    const data = snapshot.val();
+    const chatWin = document.getElementById('alou-chat-window');
+    
+    if (!chatWin) return; 
 
+    const msgDiv = document.createElement('div');
+    msgDiv.className = 'msg bot'; 
+    msgDiv.style.background = "#fff";
+    msgDiv.style.color = "#333";
+    msgDiv.style.alignSelf = "flex-start";
+    msgDiv.style.marginBottom = "8px";
+    
+    const d = new Date(data.timestamp);
+    const hora = d.getHours().toString().padStart(2, '0') + ":" + d.getMinutes().toString().padStart(2, '0');
+
+    msgDiv.innerHTML = `<small style="color:var(--primary); font-weight:bold;">${data.usuario} [${hora}]</small><br>${data.mensagem}`;
+    chatWin.appendChild(msgDiv);
+    chatWin.scrollTop = chatWin.scrollHeight;
+});
 
 function carregarLogs() {
     console.log("Sincronizando logs com Firebase...");
@@ -378,14 +356,9 @@ function carregarLogs() {
 }
 
 function escutarLogs() {
-    ['grupo_a', 'grupo_b', 'grupo_alert("Erro ao salvar. Verifique sua conexão.");
-    });
-}
-
-
-
-function carregarLogs() {
-    console.log("Sincronizando lonst dados = snapshot.val();
+    ['grupo_a', 'grupo_b', 'grupo_c'].forEach(grupo => {
+        db.ref('onde_estamos/' + grupo).limitToLast(10).on('value', (snapshot) => {
+            const dados = snapshot.val();
             let html = "";
             const sufixo = grupo.split('_')[1];
             const container = document.getElementById(`log-grupo-${sufixo}`);
@@ -728,7 +701,7 @@ function selectTab(tabId) {
     
     // 2. Atualiza nome na Nav (ADICIONADO 'plano')
     const labels = {
-        'assistente': 'Assistente', 'chamada': 'Chamada',
+        'assistente': 'Assistente', 'alou': 'ALO GEM', 'chamada': 'Chamada',
         'agenda': 'Agenda', 'partitura': 'Exercícios', 'cronograma': 'Cronograma', 'turmas': 'Turmas',
         'moo': 'MOO', 'manual': 'Manual de uso',  'instrumentos': 'Instrumentos',
         'programa': 'Programa Mínimo', 'audios': 'Hinos', 'plano': 'Plano de Aula',
@@ -1028,9 +1001,18 @@ firebase.auth().onAuthStateChanged((user) => {
         // 1. Carrega a biblioteca agora que temos permissão
         atualizarBibliotecaComMensagens();
 
-        
+        // 2. Inicia o Chat Comunitário com proteção contra duplicatas
+        const chatWin = document.getElementById('alou-chat-window');
+        db.ref('chat_comunitario').off(); // Limpa listeners anteriores
+        db.ref('chat_comunitario').limitToLast(20).on('child_added', (snapshot) => {
+            const data = snapshot.val();
+            const chatWinCurrent = document.getElementById('alou-chat-window');
+            if (chatWinCurrent) {
+                renderizarMensagemNaTela(data, chatWinCurrent);
+            }
+        });
 
-        // 2. Popula a lista de participantes (Respeitando a Rule)
+        // 3. Popula a lista de participantes (Respeitando a Rule)
         db.ref('participantes').on('value', (snapshot) => {
             const lista = snapshot.val();
             const select = document.getElementById('aluno-lista');
