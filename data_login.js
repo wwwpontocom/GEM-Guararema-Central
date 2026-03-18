@@ -6,35 +6,25 @@ document.addEventListener("DOMContentLoaded", () => {
 function verificarAcesso() {
     const loginScreen = document.getElementById('login-screen');
     const mainContainer = document.getElementById('main-container');
-    const userSalvo = localStorage.getItem("gem_user_email");
 
-    if (userSalvo) {
-        if(loginScreen) loginScreen.style.display = 'none';
-        if(mainContainer) mainContainer.style.display = 'flex';
-
-        firebase.auth().onAuthStateChanged((user) => {
-            if (!user) {
-                firebase.auth().signInAnonymously().catch(err => console.error("Erro no silent auth:", err));
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            // Sempre verifica autorização e grava log ao detectar um usuário logado
+            checkAuthorization(user.email, loginScreen, mainContainer);
+        } else {
+            // Se não há usuário, limpa o localStorage e mostra login
+            localStorage.removeItem("gem_user_email");
+            if(loginScreen) {
+                loginScreen.style.display = 'flex';
+                loginScreen.style.flexDirection = 'column';
+                loginScreen.style.justifyContent = 'center';
+                loginScreen.style.alignItems = 'center';
             }
-        });
-    } else {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                checkAuthorization(user.email, loginScreen, mainContainer);
-            } else {
-                if(loginScreen) {
-                    // Ajuste para garantir visibilidade no mobile
-                    loginScreen.style.display = 'flex';
-                    loginScreen.style.flexDirection = 'column';
-                    loginScreen.style.justifyContent = 'center';
-                    loginScreen.style.alignItems = 'center';
-                    loginScreen.style.minHeight = '60vh'; 
-                }
-                if(mainContainer) mainContainer.style.display = 'none';
-            }
-        });
-    }
+            if(mainContainer) mainContainer.style.display = 'none';
+        }
+    });
 }
+
 
 // --- 2. VERIFICAÇÃO E REGISTRO DE LOG ---
 function checkAuthorization(email, loginScreen, mainContainer) {
