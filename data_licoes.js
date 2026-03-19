@@ -29,6 +29,17 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 .form-group { flex: 1; }
                 .form-group label { display:block; font-size:10px; font-weight:bold; margin-bottom:2px; }
                 .form-group input, .form-group select { width:100%; padding:6px; box-sizing:border-box; border:1px solid #ccc; border-radius:4px; font-size: 12px; }
+            /* --- SEGURANÇA VISUAL: MODO INSTRUTOR --- */
+/* Esconde ícones de edição e exclusão quando a classe .user-mode está ativa */
+body.user-mode .fa-pencil, 
+body.user-mode .fa-trash,
+body.user-mode .fa-edit,
+body.user-mode .btn-edit, 
+body.user-mode .btn-delete,
+body.user-mode [onclick*="excluir"], 
+body.user-mode [onclick*="editar"] {
+    display: none !important;
+}     
             </style>
 
             <div class="licoes-wrapper">
@@ -150,19 +161,30 @@ Object.assign(BIBLIOTECA_LIVRO, {
                 };
 
                 window.salvarModal = function() {
-                    const key = document.getElementById('modal-key').value;
-                    const licao = {
-                        data: document.getElementById('m-data').value,
-                        bona: window.formatarSaidaLicao('bona'),
-                        msa: window.formatarSaidaLicao('msa'),
-                        metodo: window.formatarSaidaLicao('metodo'),
-                        hino: window.formatarSaidaLicao('hino'),
-                        instrutor: document.getElementById('m-instrutor').value
-                    };
-                    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
-                    if(key) ref.child(key).update(licao); else ref.push(licao);
-                    document.getElementById('modal-licao').style.display = 'none';
-                };
+    const key = document.getElementById('modal-key').value;
+    const userEmail = localStorage.getItem("gem_user_email") || "Desconhecido"; // Pega o e-mail do login
+    
+    const licao = {
+        data: document.getElementById('m-data').value,
+        bona: window.formatarSaidaLicao('bona'),
+        msa: window.formatarSaidaLicao('msa'),
+        metodo: window.formatarSaidaLicao('metodo'),
+        hino: window.formatarSaidaLicao('hino'),
+        instrutor: document.getElementById('m-instrutor').value,
+        // Novos campos de auditoria:
+        gravado_por: userEmail,
+        aparelho: navigator.userAgent,
+        timestamp: new Date().getTime()
+    };
+    
+    const ref = firebase.database().ref('licoes_alunos/' + window.currentID);
+    if(key) {
+        ref.child(key).update(licao); 
+    } else {
+        ref.push(licao);
+    }
+    document.getElementById('modal-licao').style.display = 'none';
+};
 
                 window.loadLicoes = function(id) {
                     firebase.database().ref('licoes_alunos/' + id).on('value', (snap) => {
