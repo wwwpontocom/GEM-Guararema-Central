@@ -1,7 +1,7 @@
 // --- No topo do seu data_login.js ---
-// Isso cria um "Estado da Sessão" global para o PWA
+// Estado da Sessão Global
 let currentSessionInfo = {
-    email: localStorage.getItem("gem_user_email") || "", // Tenta recuperar se já logado
+    email: localStorage.getItem("gem_user_email") || "",
     dispositivo: navigator.userAgent
 };
 
@@ -16,10 +16,8 @@ function verificarAcesso() {
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            // Sempre verifica autorização e grava log ao detectar um usuário logado
             checkAuthorization(user.email, loginScreen, mainContainer);
         } else {
-            // Se não há usuário, limpa o localStorage e mostra login
             localStorage.removeItem("gem_user_email");
             if(loginScreen) {
                 loginScreen.style.display = 'flex';
@@ -32,30 +30,24 @@ function verificarAcesso() {
     });
 }
 
-
-// --- 2. VERIFICAÇÃO E REGISTRO DE LOG ---
+// --- 2. VERIFICAÇÃO E BIFURCAÇÃO DE LOGS ---
 function checkAuthorization(email, loginScreen, mainContainer) {
     const emailKey = email.replace(/\./g, '_');
     
     firebase.database().ref('usuarios_autorizados/' + emailKey).once('value')
         .then((snapshot) => {
             if (snapshot.exists()) {
-                // 1. Atualiza o objeto global de sessão
                 currentSessionInfo.email = email;
-                
-                // 2. Persiste para o navegador (usado pelo data_licoes.js)
                 localStorage.setItem("gem_user_email", email);
-
-                // 3. Ativa o bloqueio visual de edição/exclusão no CSS
                 document.body.classList.add('user-mode'); 
                 
                 if(loginScreen) loginScreen.style.display = 'none';
                 if(mainContainer) mainContainer.style.display = 'flex';
                 
-                // 4. Registra o log histórico
-                registrarLogAcesso(email);
+                // DISPARA OS DOIS REGISTROS SEPARADOS
+                gerenciarRegistros(email);
             } else {
-                alert("Acesso negado: E-mail não autorizado na whitelist.");
+                alert("Acesso negado: E-mail não autorizado.");
                 sairDoSistema(false);
             }
         })
@@ -64,12 +56,38 @@ function checkAuthorization(email, loginScreen, mainContainer) {
         });
 }
 
-function registrarLogAcesso(email) {
-    const logRef = firebase.database().ref('logs_acesso').push();
-    logRef.set({
+// Função inteligente que decide onde gravar cada dado
+function gerenciarRegistros(email) {
+    const navEntries = performance.getEntriesByType("navigation");
+    const isReload = (navEntries.length > 0 && navEntries[0].type === "reload");
+
+    if (isReload) {
+        // Se for apenas um F5, grava apenas no nó técnico de logs
+        registrarLogSistema(email, "RELOAD");
+    } else {
+        // Se for uma entrada nova (Login), grava em ambos
+        registrarAcessoReal(email);
+        registrarLogSistema(email, "LOGIN_INICIAL");
+    }
+}
+
+// Nó: historico_acessos (Privado no Firebase)
+function registrarAcessoReal(email) {
+    firebase.database().ref('historico_acessos').push({
         email: email,
         data_hora: new Date().toLocaleString("pt-BR"),
-        dispositivo: navigator.userAgent
+        dispositivo: navigator.userAgent,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    });
+}
+
+// Nó: logs_sistema (Privado e descartável)
+function registrarLogSistema(email, acao) {
+    firebase.database().ref('logs_sistema').push({
+        email: email,
+        acao: acao,
+        data_hora: new Date().toLocaleString("pt-BR"),
+        timestamp: firebase.database.ServerValue.TIMESTAMP
     });
 }
 
@@ -84,16 +102,12 @@ function realizarLogin() {
         .then(() => {
             return firebase.auth().signInWithEmailAndPassword(email, senha);
         })
-        .then(() => {
-            console.log("Login realizado com sucesso.");
-        })
         .catch(error => alert("Erro ao entrar: " + error.message));
 }
 
 // --- 4. LOGOUT ---
 function sairDoSistema(confirmar = true) {
     if (confirmar && !confirm("Deseja sair do sistema?")) return;
-
     localStorage.removeItem("gem_user_email");
     firebase.auth().signOut().then(() => {
         location.reload();
