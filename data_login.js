@@ -1,3 +1,10 @@
+// --- No topo do seu data_login.js ---
+// Isso cria um "Estado da Sessão" global para o PWA
+let currentSessionInfo = {
+    email: localStorage.getItem("gem_user_email") || "", // Tenta recuperar se já logado
+    dispositivo: navigator.userAgent
+};
+
 // --- 1. MONITOR DE ESTADO E ACESSO AUTOMÁTICO ---
 document.addEventListener("DOMContentLoaded", () => {
     verificarAcesso();
@@ -33,11 +40,19 @@ function checkAuthorization(email, loginScreen, mainContainer) {
     firebase.database().ref('usuarios_autorizados/' + emailKey).once('value')
         .then((snapshot) => {
             if (snapshot.exists()) {
+                // 1. Atualiza o objeto global de sessão
+                currentSessionInfo.email = email;
+                
+                // 2. Persiste para o navegador (usado pelo data_licoes.js)
                 localStorage.setItem("gem_user_email", email);
+
+                // 3. Ativa o bloqueio visual de edição/exclusão no CSS
+                document.body.classList.add('user-mode'); 
+                
                 if(loginScreen) loginScreen.style.display = 'none';
                 if(mainContainer) mainContainer.style.display = 'flex';
                 
-                // Grava log de quem entrou (Auditoria)
+                // 4. Registra o log histórico
                 registrarLogAcesso(email);
             } else {
                 alert("Acesso negado: E-mail não autorizado na whitelist.");
