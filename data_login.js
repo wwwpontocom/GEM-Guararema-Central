@@ -5,6 +5,9 @@ let currentSessionInfo = {
     dispositivo: navigator.userAgent
 };
 
+// Flag para diferenciar Login Manual de Restauração de Sessão
+let isManualLogin = false;
+
 // --- 1. MONITOR DE ESTADO E ACESSO AUTOMÁTICO ---
 document.addEventListener("DOMContentLoaded", () => {
     verificarAcesso();
@@ -19,12 +22,7 @@ function verificarAcesso() {
             checkAuthorization(user.email, loginScreen, mainContainer);
         } else {
             localStorage.removeItem("gem_user_email");
-            if(loginScreen) {
-                loginScreen.style.display = 'flex';
-                loginScreen.style.flexDirection = 'column';
-                loginScreen.style.justifyContent = 'center';
-                loginScreen.style.alignItems = 'center';
-            }
+            if(loginScreen) loginScreen.style.display = 'flex';
             if(mainContainer) mainContainer.style.display = 'none';
         }
     });
@@ -61,13 +59,17 @@ function gerenciarRegistros(email) {
     const navEntries = performance.getEntriesByType("navigation");
     const isReload = (navEntries.length > 0 && navEntries[0].type === "reload");
 
-    if (isReload) {
-        // Se for apenas um F5, grava apenas no nó técnico de logs
+    if (isManualLogin) {
+        // FOI PELO BOTÃO: Grava no Histórico Real e no Log de Sistema
+        registrarAcessoReal(email);
+        registrarLogSistema(email, "LOGIN_MANUAL_SUCESSO");
+        isManualLogin = false; // Reseta após gravar
+    } else if (isReload) {
+        // FOI F5: Apenas Log de Sistema
         registrarLogSistema(email, "RELOAD");
     } else {
-        // Se for uma entrada nova (Login), grava em ambos
-        registrarAcessoReal(email);
-        registrarLogSistema(email, "LOGIN_INICIAL");
+        // FOI FECHAR/ABRIR ABA: Apenas Log de Sistema (Sessão Restaurada)
+        registrarLogSistema(email, "SESSAO_RESTAURADA");
     }
 }
 
@@ -98,11 +100,17 @@ function realizarLogin() {
 
     if (!email || !senha) return alert("Preencha todos os campos.");
 
+    // Ativa o flag para o checkAuthorization saber que é um acesso manual
+    isManualLogin = true;
+    
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
         .then(() => {
             return firebase.auth().signInWithEmailAndPassword(email, senha);
         })
-        .catch(error => alert("Erro ao entrar: " + error.message));
+        .catch(error => {
+            isManualLogin = false; // Reseta se falhar
+            alert("Erro ao entrar: " + error.message);
+        });
 }
 
 // --- 4. LOGOUT ---
